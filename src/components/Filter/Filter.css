@@ -1,0 +1,396 @@
+.filter {
+    z-index: 2;
+}
+
+.filter__desktop {
+    display: flex;
+    gap: 15px;
+    margin: 20px 23px 0 23px;
+    font-family: 'Actor', Arial, Helvetica, sans-serif;
+    flex-wrap: wrap;
+}
+
+.filter__searchline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    height: 31px;
+    padding: 0 15px;
+    width: 190px;
+    transition: width 0.4s ease; /* Плавный переход для ширины */
+}
+
+.filter__searchline.active{
+    width: 220px;
+}
+
+.filter__searchline-img {
+    margin: 0;
+}
+
+.filter__searchline-input {
+    background: #f7f8fc;
+    padding: 0;
+    background-color: initial;
+    border: 0;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: -0.04em;
+    color: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    height: 31px;
+}
+
+.filter__searchline-input:focus,
+.filter__searchline-input:hover  {
+    outline: none;
+}
+
+/* .filter__searchline-input.active {
+    width: 450px;
+} */
+
+
+.filter__group {
+    display: flex;
+}
+
+.filter__label {
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.filter__button {
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #f7f8fc;
+    border: none;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: -0.04em;
+    color: #000;
+    border-radius: 10px;
+    height: 31px;
+    padding: 0 25px;
+    display: flex;
+    text-wrap: nowrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter__button.active {
+    background: #000000;
+    color: #fff;
+}
+
+.filter__icon {
+    background: url('../../assets/arrow-filter-desk.svg');
+    background-repeat: no-repeat;
+    width: 12px;
+    height: 7px;
+    transition: transform 1s; /* Плавный переход */
+    border:0;
+    cursor: pointer;
+}
+
+.filter__icon.rotated {
+    transform: rotateZ(180deg); /* Вращение на 180 градусов по оси Y */
+}
+
+.filter__icon.active {
+    background: url('../../assets/reset-filter-desk.svg');
+    width: 15px;
+    height: 15px;
+    transition: transform 0.7s ease;
+}
+
+.filter__icon.active:hover {
+    /* background: url('../../assets/reset-filter-desk-black.svg'); */
+    width: 15px;
+    height: 15px;
+    color: #000;
+    transform: scale(1.2); 
+}
+
+.filter__button:hover, .filter__button:focus {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+.filter__container {
+    position: relative;
+    display: inline-block;
+}
+
+.filter__content {
+    display: block; 
+    position: absolute;
+    top: 46px;
+    min-width: 221px;
+    z-index: 1;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.25);
+    background: #f7f8fc;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #000;
+    cursor: pointer;
+}
+
+.filter__option {
+    color: black;
+    padding: 16px 19px;
+    text-decoration: none;
+    display: block;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: -0.04em;
+    opacity: 1;
+}
+
+.filter__option:hover {
+    transition: opacity 0.2s ease; 
+    opacity: 0.4;
+}
+
+.filter__button-reset {
+    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: -0.04em;
+    color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    height: 31px;
+    padding: 0 25px;
+    display: flex;
+    text-wrap: nowrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter__button-reset.active{
+    color: rgba(0, 0, 0, 0.6);
+}
+
+
+.button:hover {
+    transition: opacity 0.2s ease; 
+    opacity: 0.7;
+}
+
+
+.filter__button {
+}
+
+.filter__button.active {
+    background: #000000;
+    color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+
+    .filter__mobile{
+        border-radius: 20px 20px 0 0;
+        background: #fff;
+        width: 96vw;
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 6px 10px 19px;
+    }
+
+    .filter__mobile-button-container {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }    
+
+    .filter__mobile-line {
+        background: #fff;
+        border-radius: 10px;
+        height: 3px;
+        margin-bottom: 9px;
+        position: absolute;
+        top: -10px;
+        left: 55%;
+        width: 10vw;
+        margin-left: -36px;
+        will-change: opacity;
+    }
+
+    .filter__mobile-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin: 20px 0px 0;
+
+    }
+
+    .filter__mobile-title {
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: -0.04em;
+        color: #000;
+        margin: 0;
+    }
+
+    .filter__mobile-content {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+    }
+
+    .filter__mobile-option  {
+        font-weight: 400;
+        font-size: 16px;
+        letter-spacing: -0.04em;
+        color: #000;
+        padding: 5px 12px;
+        border-radius: 10px;
+        background: #f7f8fc;
+        cursor: pointer;
+    }
+
+    .filter__mobile-option.active {
+        background: #2f2a30;
+        color: #f7f8fc;
+    }
+
+    .filter__mobile-show-button {
+        background: #000000;
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-weight: 400;
+        font-size: 16px;
+        letter-spacing: -0.04em;
+        color: #f7f8fc;
+        margin-top: 20px;
+        cursor: pointer;
+        border: 0;
+        width: 100%;
+    }
+
+    .filter__for-mobile {
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        position: fixed;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        visibility: hidden;
+        animation: slideIn 0.3s forwards; 
+        visibility: visible; 
+        opacity: 1; 
+        z-index: 10;
+    }
+
+    .filter__overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.25); /* Затемнение фона */
+        transition: opacity 0.3s ease-in-out;
+        z-index: 1;
+    }
+    
+    .filter__major-mobile {
+        margin-top: 20px;
+        
+    }
+    
+    /* .filter__for-mobile.show {
+    } */
+
+    .filter__container-serchline {
+        display: flex;
+        gap: 10px;
+    }
+
+    .filter__searchline-mobile  {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        height: 30px;
+        padding: 0 10px 0 5px;
+        width: 256px;
+        transition: width 0.4s ease; /* Плавный переход для ширины */
+        background: #f7f8fc;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    .filter__buttton-open {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 130%;
+        text-align: center;
+        color: #fff;
+        border-radius: 5px;
+        background: #000;
+        padding: 8px 10px;
+        position: relative;
+        border: none;
+        cursor: pointer;
+    }
+
+    .filter__buttton-active {
+        opacity: 0;
+        transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease, top 0.3s ease, right 0.3s ease; /* Добавлено */
+    }
+    
+    .filter__buttton-active.active {
+        width: 9px;
+        height: 9px;
+        top: -4px;
+        right: -1px;
+        position: absolute;
+        background: #7D56D8;
+        border-radius: 100%;
+        opacity: 1;
+    }
+    
+       
+}
+
+/* Анимации */
+@keyframes slideIn {
+    0% {
+        bottom: -100%; /* Начальная позиция */
+        opacity: 0; /* Непрозрачность в начале анимации */
+    }
+    100% {
+        bottom: 0; /* Конечная позиция */
+        opacity: 1; /* Полная непрозрачность в конце анимации */
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        bottom: 0; /* Начальная позиция */
+        opacity: 1; /* Полная непрозрачность в начале анимации */
+    }
+    100% {
+        bottom: -100%; /* Конечная позиция */
+        opacity: 0; /* Непрозрачность в конце анимации */
+    }
+}
+
+
+
+
+

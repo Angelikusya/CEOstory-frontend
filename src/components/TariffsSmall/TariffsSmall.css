@@ -1,0 +1,266 @@
+.tariffs-small {
+    display: flex;
+    justify-content: center;
+}
+
+.tariffs-small__container {
+    display: flex;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    margin-bottom: 60px;
+}
+
+.tariffs-small__left-block {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border-radius: 20px 0 0 20px;
+    padding: 15px 30px 29px 30px;
+}
+
+.tariffs-small__skills {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 110%;
+    color: rgba(0, 0, 0, 0.7);
+    max-width: 222px;
+    margin: 0 0 12px;
+}
+
+.tariffs-small__tariffs {
+    display: flex;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.tariffs-small__first {
+    margin: 0 0 0 0;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.tariffs-small__period {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.tariffs-small__tariff-line {
+    position: relative;
+}
+
+.tariffs-small__line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 110%;
+    height: 2px;
+    background-color: #000;
+    transform: rotate(-17deg); 
+    transform-origin: left bottom;
+}
+
+
+.tariffs-small__price {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    text-align: center;
+    color: #000;
+    margin: 0;
+}
+
+.tariffs-small__discount {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 110%;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 5px 0 10px;
+}
+
+.tariffs-small__botton {
+    margin: 0;
+    padding: 9px 0;
+    width: 100%;
+}
+
+.tariffs-small__benefits {
+    margin: 25px 0 0 0;
+}
+
+.tariffs-small__benefits  {
+    display: flex;
+}
+
+
+.tariffs-small__price-сontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 280px;
+}
+
+.tariffs-small__price-benefit-img {
+    background-image: url('../../assets/benefit-tariffs-dark.svg');
+    width: 19px;
+    height: 19px;
+    margin: 2px 0 0 0;
+}
+
+.tariffs-small__price-item {
+    margin: 0 0 10px 0;
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.tariffs-small__price-list {
+    list-style: none;
+    margin: 0 ;
+    padding: 0;
+}
+
+.tariffs-small__price-name {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+    margin: 0;
+}
+
+.tariffs-small__price-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 110%;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+}
+
+.tariffs-small__right-block {
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 0 20px 20px 0 ;
+    padding: 15px 20px 29px 20px;
+}
+
+.tariffs-small__logo-img {
+    width: 98px;
+    height: 29px;
+    margin: 15px 0 0;
+}
+
+.tariffs-small__right-block-header {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    color: #e5e5e5;
+    margin: 25px 0 0 0;
+    font-family: 'Akshar', Arial, Helvetica, sans-serif;
+}
+
+.tariffs-small__right-block-span {
+    color: #92cbad;
+}
+
+.tariffs-small__right-block-text {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #fff;
+    max-width: 340px;
+    margin: 15px 0 0 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.tariffs-small__right-block-more {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 130%;
+    color: #fff;
+    margin: 20px 0 0 0;
+    max-width: 340px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+
+}
+
+.tariffs-small__right-block-image {
+    background-image: url('../../assets/image-notloggedin-desk.svg');
+    width: 270px;
+    height: 77px;
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    margin: 0 0 0 0;
+}
+
+@media screen and (max-width: 1279px) {
+    .tariffs-small__left-block {
+        padding: 15px 15px 29px 15px;
+    }
+
+    .tariffs-small__right-block {
+        padding: 15px 10px 29px 10px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .tariffs-small__container {
+        flex-direction: column;
+        max-width: 362px;
+    }
+
+    .tariffs-small__botton {
+        margin: 0;
+        padding: 9px 0;
+        width: 100%;
+    }
+
+    .tariffs-small__left-block {
+        border-radius: 20px 20px 0 0;
+        padding: 15px 15px 29px 15px;
+    }
+
+    .tariffs-small__right-block {
+        border-radius: 0 0 20px 20px;
+        padding: 15px 24px 29px 215x;
+    }
+
+    .tariffs-small__benefits {
+        margin: 25px 0 0 0;
+    }
+
+    .tariffs-small__right-block-text  {
+        max-width: 261px;
+    }
+
+    .tariffs-small__right-block-more {
+        max-width: 261px;
+    }
+    
+}
+
+
+@media screen and (max-width: 767px) {
+    .tariffs-small__price-name {
+        max-width: 235px;
+    }
+
+    .tariffs-small__price-text {
+        max-width: 235px;
+    }
+}

@@ -1,0 +1,132 @@
+.saved {
+    padding: 50px 0;
+    background: #F7F8FC;
+
+}
+.saved__stories {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    position: relative;
+}
+
+.saved__story {
+    position: relative;
+}
+.saved__photo {
+    border-radius: 20px 0 0 20px;
+    width: 151px;
+    height: 316px;
+    object-fit: cover;
+    z-index: 2;
+    position: absolute;
+}
+
+.saved__container {
+    display: flex;
+    flex-direction: column;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    align-items: center;
+    margin: 11rem 0;
+}
+
+.saved__text {
+    margin: 0 0 15px 0;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 120%;
+    text-align: center;
+    color: #2f2a30;
+}
+
+.saved__more {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 120%;
+    text-align: center;
+    color: #2f2a30;
+    margin: 0 0 22px 0;
+    max-width: 384px;
+}
+
+.saved__link {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
+    background: #fff;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 13px 66px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    color: #2f2a30;
+    text-decoration: none;
+}
+
+
+@media screen and (max-width: 1279px) { 
+    .saved__container {
+        margin: 20rem 0;
+    }
+    .saved__text {
+        margin: 0 0 15px 0;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 120%;
+        text-align: center;
+        color: #2f2a30;
+    }
+
+    .saved__photo {
+        width: 151px;
+        height: 332px;
+    }
+
+    .saved__photo {
+        width: 151px;
+        height: 332px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .saved__container {
+        margin: 11rem 0;
+    }
+    
+    .saved__text {
+        margin: 0 0 15px 0;
+        font-size: 14px;
+    }
+    
+    .saved__more {
+        font-weight: 400;
+        font-size: 13px;
+        margin: 0 0 17px 0;
+        max-width: 252px;
+    }
+    
+    .saved__link {
+        padding: 12px 44px;
+        font-size: 13px;
+    }
+
+    .saved__photo-container {
+        border-radius: 50%;
+        width: 71px;
+        height: 71px;
+        overflow: hidden;
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        position: absolute;
+        top: 10px;
+        left: 20px;
+    }
+    
+    .saved__photo {
+        width: 71px;
+        height: 96px;
+        object-fit: cover;
+        transform: translateY(12px);
+    }
+}

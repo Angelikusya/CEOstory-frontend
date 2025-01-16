@@ -1,0 +1,148 @@
+.documents {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin: 43px 170px 70px 76px;
+}
+
+.documents__title {
+    font-weight: 700;
+    font-size: 30px;
+    color: #000;
+    margin: 0 0 0 20px;
+}
+
+.documents__container {
+    display: flex;
+    margin: 20px 0 0 0;
+    gap: 45px;
+}
+
+.documents__name {
+    font-weight: 700;
+    font-size: 23px;
+    color: #000;
+    margin: 20px 0 10px 0;
+}
+
+.documents__date {
+    font-weight: 400;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0 0 20px 0;
+}
+
+.documents__content {
+
+}
+
+.documents__content-title {
+    font-weight: 700;
+    font-size: 20px;
+    color: #000;
+    margin: 0;
+}
+
+.documents__content-link {
+    font-weight: 400;
+    font-size: 15px;
+    color: #000;
+    text-decoration: underline;
+}
+
+.documents__subtitle {
+    font-weight: 700;
+    font-size: 15px;
+    color: #000;
+    margin: 20px 0 10px 0;
+}
+
+.documents__text {
+    line-height: 120%;
+    margin: 0 0 10px;
+    text-align: justify; /* Выравнивание по ширине */
+    font-size: 15px;
+}
+
+.documents__text-support {
+    line-height: 120%;
+    font-size: 15px;
+    text-decoration: none;
+    color: #000;
+}
+
+.documents__list-item  {
+    text-align: start; /* Выравнивание по ширине */
+}
+
+.documents__link {
+    line-height: 120%;
+    margin: 0 0 10px;
+    text-align: start;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #000;
+}
+
+.documents__table {
+    border-collapse: collapse;
+    margin: 20px 0 10px 0;
+}
+
+.documents__table-cell {
+    border: 1px solid #000000;
+    padding: 0in 0.08in;
+}
+  
+.data-policy-table__text {
+    text-align: justify;
+    margin-top: 0.08in;
+    font-family: 'Cambria', serif;
+}
+  
+  @media screen and (max-width: 1279px) {
+    .documents {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        margin: 30px 30px 30px 20px;
+    }
+
+    .documents__container {
+        display: flex;
+        margin: 0;
+        gap: 45px;
+    }
+  }
+
+
+@media screen and (max-width: 767px) {
+    .documents {
+        margin: 10px 20px;
+    }
+    .documents__title {
+        font-size: 23px;
+        margin: 10px 0 0 0;
+        line-height: 90%;
+    }
+    .documents__container {
+        margin: 10px 0 0 0;
+    }
+    .documents__name {
+        font-size: 15px;
+        line-height: 90%;
+        margin: 20px 0 20px 0;
+    }
+    .documents__content-title {
+        font-size: 15px;
+
+    }
+    .documents__link {
+        font-size: 15px;
+    }
+    .documents__text {
+        text-align:start ; 
+        font-size: 13px;
+    }
+    .documents__text-support {
+        font-size: 13px;
+    }
+}
+

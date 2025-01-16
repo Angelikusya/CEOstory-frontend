@@ -1,0 +1,342 @@
+.register {
+    height: 100vh;
+    background-color:#000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 2s forwards;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.register__container {
+    display: flex;
+    align-items: flex-end;
+    gap: 90px;
+}
+
+.rigister__image {
+    background-image: url('../../assets/image-register-desk.svg');
+    width: 491px;
+    height: 292px;
+    background-size: contain;
+    margin-bottom: 30px;
+}
+
+.register__block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 296px;
+}
+
+.register__logo {
+    background-image: url('../../assets/logo-signin-desk.svg');
+    background-size: cover;
+    cursor: pointer;
+    width: 153px;
+    height: 43px;
+    opacity: 1;
+}
+
+.register__greeting {
+    margin: 0;
+    font-weight: 400;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    margin-top: 6px;
+}
+
+.register__form {
+    display: flex;
+    flex-direction: column;
+    margin: 3px 0 0;
+}
+
+.register__text {
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 10px;
+}
+
+.register__submit {
+    background: rgba(255, 255, 255, 1);;
+    border-radius: 20px;
+    margin-top: 45px;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.44s ease, box-shadow 0.445s ease; /* Объединены переходы */
+    font-weight: 400;
+    font-size: 18px;
+    color: #000;
+    text-transform: uppercase;
+    padding: 10px 0;
+    width: 346px;
+}
+
+.register__submit:disabled {
+    opacity: 0.5;
+    cursor:auto;
+}
+
+.register__input {
+    border: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid  rgba(255, 255, 255, 0.3);
+    margin: 0;
+    background-color: transparent;
+    overflow: hidden;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px 10px;
+}
+
+.register__input::placeholder {
+    font-weight: 400;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.register__input:focus {
+    border: 2px solid  rgba(255, 255, 255, 0.8);
+}
+
+/* .register__input_error  {
+    color: rgba(231, 26, 26, 0.8);;
+    margin: 0;
+} */
+
+.register__form-error {
+    margin: 0;
+    padding-top: 2px;
+    font-weight: 400;
+    font-size: 10px;
+    color: #000;
+}
+
+.register__form-error_active {
+    display: block;
+    margin: 0;
+    color: rgba(231, 26, 26, 0.8);
+    font-style: normal;
+    font-weight: 400;
+}
+
+/* .register__form-error_active {
+    color: rgba(231, 26, 26, 0.8);
+} */
+
+.register__submit-error {
+    color: #9b0c3f;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    position: absolute;
+    bottom: 210px;
+}
+
+.register__button {
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    border: none; 
+    padding: 0; 
+    cursor: pointer;
+    opacity: 1;
+    background: rgba(83, 81, 81, 0.9);
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+    transition: opacity 0.2s ease, transform 0.44s ease, box-shadow 0.445s ease; /* Объединены переходы */
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    width: 346px;
+    text-decoration: none;
+}
+
+.register__checkbox {
+    display: flex;
+    margin-top: 10px;
+    /* width: 331px; */
+    /* margin-left: 15px; */
+}
+
+/* Скрыть стандартный чекбокс */
+.register-checkbox {
+    display: none;
+}
+
+/* Оформление кастомного чекбокса */
+.register-checkbox + label {
+    position: relative;
+    padding-left: 27px;
+    cursor: pointer;
+}
+
+/* Оформление "галочки" при выборе чекбокса */
+.register-checkbox + label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 19px;
+    height: 19px;
+    border: 2px solid rgba(125, 86, 216, 0.14);
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border 0.3s ease; 
+}
+
+.register-checkbox:hover + label:before{
+    border: 2px solid #7D56D8;
+}
+
+/* Стилизация "галочки" при выборе чекбокса */
+.register-checkbox:checked + label:before {
+    background-color: #7762f6; /* Цвет "галочки" при выборе */
+    background-image: url('../../assets/checkbox-signin.svg');
+    width: 19px;
+    height: 19px;
+    background-size: contain;
+    background-repeat: no-repeat; 
+    transition: background-color 0.3s ease; 
+}
+
+.register-checkbox:checked:hover + label:before {
+    background-color: #7D56D8;
+}
+
+/* Стилизация текста рядом с чекбоксом */
+.checkbox__policy {
+    cursor: pointer;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: -0.02em;
+    color: rgba(119, 98, 246, 0.9);
+    text-decoration: underline;
+    line-height: 60%;
+    margin: 0;
+    padding: 0.5px;
+    opacity: 1;
+}
+
+.checkbox__policy:hover {
+    color: rgba(119, 98, 246, 1);
+}
+
+.checkbox__text {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: -0.02em;
+    color: #fff;
+    line-height: 140%;
+    margin: 0;
+}
+
+.register__password {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    bottom: 13px;
+    right: 20px;
+    width: 26px;
+    height: 16px;
+    cursor: pointer;
+    background-size: contain;    
+    background-repeat: no-repeat;
+}
+
+.eye-close {
+    background-image: url('../../assets/eye-open.svg');
+}
+
+.eye-open {
+    background-image: url('../../assets/eye-close.svg');
+    height: 10px;
+}
+
+@media screen and (max-width: 1279px) {
+    .register__container {
+        display: flex;
+        gap: 6px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .rigister__image {
+        background-image: url('../../assets/image-register-tablet.svg');
+        width: 184px;
+        height: 138px;
+        background-size: contain;
+        margin-bottom: 30px;
+    }
+    .register-checkbox + label {
+        padding-left: 35px;
+    }
+
+    .register-checkbox + label:before {
+        width: 24px;
+        height: 24px;
+
+    }
+
+    .register-checkbox:checked + label:before {
+        width: 24px;
+        height: 24px;
+    }
+
+    .checkbox__text {
+        font-size: 12px;
+    }
+
+    .checkbox__policy {
+        font-size: 12px;
+    }
+    .register__submit-error {
+        bottom: 120px;
+    }
+}
+
+@media screen and (max-width: 855px) {
+    .checkbox__text {
+        margin-top: 2px;
+    }
+}
+
+@media screen and (max-width: 855px) {
+    .register__block {
+        width: 93%;
+        padding: 0 12px;
+    }
+
+    .register__submit {
+        width: 100%;
+        margin-top: 55px;
+    }
+
+    .register__button {
+        width: 100%;
+    }
+
+    .register__submit-error {
+        font-size: 14px;
+        bottom: 210px;
+    }
+}
+
+@media screen and (max-width: 598px) {
+    .checkbox__text {
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+}

@@ -1,0 +1,226 @@
+.notpaied {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    background: rgba(44, 42, 48, 0.5);
+    z-index: 10;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    opacity: 1; 
+    transition: opacity 1s; 
+}
+
+.notpaied_disabled {
+    opacity: 0;
+    display: none;
+}
+
+.notpaied__container {
+    height: 364px;
+    display: flex;
+}
+
+.notpaied__left-block {
+    background-color: #fff;
+    width: 392px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px 0 0 20px;
+}
+
+.notpaied__right-block {
+    background-color: #000;
+    width: 392px; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 0 20px 20px 0 ;
+    padding: 0 0 0 20px;
+}
+
+
+.notpaied__left-block-title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+    margin: 97px 0 20px;
+    max-width: 345px;
+}
+
+.notpaied__left-block-text {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 110%;
+    color: #000;
+    text-align: left;
+    margin: 0 0 31px 0;
+    width: 345px;
+}
+
+.notpaied__botton {
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    color: #fff;
+    width: 350px;
+    padding: 9px 56px;
+}
+
+.notpaied__logo-img {
+    width: 98px;
+    height: 29px;
+    margin: 15px 0 0;
+}
+
+.notpaied__right-block-header {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    color: #e5e5e5;
+    margin: 25px 0 0 0;
+    font-family: 'Akshar', Arial, Helvetica, sans-serif;
+}
+
+.notpaied__right-block-span {
+    color: #92cbad;
+}
+
+.notpaied__right-block-text {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #fff;
+    max-width: 340px;
+    margin: 15px 0 0 0;
+}
+
+.notpaied__right-block-more {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 130%;
+    color: #fff;
+    margin: 20px 0 0 0;
+    max-width: 340px;
+}
+
+.notpaied__right-block-image {
+    background-image: url('../../assets/image-notloggedin-desk.svg');
+    width: 270px;
+    height: 77px;
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    margin: 0 0 0 0;
+}
+
+@media screen and (max-width: 1279px) {
+    .notpaied__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center; 
+        margin: 0 auto;
+    }
+    
+    .notpaied__left-block {
+        border-radius: 20px 20px 0 0 ;
+    }
+    
+    .notpaied__right-block {
+        border-radius: 0 0 20px 20px;
+        padding: 0 0 0 20px;
+    }
+    
+    
+    .notpaied__left-block-title {
+        margin: 94px 0 20px;
+    }
+    
+    .notpaied__botton {
+        margin: 0 0 92px;
+        padding: 9px 56px;
+    }
+    
+    .notpaied__right-block-image {
+        margin: 0 0 50px 0;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    .notpaied__container {
+        height: 364px;
+        display: flex;
+        margin: 10px;
+    }
+    
+    .notpaied__left-block {
+        width: 300px; 
+        border-radius: 20px 20px 0 0 ;
+    }
+    
+    .notpaied__right-block {
+        width: 300px; 
+        display: flex;
+        border-radius: 0 0 20px 20px ;
+        padding: 0 0 76px 20px;
+        position: relative;
+    }
+    
+    .notpaied__left-block-title {
+        font-size: 18px;
+        margin: 81px 0 10px;
+        max-width: 276px;
+    }
+    
+    .notpaied__left-block-text {
+        font-size: 15px;
+        margin: 0 0 30px 0;
+        max-width: 276px;
+    }
+    
+    .notpaied__botton {
+        font-size: 20px;
+        width: 275px;
+        margin: 0 0 80px;
+        padding: 9px 36px;
+    }
+    
+    .notpaied__logo-img {
+        margin: 14px 0 0;
+    }
+    
+    .notpaied__right-block-header {
+        margin: 20px 0 0 0;
+    }
+    
+    .notpaied__right-block-text {
+        max-width: 261px;
+        margin: 10px 0 0 0;
+    }
+    
+    .notpaied__right-block-more {
+        margin: 10px 0 0 0;
+        max-width: 230px;
+    }
+    
+    .notpaied__right-block-image {
+        background-image: url('../../assets/image-notloggedin-mobile.svg');
+        background-size: cover;
+        background-position: center; 
+        background-repeat: no-repeat;
+        width: 248px;
+        height: 95px;
+        position: absolute;
+        bottom: 20px;
+        margin: 0;
+    }
+}

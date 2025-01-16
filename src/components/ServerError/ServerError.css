@@ -1,0 +1,14 @@
+
+.giphy-iframe {
+    width: 425px;
+    height: 425px;
+}
+  
+
+@media screen and (max-width: 767px) {
+    .giphy-iframe {
+        width: 296px;
+        height: 296px;
+    }
+    
+}

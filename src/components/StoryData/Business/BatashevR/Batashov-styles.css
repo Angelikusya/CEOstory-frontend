@@ -1,0 +1,249 @@
+.story-content {
+    position: relative;
+    /* width: 100vw; */
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    margin: 40px 0 0 ;
+}
+
+.batashov-short__relative {
+    position: absolute;
+    left: -200px;
+    top: 0;
+}
+
+.batashov-short__story {
+    display: flex;
+    flex-direction: column;
+}
+
+.batashov-short__question {
+    font-weight: 500;
+    font-size: 25px;
+    letter-spacing: -0.02em;
+    color: #000;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    margin: 0 0 20px ;
+    max-width: 694px;
+    line-height: 120%;
+}
+
+.batashov-short__text-container {
+    margin: 0 0 30px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.batashov-short__list-bulits li::before {
+    content: '•'; 
+    margin-right: 8px; 
+    color: #000; 
+}
+
+.batashov-short__list-bulit {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+.short-text.short-span{
+    font-weight: 700;
+    color: #007268;
+}
+
+.short-text.short-span_underlined {
+    font-weight: 700;
+    color: #007268;
+    border-bottom: 3px solid #007268;
+}
+
+.batashov-short__quoute {
+    background: #eceff3;
+    padding: 20px 34px 20px 35px;
+    position: relative;
+    margin: 0 0 30px 0;
+    max-width: 694px;
+}
+
+.batashov-short__quoute-img {
+    background-image: url('../../../../assets/quoute-story-desk.svg');
+    width: 29px;
+    height: 43px;
+    position: absolute;
+    top: 15px;
+    left: 5px;
+    background-repeat: no-repeat;
+}
+
+.batashov-short__list-numbers {
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    max-width: 694px;
+    margin: 0;
+    padding: 0;
+}
+
+
+.batashov-short__item-number {
+    list-style-type: none;
+    position: relative;
+    padding: 10px 10px 10px 15px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin: 0;
+}
+
+.batashov-short__item-number.dark {
+    background: #eceff3;
+}
+
+.batashov-short__number-line {
+    position: absolute;
+    height: 100%;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    left: 31px;
+    bottom: 0px;
+}
+
+.batashov-short__number-line.top {
+    height: 50%;
+}
+
+.batashov-short__number-line.bottom {
+    height: 50%;
+    bottom: 50%;
+}
+
+.batashov-short__number-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #fff;
+    border-radius: 100%;
+    width: 32px;
+    height: 32px;
+}
+
+.batashov-short__number-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    max-width: 364px;
+}
+
+.batashov-short__number-title {
+    font-weight: 700;
+    font-size: 19px;
+    letter-spacing: -0.02em;
+    color: #000;
+    line-height: 120%;
+    margin: 0;
+}
+
+.batashov-short__number-text {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 130%;
+    letter-spacing: -0.02em;
+    color: #313232;
+    margin: 0;
+}
+
+.story__switcher-mobile-text {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #000;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+}
+
+.story__switcher-mobile-span {
+    color: #8a878a;
+}
+
+
+@media screen and (max-width: 1280px) {
+    .batashov-short__relative {
+        position: unset;
+        margin-bottom: 20px;
+        /* max-width: 694px; */
+    }
+
+    .batashov-short {
+        margin: 40px 0 0 ;
+        padding: 0 8px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .batashov-short__relative {
+        position: unset;
+    }
+
+    .batashov-short__item-number {
+        list-style-type: none;
+        padding: 0;
+        position: relative;
+        padding: 10px 10px 10px 15px;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .batashov-short {
+        margin: 40px 0 0 ;
+        padding: 0 18px;
+    }
+
+    .batashov-short__question {
+        font-size: 20px;
+        line-height: 120%;
+    }
+    .short-text {
+        font-size: 15px;
+    }
+    .batashov-short__number-title {
+        font-size: 17px;
+    }
+    .batashov-short__text-container {
+        margin: 0 0 20px;
+        gap: 15px;
+    }
+    
+    .batashov-short__number-text {
+        font-size: 14px;
+        line-height: 110%;
+    }
+    .batashov-short__number-step {
+        font-size: 15px;
+        line-height: 100%;
+    }
+
+}
+
+@media screen and (max-width: 460px) {
+    .batashov-short__number-text {
+        max-width: 288px;
+    }
+
+    .batashov-short__item-number {
+        padding: 10px 10px 10px 5px;
+    }
+
+    .batashov-short__number-line {
+        left: 20px;
+    }
+
+    .batashov-short__number-title {
+        max-width: 288px;
+    }
+
+}

@@ -1,0 +1,30 @@
+.app {
+    background-color: #000000;
+    box-sizing: border-box;
+    color: #2F2A30;
+    margin: 0 auto;
+    font-family: 'Actor', Arial, Helvetica, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    animation: fadeIn 2s forwards;
+    position: relative;
+}
+
+.special-page {
+    background-color: #f7f8fc; /* Цвет фона для указанных страниц */
+}
+
+.button:hover {
+    transition: opacity 0.2s ease; 
+    opacity: 0.7;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

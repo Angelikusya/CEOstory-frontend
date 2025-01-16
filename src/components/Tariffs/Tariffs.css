@@ -1,0 +1,159 @@
+.tariffs {
+    margin: 63px 71px 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Akshar', Arial, Helvetica, sans-serif;
+}
+
+.tariffs__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.tariffs__greeting {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin:0 0 20px;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 120%;
+    text-align: center;
+    color: #000;
+}
+
+.tariffs__greeting-text {
+    margin: 0;
+}
+
+.tariffs__logo {
+    background-image: url('../../assets/logo-tsriffs-desk.svg');
+    background-size: cover;
+    cursor: pointer;
+    width: 121px;
+    height: 37px;
+    opacity: 1;
+}
+
+.tariffs__header {
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 120%;
+    text-align: center;
+    color: #000;
+    margin: 0;
+    min-width: 500px;
+}
+
+
+.tariffs__underline {
+    border-bottom: 5px solid #92CBAD;
+    display: inline-block; 
+    padding-bottom: 0px;
+
+}
+
+
+.tariffs__more {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 130%;
+    text-align: center;
+    color: #000;
+    width: 479px;
+    margin: 22px 0 29px 0;
+}
+
+.tariffs__link {
+    padding: 11px 55px;
+    margin: 0;
+}
+
+.tariffs__line {
+    border: 0.30px solid rgba(0, 0, 0, 0.5);
+    width: 100%;
+    margin: 60px 0 0 0;
+}
+
+.tariffs__text-container {
+    max-width: 679px;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+}
+
+.tariffs__text {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #000;
+    margin: 0 0 30px;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+}
+
+@media screen and (max-width: 1279px) {
+
+    .tariffs {
+        margin: 63px 30px 44px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    .tariffs {
+        margin: 20px 18px 14px;
+    }
+    
+    .tariffs__greeting {
+        gap: 5px;
+        margin:0 0 20px;
+        font-size: 18px;
+        align-items: flex-end;
+    }
+    
+    .tariffs__logo {
+        background-image: url('../../assets/logo-tariffs-mobile.svg');
+        width: 88px;
+        height: 34px;
+    }
+    
+    .tariffs__header {
+        font-size: 23px;
+        min-width: 319px;
+    }
+    
+    
+    .tariffs__underline {
+        border-bottom: 3px solid #92CBAD;
+    }
+    
+    
+    .tariffs__more {
+        font-size: 15px;
+        width: 100%;
+        margin: 27px 0 30px;
+    }
+    
+    .tariffs__link {
+        padding: 10px 15px;
+        margin: 0;
+    }
+    
+    .tariffs__line {
+        border: 0.30px solid rgba(0, 0, 0, 0.5);
+        width: 100%;
+        margin: 30px 0 0 0;
+    }
+
+    .tariffs__text-container {
+        max-width: 679px;
+        margin: 0;
+    }
+    
+    .tariffs__text {
+        font-size: 15px;
+        margin: 0 0 15px;
+    }
+}

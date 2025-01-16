@@ -1,0 +1,166 @@
+.gant {
+    display: flex;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    background: #000;
+}
+
+.gant__container {
+    display: flex;
+    padding: 18px 19px 44px 10px;
+    gap: 19px;
+}
+
+.gant__blok{
+    display: flex;
+    flex-direction: column;
+}
+
+.gant__name {
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #92cbad;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.gant__title {
+    font-weight: 500;
+    font-size: 25px;
+    letter-spacing: -0.02em;
+    color: #fff;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.gant__benefits {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    color: #f1fcf8;
+    margin: 20px 0 10px 0;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.gant__benefits-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    margin: 0 0 27px 0;
+}
+
+.gant__benefits-block {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    max-width: 267px;
+}
+
+.gant__benefit-icon-1 {
+    background-image: url('../../assets/target-gant-desk.svg');
+    width: 25px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.gant__benefit-icon-2 {
+    background-image: url('../../assets/clock-gant-desk.svg');
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.gant__benefit-icon-3 {
+    background-image: url('../../assets/done-gant-desk.svg');
+    width: 20px;
+    height: 13px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.gant__benefit-text{
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    color: #fff;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.gant__photo {
+    background-image: url('../../assets/gant-photo.webp');
+    width: 394px;
+    height: 224px;
+    margin-top: 84px;
+    background-size: contain;
+}
+
+.gant__link {
+    margin: 40px 0 0 0;
+    padding: 12px 78px;
+}
+
+@media screen and (max-width: 1279px) {
+    .gant__link {
+        margin: 40px 0 0 0;
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .gant {
+        width: 310px;
+    }
+
+    .gant__container-mobile{
+        display: flex;
+        flex-direction: column;
+        padding: 18px 19px 25px ;
+        gap: 0;
+    }
+
+    .gant__name-mobile {
+        margin: 0 0 0 27px;
+        font-weight: 400;
+        font-size: 19px;
+        line-height: 150%;
+        letter-spacing: -0.02em;
+        color: #92cbad;
+        font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    
+    }
+
+    .gant__title-mobile {
+        margin: 0 0 0 27px;
+        font-weight: 500;
+        font-size: 25px;
+        letter-spacing: -0.02em;
+        color: #fff;
+        font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    
+    }
+
+    .gant__photo-mobile {
+        background-image: url('../../assets/gant-photo.webp');
+        /* width: 300px; */
+        height: 172px;
+        margin-top: 15px;
+        background-size: contain;
+    }
+    .gant__blok-mobile{
+        margin: 0 0 0 27px;
+    }
+
+    .gant__link-mobile {
+        margin: 0px 0 0 0;
+        max-width: 100%;
+    }
+    
+}

@@ -1,0 +1,74 @@
+
+.cookie {
+    position: fixed;
+    bottom: -1px;
+    padding: 20px 0 20px 0;
+    border-radius: 15px 15px 0 0;
+    z-index: 1000;
+    background: rgba(41, 41, 41, 0.8); /* Полупрозрачный фон */
+    backdrop-filter: blur(10px); /* Применение размытия к фону */
+    width: 100%;
+}
+
+.cookie__container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    padding: 0 50px 0 30px;
+}
+
+.cookie__text {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: -0.02em;
+    color: #D1CBCB;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    margin: 0;
+    text-align: center;
+}
+
+.cookie__link {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: -0.02em;
+    color: #9B8AFF;
+    text-decoration: underline;
+    margin: 0;
+}
+
+.cookie__close {
+    background-image: url('../../assets/cookies-close-desk.svg');
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    right: 20px;
+    top: 22px;
+    cursor: pointer;
+    background-color: transparent; 
+    border: none;  
+}
+
+
+
+@media screen and (max-width: 1100px) {
+    .cookie {
+        /* padding: 20px 35px 20px 20px ; */
+    }
+    .cookie__container {
+        justify-content: flex-start;
+    }
+
+    .cookie__text {
+        text-align: left;
+    }
+    
+}
+
+@media screen and (max-width: 767px) {
+.cookie {
+    /* width: 93vw; */
+}
+}

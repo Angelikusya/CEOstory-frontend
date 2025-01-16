@@ -1,0 +1,104 @@
+.tariffs__people {
+    display: flex;
+    align-items: center;
+    margin: 38px 0 0 0;
+    display: flex;
+    overflow: hidden;
+    gap: 20px;
+    border-radius: 20px;
+}
+
+.tariffs__person {
+    position: relative;
+    border-radius: 20px;
+    height: 182px;
+}
+
+.tariffs__image {
+    /* border: 1px solid rgba(0, 0, 0, 0.1); */
+    border-radius: 20px;
+    /* width: 182px;
+    height: 182px; */
+    width: 100%;
+    height: 100%;
+}
+
+.tariffs__gradient {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    background: linear-gradient(360deg, rgba(0, 0, 0, 0.5) 45%, rgba(102, 102, 102, 0.000000001) 100%);    
+    border-radius: 0 0 20px 20px;
+    width: 182px;
+    height: 121px;
+    position: absolute;
+    bottom: 0;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+}
+
+.tariffs__name {
+    font-weight: 400;
+    font-size: 20px;
+    color: #fff;
+    margin: 0;
+}
+
+.tarrifs__salary {
+    border: 1px solid #fff;
+    border-radius: 10px;
+    background: #000;
+    font-weight: 700;
+    font-size: 12px;
+    color: #fff;
+    padding: 5px 0;
+    width: 152px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 7px 0;
+    text-align: center;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.tarrifs__salary-number {
+    margin: 0;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 1280px) {
+    .tariffs__person {
+        width: 182px; /* Для отображения трех блоков */
+        height: 182px;
+    }
+}
+
+@media (max-width: 767px) {
+    .tariffs__people {
+        margin: 40px 20px 0;
+    }
+
+    .tariffs__person {
+        width: 150px; /* Для отображения трех блоков */
+        height: 150px;
+    }
+    
+    .tariffs__image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .tariffs__gradient {
+        width: 150px;
+        height: 126px;
+    }
+    
+    .tarrifs__salary {
+        /* margin: 0 0 11px 0; */
+        width: 117px;
+    }
+    
+    .tarrifs__salary-number {
+        margin: 0;
+    }
+}

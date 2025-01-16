@@ -1,0 +1,372 @@
+.tariffs__price {
+    font-family: 'Akshar', Arial, Helvetica, sans-serif;
+    margin: 70px 0 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 350px); 
+    gap: 50px; 
+}
+
+.tariffs__price-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #92cbad;
+    border-radius: 20px;
+    padding: 24px 20px 0;
+    align-items: flex-start;
+    /* height: 599px; */
+    background-color: #fff;
+}
+
+.tariffs__price-card.popular {
+    margin-top: -22px; 
+    border: 3px solid #92cbad;
+}
+
+.tariffs__price-popular {
+    border-radius: 10px 10px 0 0;
+    /* width: 136px;
+    height: 27px; */
+    background: #92cbad;
+    position: absolute;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 100%;
+    text-align: center;
+    color: #fff;
+    top: -27px;
+    right: 15px;
+    padding: 7px 10px;
+}
+
+.tariffs__price-duration {
+    border: 1px solid #92cbad;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -25px;
+    left: 30px;
+    background-color: #fff;
+}
+
+.tariffs__price-duration.popular { 
+    border: 3px solid #92cbad;
+}
+
+.tariffs__price-number {
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 120%;
+    color: #92cbad;
+    font-family: 'Akshar', Arial, Helvetica, sans-serif;
+}
+
+.tariffs__price-month {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 120%;
+    color: #92cbad;
+    margin: 0 0 0 13px;
+}
+
+.tariffs__price-motivation {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 110%;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    max-width: 222px;
+    margin: 3px 0 25px 13px;
+}
+
+.tariffs__price-block {
+    display: flex;
+    align-items: flex-end;
+}
+
+.tariffs__price-cost {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    text-align: center;
+    color: #000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin: 0 0 0 13px;
+}
+
+.tariffs__price-cost-month {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.tariffs__price-cost-duration {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.06em;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin: 4px 0 0 13px;
+}
+
+.tariffs__price-button {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    border: 1px solid #92cbad;
+    border-radius: 10px;
+    background: #fff;
+    padding: 11px 0;
+    width: 100%;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 27px 0 29px ;
+}
+
+.tariffs__price-button.popular {
+    color: #fff;
+    background-color: #92cbad;
+}
+
+.tariffs__price-button.popular:hover {
+    color: #fff;
+    background-color: rgba(146, 203, 173, 0.6);
+    border: 1px solid rgba(146, 203, 173, 0.6);
+}
+
+.tariffs__price-button:hover {
+    background: #92cbad; 
+    color: #fff; 
+}
+
+.tariffs__price-list {
+    list-style: none;
+    margin: 0 0 30px;
+    padding: 0;
+
+}
+
+.tariffs__price-item {
+    margin: 0 0 10px 0;
+}
+
+.tariffs__price-сontainer {
+    display: flex;
+    gap: 10px;
+}
+
+.tariffs__price-name {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    color: #000;
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    max-width: 276px;
+    margin: 0;
+}
+
+.tariffs__price-benefit-img {
+    background-image: url('../../assets/benefit-tariffs.svg');
+    width: 19px;
+    height: 19px;
+    margin: 2px 0 0 0;
+}
+
+.tariffs__price-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 110%;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    max-width: 276px;
+    margin: 3px 0 0 29px;
+}
+
+@media screen and (max-width: 1279px) {
+    .tariffs__price {
+        margin: 20px 0 30px;
+        grid-template-columns: repeat(3, 220px); 
+        gap: 15px;
+    }
+
+    .tariffs__price-card {
+        padding: 26px 12px 0;
+        align-items: flex-start;
+        /* height: 810px; */
+    }
+    
+    .tariffs__price-card.popular {
+        margin-top: -40px; 
+        border: 3px solid #92cbad;
+    }
+    
+    .tariffs__price-popular {
+        border-radius: 10px 10px 0 0;
+        /* width: 113px;
+        height: 27px; */
+        font-weight: 700;
+        top: -27px;
+        right: 10px;
+        padding: 5px 8px;
+    }
+    
+    .tariffs__price-duration {
+        top: -25px;
+        left: 20px;
+    }
+    
+    .tariffs__price-month {
+        margin: 0 0 0 8px;
+    }
+    
+    .tariffs__price-motivation {
+        line-height: 110%;
+        max-width: 149px;
+        margin: 7px 0 19px 8px;
+    }
+    
+    .tariffs__price-cost {
+        margin: 0 0 0 8px;
+    }
+    
+    .tariffs__price-cost-duration {
+        margin: 4px 0 0 8px;
+    }
+    
+    .tariffs__price-button {
+        border-radius: 10px;
+        padding: 12px 22px;
+        margin: 30px 0;
+    }
+    
+    .tariffs__price-item {
+        margin: 0 0 5px 0;
+    }
+    
+    .tariffs__price-сontainer {
+        gap: 9px;
+    }
+    
+    .tariffs__price-name {
+        max-width: 159px;
+        line-height: 110%;
+    }
+    
+    .tariffs__price-benefit-img {
+        background-image: url('../../assets/benefit-tariffs.svg');
+        width: 19px;
+        height: 19px;
+        margin: 2px 0 0 0;
+    }
+    
+    .tariffs__price-text {
+        max-width: 161px;
+        margin: 7px 0 10px 29px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .tariffs__price {
+        margin: 20px 0 30px ;
+        grid-template-columns: repeat(1, 331px); 
+        gap: 40px;
+        justify-content: center;
+    }
+
+    .tariffs__price-card {
+        padding: 30px 15px 0;
+        align-items: flex-start;
+        /* height: 100%; */
+    }
+    
+    .tariffs__price-card.popular {
+        margin-top: 0; 
+    }
+    
+    .tariffs__price-popular {
+        /* width: 136px;
+        height: 27px; */
+        top: -27px;
+        right: 15px;
+        padding: 5px 10px ;
+    }
+    
+    .tariffs__price-duration {
+        left: 30px;
+    }
+    
+    .tariffs__price-number {
+        font-size: 30px;
+    }
+    
+    .tariffs__price-month {
+        font-size: 20px;
+        margin: 0 0 0 5px;
+    }
+    
+    .tariffs__price-motivation {
+        font-size: 15px;
+        max-width: 190px;
+        margin: 3px 0 25px 5px;
+    }
+
+    
+    .tariffs__price-cost {
+        font-size: 30px;
+        margin: 0 0 0 5px;
+    }
+    
+    .tariffs__price-cost-month {
+        font-size: 15px;
+    }
+    
+    .tariffs__price-cost-duration {
+        margin: 4px 0 0 5px;
+    }
+    
+    .tariffs__price-button {
+        padding: 12px 70px;
+        margin: 25px 0;
+    }
+
+    .tariffs__price-list {
+        margin: 0 0 10px;
+    }
+
+    .tariffs__price-item {
+        margin: 0 0 5px 0;
+    }
+    
+    .tariffs__price-сontainer {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .tariffs__price-name {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 110%;
+        max-width: 260px;
+    }
+    
+    .tariffs__price-text {
+        font-size: 15px;
+        line-height: 110%;
+        color: rgba(0, 0, 0, 0.7);
+        max-width: 276px;
+        margin: 3px 0 0 29px;
+    }
+}

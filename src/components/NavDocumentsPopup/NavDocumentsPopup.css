@@ -1,0 +1,87 @@
+.documents-nav {
+    margin: 20px 0 0 0;
+    background-color: #f7f8fc;
+}
+
+.documents-nav__list {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0;
+}
+
+.documents-nav__item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: 260px;
+}
+
+.documents-nav__item:last-of-type {
+    border-bottom: none;
+}
+
+.documents-nav__link {
+    margin: 5px 10px;
+    display: inline-block; /* Позволяет ссылке подстраиваться под размер текста */
+    width: 240px;
+    padding: 15px 10px 15px 10px;
+    border: 1.5px solid #F7F8FC;
+}
+
+.documents-nav__link:hover {
+    transition: color 0.3s; 
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.documents-nav__link.active {
+    background-color: #fff;
+    border: 1.5px solid #92cbad;
+    box-sizing: border-box; /* Учитывает границу в ширине элемента */
+    width: 240px;
+    border-radius: 10px;
+}
+
+.documents-nav__text {
+    font-weight: 400;
+    font-size: 15px;
+    color: #000;
+    margin: 0;
+    line-height: normal;
+}
+
+@media screen and (max-width: 1279px) {
+
+    .documents-nav__item {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        width: 220px;
+    }
+    .documents-nav__link {
+        margin: 5px 10px;
+        display: inline-block; /* Позволяет ссылке подстраиваться под размер текста */
+        width: 210px;
+        padding: 10px 15px
+    }
+
+    .documents-nav__link.active {
+        width: 210px;
+    }
+
+    .documents-nav__stories {
+        margin-top: 50px;
+
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .documents-nav__close {
+        background-image: url('../../assets/close-documents-mobile.svg');
+        width: 34px; /* Ширина кнопки */
+        height: 18px; /* Высота кнопки */
+        cursor: pointer;
+        background-size: contain; /* Масштабируем изображение, чтобы оно вписывалось в область */
+        background-repeat: no-repeat; /* Не повторяем изображение */
+        background-position: center; /* Центрируем изображение в области */
+        border: none; /* Убираем рамку, если она есть */
+        outline: none; /* Убираем обводку при фокусе */
+        padding: 0; /* Убираем внутренние отступы */
+    }
+    
+}

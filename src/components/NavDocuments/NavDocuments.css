@@ -1,0 +1,113 @@
+.documents-nav {
+    margin: 20px 0 0 0;
+    background-color: #f7f8fc;
+}
+
+.documents-nav__close {
+    display: none;
+}
+
+.documents-nav__list {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0;
+}
+
+.documents-nav__item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: 260px;
+}
+
+.documents-nav__item:last-of-type {
+    border-bottom: none;
+}
+
+.documents-nav__link {
+    margin: 5px 10px;
+    display: inline-block; /* Позволяет ссылке подстраиваться под размер текста */
+    width: 240px;
+    padding: 15px 10px 15px 10px;
+    border: 1.5px solid #F7F8FC;
+    text-decoration: none;
+}
+
+.documents-nav__link:hover {
+    transition: color 0.3s; 
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.documents-nav__link.active {
+    background-color: #fff;
+    border: 1.5px solid #92cbad;
+    box-sizing: border-box; /* Учитывает границу в ширине элемента */
+    width: 240px;
+    border-radius: 10px;
+}
+
+.documents-nav__text {
+    font-weight: 400;
+    font-size: 15px;
+    color: #000;
+    margin: 0;
+    line-height: normal;
+}
+
+@media screen and (max-width: 1279px) {
+    .documents-nav {
+        margin: 0 0 0 0;
+        background-color: #f7f8fc;
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+        transition: visibility 0s, opacity .6s linear;
+        transition-delay: 0.5s, 0s;
+        z-index: 10;
+        animation: fadeIn 1s ease;
+        flex-direction: column;
+        padding: 30px 30px;
+        align-items: flex-start;
+    }
+
+    .documents-nav__close {
+        background-image: url('../../assets/close-documents-mobile.svg');
+        width: 51px; /* Ширина кнопки */
+        height: 27px; /* Высота кнопки */
+        cursor: pointer;
+        background-size: contain; /* Масштабируем изображение, чтобы оно вписывалось в область */
+        background-repeat: no-repeat; /* Не повторяем изображение */
+        background-position: center; /* Центрируем изображение в области */
+        border: none; /* Убираем рамку, если она есть */
+        outline: none; /* Убираем обводку при фокусе */
+        padding: 0; /* Убираем внутренние отступы */
+        display: block;
+        align-self: flex-start;
+        margin: 0 0 40px 0;
+    }
+
+    .documents-nav__item {
+        width: 100%;
+    }
+
+    .documents-nav__link {
+        margin: 5px 10px;
+        width: 100%;
+        padding: 15px 10px 15px 10px;
+        border: 1.5px solid #F7F8FC;
+    }
+    .documents-nav__link.active {
+        width: 100%;
+    }
+    
+    .documents-nav__text {
+        font-weight: 400;
+        font-size: 15px;
+        color: #000;
+        margin: 0;
+        line-height: normal;
+    }
+    
+}

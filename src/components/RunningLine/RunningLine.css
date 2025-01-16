@@ -1,0 +1,50 @@
+.line {
+    background: #000000;
+    padding: 0 0 0;
+    margin-top: 22px;
+}
+
+.line__container {
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden; /* Скрывает элементы, выходящие за пределы контейнера */
+    white-space: nowrap; /* Запрещает перенос строк */
+}
+
+.line__marquee-track {
+    display: flex;
+    gap: 20px;
+    animation: marquee 25s linear infinite; /* Добавляем анимацию */
+}
+
+.line__marquee-element {
+    display: inline-block; /* Позволяет элементам занимать только необходимое пространство */
+}
+
+.line__text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 120%;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Actor', Arial, Helvetica, sans-serif;
+    padding: 6px 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .line__marquee-track {
+        gap: 8px;
+        animation: marquee 5s linear infinite; /* Добавляем анимацию */
+
+    }
+}
+
+
+/* Анимация для бегущей строки */
+@keyframes marquee {
+    0% {
+        transform: translateX(-50%); /* Начинаем с правого края */
+    }
+    100% {
+        transform: translateX(-100%); /* Перемещаем до левого края */
+    }
+}
