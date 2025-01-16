@@ -245,7 +245,7 @@ const BatashevR = ({
               className='main__link story__button' 
               onClick={() => {
                 setIsShort(false);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0 });
               }}
             >Узнать весь путь героя
             </button>
@@ -254,7 +254,7 @@ const BatashevR = ({
               className='main__link story__button' 
               onClick={() => {
               setIsShort(true);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              window.scrollTo({ top: 0 });
             }}
           > Коротко о главном
           </button>

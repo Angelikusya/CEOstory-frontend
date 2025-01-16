@@ -38,13 +38,12 @@
 }
 
 .tariffs__cards-card {
-    width: 100%;
+    /* width: 100%; */
     position: relative;
     display: flex;
     background: #fff;
     text-decoration: none;
     padding: 0;
-    width: 100%;
     border-radius: 20px;
     transition: transform .3s ease-in-out;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -66,7 +65,8 @@
 .tariffs__card-wrapper {
     display: flex;
     flex-direction: column;
-    margin: 0 10px 0 10px;
+    margin: 0 0px 0 10px;
+    max-width: calc(320px - 113px);
 }
 
 .tariffs__card-title {
@@ -175,7 +175,7 @@
 
     .tariffs__cards-block {
         display: grid;
-        grid-template-columns: repeat(1, 328px);
+        grid-template-columns: repeat(1, 310px);
         gap: 29px;
     }
 
@@ -185,5 +185,10 @@
 
     .tariffs__card-more {
         margin: 5px 0 0 0;
+    }
+
+    .tariffs__card-text {
+        font-weight: 300;
+        max-width: 162px;
     }
 }

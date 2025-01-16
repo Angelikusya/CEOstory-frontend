@@ -45,7 +45,7 @@ useEffect(() => {
         )}
         <p className='main__subtitle'>Погрузись в&nbsp;10 историй с советами, <span className='main__subtitle-span'>как с&nbsp;нуля добиться того же самого</span></p>
         <div className='main__line'></div>
-        <Link to='/career-stories' className='main__link'  onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }}>Читать истории</Link>
+        <Link to='/career-stories' className='main__link main__link-margin'  onClick={() => { window.scrollTo({ top: 0 }) }}>Читать истории</Link>
       </div>
       <div className='main__stories'>
         <h3 className='main__about'>Узнай, что нужно сделать <span className='main__about-span'>чтобы добиться успеха</span></h3>
@@ -220,7 +220,7 @@ useEffect(() => {
               <p className='main__numbers-text'><span className='main__numbers-text-span'>Более 10 историй</span> подобных этим</p>
           </div>
 
-        <Link to='/career-stories' className='main__link main__link_margin' onClick={() => { window.scrollTo({ top: 0 }) }}>Читать истории</Link>
+        <Link to='/career-stories' className='main__link main__link-margin-button' onClick={() => { window.scrollTo({ top: 0 }) }}>Читать истории</Link>
       </div>
 
     </section>

@@ -1,5 +1,5 @@
 import './Tariffs.css';
-import { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TariffsPeople from '../TariffsPeople/TariffsPeople';
 import TariffsAbout from '../TariffsAbout/TariffsAbout';
 import TariffsCards from '../TariffsCards/TariffsCards';
@@ -9,8 +9,12 @@ import TariffsPrice from '../TariffsPrice/TariffsPrice';
 import TariffsFAQ from '../TariffsFAQ/TariffsFAQ';
 import TariffsGarancy from '../TariffsGarancy/TariffsGarancy';
 import TariffsSmall from '../TariffsSmall/TariffsSmall';
+import Preloader from '../Preloader/Preloader';
 
 const Tariffs = ({ onPaymentSubmit }) => {
+
+    const [isLoading, setIsLoading] = useState(true);
+
   // Создаем реф для элемента с тарифами
   const tariffsPriceRef = useRef(null);
 
@@ -21,8 +25,21 @@ const Tariffs = ({ onPaymentSubmit }) => {
     }
   };
 
+  useEffect(() => {
+    // Установка таймера для прелоадера
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500); // Задержка на 1 секунду
+    return () => clearTimeout(timer); // Очистка таймера при размонтировании
+  
+    }, []); //
+
   return (
-    <section className='tariffs'>
+    <section className=''>
+          {isLoading ? (
+      <Preloader />
+    ) : (
+      <div className='tariffs'>
       <div className='tariffs__main'>
         <div className='tariffs__greeting'>
           <p className='tariffs__greeting-text'>Добро пожаловать в </p>
@@ -57,6 +74,8 @@ const Tariffs = ({ onPaymentSubmit }) => {
         {/* <TariffsPrice /> */}
         <TariffsSmall onPaymentSubmit={onPaymentSubmit} />
       </div>
+      </div>
+      )}
     </section>
   );
 };
