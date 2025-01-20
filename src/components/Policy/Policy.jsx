@@ -4,6 +4,11 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import NavDocuments from '../NavDocuments/NavDocuments';
 
 const Policy = () => {
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Политика конфиденциальности интернет-сайта — CEOstory';
+  });
   return (
     <div className='documents'>
       <h3 className='documents__title'>Правовая информация</h3>
@@ -348,16 +353,16 @@ const Policy = () => {
           </p>
           <ul className='documents__list'>
             <li className='documents__list-item documents__text'>
-              - достижения цели обработки ПДн;
+            &#45; достижения цели обработки ПДн;
             </li>
             <li className='documents__list-item documents__text'>
-            - отзыва согласия на обработку ПДн;
+            &#45; отзыва согласия на обработку ПДн;
+            </li>
+            <li className='documents__list-item documents__text'>
+            &#45; прекращения осуществления Оператором предпринимательской деятельности, 
+            в зависимости от того, какое событие наступит раньше.
             </li>
           </ul>
-          <p className="documents__text">
-            - прекращения осуществления Оператором предпринимательской деятельности, 
-            в зависимости от того, какое событие наступит раньше.
-          </p>
           <p className="documents__text">
             5.2.	Разрешенные для распространения ПДн обрабатываются до прекращения 
             существования Сайта или получения отзыва согласия на обработку ПДн, в зависимости 

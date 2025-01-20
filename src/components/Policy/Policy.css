@@ -68,9 +68,23 @@
     text-decoration: none;
     color: #000;
 }
+.documents__list  {
+    text-decoration: none;
+    padding: 0; /* Убирает отступы */
+    margin: 0; /* Убирает внешние отступы */
+    list-style-type: none; /* Убирает маркеры у списка */
+}
 
 .documents__list-item  {
     text-align: start; /* Выравнивание по ширине */
+    text-decoration: none;
+}
+
+.documents__links {
+    list-style-type: none; /* Убирает маркеры у списка */
+    padding: 0; /* Убирает отступы */
+    margin: 0; /* Убирает внешние отступы */
+
 }
 
 .documents__link {

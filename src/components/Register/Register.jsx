@@ -11,6 +11,11 @@ function Register({ onRegister, errorMessage, isLoading}) {
   const [password, setPassword] = useState('');
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Регистрация — CEOstory';
+  });
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxChecked(e.target.checked);

@@ -9,6 +9,11 @@ function Login({ onLogin, errorMessage, isLoading }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Вход — CEOstory';
+  });
   
   const {
     register,

@@ -25,6 +25,12 @@ const Tariffs = ({ onPaymentSubmit }) => {
     }
   };
 
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Тарифы — CEOstory';
+  });
+
   useEffect(() => {
     // Установка таймера для прелоадера
     const timer = setTimeout(() => {

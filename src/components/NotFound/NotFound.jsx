@@ -5,6 +5,11 @@ import mangif from '../../assets/gif-notfound.mov';
 
 const NotFound = () => {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Ошибка 404';
+  });
 
   const handleResize = () => {
   setScreenSize(window.innerWidth);

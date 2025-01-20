@@ -10,6 +10,11 @@ import VafeevT from '../../assets/speaker-photoes/speaker-photo-main-4.webp';
 const Main = () => {
 
 const [screenSize, setScreenSize] = useState(window.innerWidth);
+const pathname = window.location.pathname; // Получаем текущий путь
+
+useEffect(() => {
+    document.title = 'CEOstory —  секреты успеха топ-менеджеров и бизнесменов';
+});
 
 const handleResize = () => {
   setScreenSize(window.innerWidth);

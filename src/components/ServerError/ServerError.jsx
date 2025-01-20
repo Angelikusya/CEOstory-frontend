@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import catgif from '../../assets/gif-cat.mov';
 
-
 const ServerError = () => {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
 
@@ -17,6 +16,12 @@ const ServerError = () => {
       window.removeEventListener('resize', handleResize);
   };
   }, []);
+
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Ошибка 500';
+  });
 
   return (
     <section className="not-found">

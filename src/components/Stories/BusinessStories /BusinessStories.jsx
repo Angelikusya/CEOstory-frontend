@@ -15,6 +15,12 @@ const BusinessStories = ({ data = DATABusiness, onCloseFilter, saveStory, remove
     });
     const [visibleCount, setVisibleCount] = useState(4); // начальное количество историй
     const [isLoading, setIsLoading] = useState(false);
+
+    const pathname = window.location.pathname; // Получаем текущий путь
+
+    useEffect(() => {
+        document.title = 'Истории про бизнес — CEOstory';
+    });
   
 
     useEffect(() => {
@@ -73,8 +79,6 @@ const BusinessStories = ({ data = DATABusiness, onCloseFilter, saveStory, remove
             return 'историй';
         }
     };
-
-    const pathname = window.location.pathname; // Получаем текущий путь
 
     // Определяем текст заголовка в зависимости от текущей страницы
     let headerText = 'Каталог историй про ';

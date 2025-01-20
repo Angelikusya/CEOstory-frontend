@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import React,  { useState, useEffect } from 'react';
 import StoriesPreview from '../StoriesPreview/StoriesPreview';
 import './Saved.css';
 import DATA from '../Data/DataCareer'; 
@@ -21,6 +22,12 @@ const Saved = ({
     onIncreaseView, 
     isStorySaved,
 }) => {
+    const pathname = window.location.pathname; // Получаем текущий путь
+
+    useEffect(() => {
+        document.title = 'Ваши сохраненные истории — CEOstory';
+    });
+
     return (
         <main className='saved'>
             <div className='saved__stories'>

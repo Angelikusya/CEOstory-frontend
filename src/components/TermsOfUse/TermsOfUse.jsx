@@ -4,6 +4,13 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import NavDocuments from '../NavDocuments/NavDocuments';
 
 const TermsOfUse = () => {
+
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Условия оказания информационных услуг — CEOstory';
+  });
+
   return (
     <div className='documents'>
       <h3 className='documents__title'>Правовая информация</h3>

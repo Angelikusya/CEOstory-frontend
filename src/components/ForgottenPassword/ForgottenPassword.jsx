@@ -7,6 +7,12 @@ import { Link } from 'react-router-dom';
 function ForgottenPassword({ onSendEmail, errorMessage, isLoading, isEmailSent }) {
   const [email, setEmail] = useState('');
 
+  const pathname = window.location.pathname; // Получаем текущий путь
+
+  useEffect(() => {
+      document.title = 'Забыли пароль? — CEOstory';
+  });
+
   const {
     register,
     formState: { errors, isValid },
@@ -29,7 +35,7 @@ function ForgottenPassword({ onSendEmail, errorMessage, isLoading, isEmailSent }
 
   return (
     <section className='register'>
-      <div className='register__container'>
+      <div className='forgotten-password__container'>
         <Link className='register__logo button' to='/'></Link>
           <p className='register__greeting forgotten-password__greeting'>
             Введите почту, которая была привязана к аккаунту. Мы отправим ссылку для восстановления пароля
@@ -57,7 +63,7 @@ function ForgottenPassword({ onSendEmail, errorMessage, isLoading, isEmailSent }
                   message: 'Максимальное количество символов: 40'
                 },
                 pattern: {
-                  value: /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/,
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+.[a-zA-Z]{2,}$/,
                   message: 'Некорректный формат Email'
                 },
               })} 

@@ -15,8 +15,7 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
     });
     const [visibleCount, setVisibleCount] = useState(4); // начальное количество историй
     const [isLoading, setIsLoading] = useState(false);
-
-    // const pathname = window.location.pathname; // Получаем текущий путь
+    const pathname = window.location.pathname; // Получаем текущий путь
 
     // const headerText = '';
     
@@ -28,6 +27,8 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
   
 
     useEffect(() => {
+        document.title = 'Истории про карьеру — CEOstory';
+        
         const savedFilters = JSON.parse(localStorage.getItem('storyFilters'));
         if (savedFilters) {
             setFilters(savedFilters);
@@ -36,6 +37,7 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
             setFilteredData(data);
         }
     }, [data]);
+
 
     const handleFilterChange = (newFilters) => {
         const { businessType, income, field, searchTerm } = newFilters;
@@ -83,8 +85,6 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
             return 'историй';
         }
     };
-
-    const pathname = window.location.pathname; // Получаем текущий путь
 
     // Определяем текст заголовка в зависимости от текущей страницы
     let headerText = 'Каталог историй про ';

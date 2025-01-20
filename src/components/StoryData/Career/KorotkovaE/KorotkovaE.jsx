@@ -13,6 +13,7 @@ import StoriesMore from '../../../StoriesMore/StoriesMore';
 import KorotkovaEshort from './KorotkovaE-short';
 import KorotkovaElong from './KorotkovaE-long';
 
+
 ////поменять в фалйе
 // текст!!
 // storyId
@@ -28,10 +29,16 @@ const KorotkovaE = ({
   const [newViews, setNewViews] = useState(0);
   const [isShort, setIsShort] = useState(true);
   const [visibleStories, setVisibleStories] = useState(3);
+  const pathname = window.location.pathname; // Получаем текущий путь
+
 
   // Находим историю с storyId: 1
   const story = DATA.find(story => story.storyId === 1);
   const storyId = 1;
+
+  useEffect(() => {
+    document.title = `${story.title}  — CEOstory`;
+  });
 
 // Фильтруем карточки, чтобы оставить только те, которые не равны storyId
 const combinedStories = DATACareer.filter(story => story.storyId !== storyId);

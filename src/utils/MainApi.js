@@ -19,6 +19,8 @@ export const register = (name, email, password) => {
     })
     .then((res) => checkResponse(res))
 };
+
+
   
 //вход
 export const login = (email, password) => {

@@ -1,8 +1,14 @@
 import './ConfirmationPayment.css';
 import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react'
 
 
 const ConfirmationPayment = () => {
+    const pathname = window.location.pathname; // Получаем текущий путь
+  
+    useEffect(() => {
+        document.title = 'Оплата успешно прошла — CEOstory';
+    });
 
     return (
       <div className='confirmation'>
