@@ -2,8 +2,10 @@ import './Register.css';
 import React,  { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import PopupSendEmail from '../PopupSendEmail/PopupSendEmail';
 
-function Register({ onRegister, errorMessage, isLoading}) {
+function Register({ onRegister, errorMessage, isLoading, showPopupConfirmationEmail, setShowPopupConfirmationEmail }) {
+
 
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -12,6 +14,7 @@ function Register({ onRegister, errorMessage, isLoading}) {
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   const pathname = window.location.pathname; // Получаем текущий путь
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
       document.title = 'Регистрация — CEOstory';
@@ -42,9 +45,13 @@ function Register({ onRegister, errorMessage, isLoading}) {
   const handleSubmitRegister = (e) => {
     e.preventDefault();
     onRegister(name, email, password);
+    
   };
 
-  const [showPassword, setShowPassword] = useState(false);
+  const closePopup = () => {
+    setShowPopupConfirmationEmail(false); // Закрываем попап
+  };
+
 
   const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
@@ -177,13 +184,30 @@ function Register({ onRegister, errorMessage, isLoading}) {
                 </div>
                 {/* <div className={`register__form-error ${!isCheckboxChecked ? 'register__form-error_active' : ''}`}>{'Вы должны дать согласие на обработку данных' || 'Ошибка'}</div> */}
                 <div className='register__submit-error'>{errorMessage}</div> 
-                <button className='register__submit button' disabled={!isValid || isLoading || !isCheckboxChecked}>Зарегистрироваться</button>
+                {/* <button className='register__submit button' disabled={!isValid || isLoading || !isCheckboxChecked}>Зарегистрироваться</button> */}
+                {isLoading ? (
+                  <button className='register__submit button' disabled={!isValid || isLoading || !isCheckboxChecked}>Подождите...</button>
+                ) : (
+                  <button
+                    className="register__submit button"
+                    disabled={!isValid || isLoading || !isCheckboxChecked}
+                  >
+                    Зарегистрироваться
+                  </button>
+                  )}
+
               </form>
               <Link to='/signin'className='register__button button'> Войти</Link>
 
           </div>
         </div>
-      </section>
+      {showPopupConfirmationEmail && (
+        <PopupSendEmail
+          onClose={closePopup} 
+          email={email}
+          />
+      )}
+    </section>
   )
 }
 

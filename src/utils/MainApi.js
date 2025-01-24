@@ -9,15 +9,27 @@ const checkResponse = (res) => {
   
 //регистрация
 export const register = (name, email, password) => {
-    return fetch(`${BASE_URL}/signup`, {
-        method: 'POST',
-        headers: {
-            Accept: "application/json",
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({name, email, password})
-    })
-    .then((res) => checkResponse(res))
+  return fetch(`${BASE_URL}/signup`, {
+      method: 'POST',
+      headers: {
+          Accept: "application/json",
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, password })
+  })
+  .then((res) => checkResponse(res));
+};
+
+// Подтверждение почты API
+export const confirmEmail = (userId, token) => {
+  return fetch(`${BASE_URL}/users/confirm/${userId}/${token}`, {
+      method: 'GET',
+      headers: {
+          Accept: "application/json",
+          'Content-Type': 'application/json'
+      }
+  })
+  .then((res) => checkResponse(res));
 };
 
 

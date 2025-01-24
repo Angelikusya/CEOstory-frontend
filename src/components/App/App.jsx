@@ -28,6 +28,7 @@ import Academy from '../Academy/Academy';
 import BatashevR from '../StoryData/Business/BatashevR/BatashevR';
 import ConfirmationPayment from '../ConfirmationPayment/ConfirmationPayment';
 import KorotkovaE from '../StoryData/Career/KorotkovaE/KorotkovaE';
+import RegistrationSucceed from '../RegistrationSucceed/RegistrationSucceed';
 
 //истории
  
@@ -45,32 +46,52 @@ function App() {
     const [isEmailSent, setIsEmailSent] = useState(false);
     const [errorMessageSendEmail, setErrorMessageSendEmail] = useState('');
     const [views, setViews] = useState(0);
-
+    const [showPopupConfirmationEmail, setShowPopupConfirmationEmail] = useState(false); // Состояние для показа попапа
 
     // регистрация
+    // Обработчик регистрации
     const handleRegister = (name, email, password) => {
         setIsLoading(true);
         auth
-        .register(name, email, password)
-        .then((data) => {
-            handleLogin(email, password);
-            navigate('/career-stories', {replace: true});
-            getSavedStories();
-            setCurrentUser({ name, email }); 
-        })
-        .catch((err) => {
-            console.error(err);
-            if (err === 'Ошибка: 409') {
-            setErrorMessageRegister('Пользователь с таким e-mail уже существует');
-            } else if (err === 'Ошибка: 500') {
-            setErrorMessageRegister('На сервере произошла ошибка');
-            } else {
-            setErrorMessageRegister('При регистрации пользователя произошла ошибка');
-            }
-        })
-        .finally(() => setIsLoading(false))
+            .register(name, email, password)
+            .then((data) => {
+                setCurrentUser({ name, email });
+                setShowPopupConfirmationEmail(true);
+                // Здесь можно добавить логику для отправки уведомления о необходимости подтвердить почту
+            })
+            .catch((err) => {
+                console.error(err);
+                if (err === 'Ошибка: 409') {
+                    setErrorMessageRegister('Пользователь с таким e-mail уже существует');
+                } else if (err === 'Ошибка: 500') {
+                    setErrorMessageRegister('На сервере произошла ошибка');
+                } else {
+                    setErrorMessageRegister('При регистрации пользователя произошла ошибка');
+                }
+            })
+            .finally(() => setIsLoading(false));
     };
 
+    // Подтверждение почты
+    const handleConfirmEmail = (userId, token) => {
+        setIsLoading(true);
+        auth
+          .confirmEmail(userId, token)
+          .then((data) => {
+            if (data.accessToken) {
+              localStorage.setItem('token', data.accessToken);
+              navigate('/career-cases', { replace: true }); // Замените на нужный роут
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            setErrorMessageRegister('Не удалось подтвердить почту. Попробуйте позже.');
+          })
+          .finally(() => setIsLoading(false));
+      };
+
+    
+    
     // авторизация
     const handleLogin = (email, password) => { 
       setIsLoading(true);
@@ -159,7 +180,6 @@ function App() {
             console.error('Ошибка при сбросе пароля:', error);
         }
     };
-    
     
     
     // проверка токена
@@ -314,8 +334,6 @@ function App() {
         // }
     };
     
-    
-    
 
     //где header полностью черный
     const isSpecialPage = () => 
@@ -385,8 +403,19 @@ function App() {
                         onRegister={handleRegister} 
                         errorMessage={errorMessageRegister}
                         isLoading={isLoading}
+                        showPopupConfirmationEmail={showPopupConfirmationEmail} // Передаем состояние
+                        setShowPopupConfirmationEmail={setShowPopupConfirmationEmail} // Передаем функцию обновления состояния
                     />} 
                 />
+
+                <Route 
+                    path="/confirm/:userId/:token" 
+                    element={
+                        <RegistrationSucceed 
+                            onEmailConfirmation={handleConfirmEmail} 
+                        />} 
+                />
+
                 <Route 
                     path="/signin" element={
                     <Login 
@@ -406,6 +435,7 @@ function App() {
                         onNewPassword={handleNewPassword}
                     />}
                 />
+
 
                 <Route path="/academy" element={<Academy />} />
                 <Route 

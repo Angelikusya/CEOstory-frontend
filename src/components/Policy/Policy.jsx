@@ -9,6 +9,7 @@ const Policy = () => {
   useEffect(() => {
       document.title = 'Политика конфиденциальности интернет-сайта — CEOstory';
   });
+  
   return (
     <div className='documents'>
       <h3 className='documents__title'>Правовая информация</h3>

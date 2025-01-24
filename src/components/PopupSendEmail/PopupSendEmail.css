@@ -1,0 +1,94 @@
+.sent-email {
+    display: flex;
+    justify-content: center; /* Центрируем по горизонтали */
+    align-items: center; /* Центрируем по вертикали */
+    position: fixed;
+    top: 0; /* Занимаем всю высоту */
+    left: 0; /* Занимаем всю ширину */
+    width: 100%; /* Ширина на всю страницу */
+    height: 100%; /* Высота на всю страницу */
+    background-color: rgba(0, 0, 0, 0.5); /* Затемненный фон */
+    backdrop-filter: blur(2px); /* Размытие фона */
+    z-index: 10; /* Обеспечиваем, чтобы попап был выше других элементов */
+    animation: fadeIn 1s ease; /* Анимация появления */
+}
+
+.sent-email__container {
+    background-color: #fff; 
+    padding: 73px 70px 30px; 
+    border-radius: 20px;
+    max-width: 446px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.sent-email__notefication {
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    color: #000;
+    margin: 0 0 20px;
+}
+
+.sent-email__text {
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
+    color: #000;
+    max-width: 266px;
+    margin: 0;
+}
+
+.sent-email__mail {
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
+    color: #000;
+    margin: 5px 0 0 0;
+}
+
+.sent-email__mail-span {
+    font-weight: 700;
+}
+
+.sent-email__close {
+    background: url('../../assets/close-content-tablet.svg');
+    width: 35px;
+    height: 35px;
+    border: none;
+    background-size: contain;
+    cursor: pointer;
+    position: absolute;
+    top: -25px;
+    right: -25px;
+}
+
+.sent-email__check {
+    background: rgba(83, 81, 81, 0.6);
+    border-radius: 10px;
+    padding: 5px 20px;
+    margin: 30px 0 0 0;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+
+@media screen and (max-width: 450px) {
+    .sent-email__container {
+        width: 80%;
+        padding: 67px 10px 20px; 
+    }
+
+    .sent-email__text {
+        max-width: 200px;
+    }
+
+    .sent-email__notefication {
+        font-size: 20px;
+        margin: 0 0 10px 0;
+    }
+}

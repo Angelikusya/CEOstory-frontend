@@ -4,6 +4,7 @@ import StoriesPreview from '../../StoriesPreview/StoriesPreview';
 import Filter from '../../Filter/Filter';
 import DATACareer from '../../Data/DataCareer'; 
 import { Link, useLocation } from 'react-router-dom';
+import PopupSendEmail from '../../PopupSendEmail/PopupSendEmail';
 
 const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStory, onIncreaseView, isStorySaved }) => {
     const [filteredData, setFilteredData] = useState(data);
@@ -16,6 +17,8 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
     const [visibleCount, setVisibleCount] = useState(4); // начальное количество историй
     const [isLoading, setIsLoading] = useState(false);
     const pathname = window.location.pathname; // Получаем текущий путь
+    const [showPopup, setShowPopup] = useState(false);
+
 
     // const headerText = '';
     
@@ -24,6 +27,13 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
     // } else if (pathname.includes('business-stories')) {
     //   headerText = 'Каталог историй про бизнес';
     // }
+
+    useEffect(() => {
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 10000); // Закрыть через 10 секунд
+    }, []);
+
   
 
     useEffect(() => {
@@ -158,6 +168,10 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
                         ? 'Загружаю...' 
                         : `Еще ${filteredData.length - visibleCount} ${getStoryLabel(filteredData.length - visibleCount)}`}
                 </button>
+            )}
+
+            {showPopup && (
+            <PopupSendEmail />
             )}
         </div>
     );
