@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import PopupSendEmail from '../PopupSendEmail/PopupSendEmail';
 
-function Register({ onRegister, errorMessage, isLoading, showPopupConfirmationEmail, setShowPopupConfirmationEmail }) {
+function Register({ onRegister, isLoading, showPopupConfirmationEmail, setShowPopupConfirmationEmail }) {
 
 
   const navigate = useNavigate();
@@ -182,9 +182,6 @@ function Register({ onRegister, errorMessage, isLoading, showPopupConfirmationEm
                   <p className="checkbox__text"> Согласен на обработку <Link to="/documents/terms-of-use" target='_blank' className="checkbox__policy">персональных данных</Link> в&nbsp;соответствии с&nbsp;<Link to="/documents/privacy-policy" target='_blank' className="checkbox__policy button">Политикой конфиденциальности</Link></p>
                 </label>
                 </div>
-                {/* <div className={`register__form-error ${!isCheckboxChecked ? 'register__form-error_active' : ''}`}>{'Вы должны дать согласие на обработку данных' || 'Ошибка'}</div> */}
-                <div className='register__submit-error'>{errorMessage}</div> 
-                {/* <button className='register__submit button' disabled={!isValid || isLoading || !isCheckboxChecked}>Зарегистрироваться</button> */}
                 {isLoading ? (
                   <button className='register__submit button' disabled={!isValid || isLoading || !isCheckboxChecked}>Подождите...</button>
                 ) : (

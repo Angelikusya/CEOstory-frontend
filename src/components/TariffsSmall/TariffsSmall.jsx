@@ -46,7 +46,7 @@ const TariffsSmall = ({onPaymentSubmit}) => {
                         <p className='tariffs-small__price'>{paymentData.amount} ₽</p>
                         <p className='tariffs-small__period'>/год</p>
                     </div>
-                    <p className='tariffs-small__discount'>скидка 58% до 31.01.2025</p>
+                    <p className='tariffs-small__discount'>скидка 58% до 31.03.2025</p>
                     <button onClick={handleSubmitPayment} className='main__link tariffs-small__botton '>Получить доступ</button>
                     <div className='tariffs-small__benefits'>
                         <ul className='tariffs-small__price-list'>

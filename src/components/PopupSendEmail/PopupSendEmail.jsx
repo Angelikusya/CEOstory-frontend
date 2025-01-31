@@ -47,7 +47,6 @@ const PopupSendEmail = ({ email, onClose }) => {
         if (mailUrl) {
             window.open(mailUrl, '_blank'); // Открываем URL в новой вкладке
         } else {
-            alert('Неизвестный почтовый сервис'); // Уведомляем пользователя
         }
     };
 

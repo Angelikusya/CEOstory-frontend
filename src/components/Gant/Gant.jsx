@@ -40,7 +40,7 @@ const Gant = () => {
                             </div>
                         </div>
                     </div>
-                    <Link to='/academy' className='main__link gant__link-mobile'>Получить</Link>
+                    <Link to='https://disk.yandex.ru/d/6O3NtUhe938Kzw' target='_blank' className='main__link gant__link-mobile'>Получить</Link>
                 </div>
             ) : (
                 <div className='gant__container'>
@@ -63,7 +63,7 @@ const Gant = () => {
                                 <p className='gant__benefit-text'>хочет сразу начать использовать эффективные методы</p>
                             </div>
                         </div>
-                        <Link to='/academy' className='main__link gant__link'>Получить</Link>
+                        <Link to='https://disk.yandex.ru/d/6O3NtUhe938Kzw' target='_blank' className='main__link gant__link'>Получить</Link>
                     </div>
                 </div>
             )}

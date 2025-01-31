@@ -50,7 +50,7 @@ const ServerError = () => {
       <p className='not-found__text'>Попробуй зайти на CEOstory чуть позже.</p>
 
       <p className='not-found__text'>
-        Если сервер упал во время оплаты - свяжись с нами по почте: 
+        Если сервер упал во время оплаты &mdash; свяжись с нами по почте: 
         <a href="mailto:support@ceostory.ru" className='documents__text-support'> support@ceostory.ru</a>
       </p>
       <p className='not-found__text'> Мы решим твой вопрос в рабочее время.

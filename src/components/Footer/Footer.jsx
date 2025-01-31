@@ -23,17 +23,21 @@ function Footer() {
 
   const { pathname } = useLocation();
 
-  const showFooterTotalBlack = () => 
-    pathname === '/about';
+  const showFooterTotalBlack = () => {
+    const isConfirmPage = pathname.startsWith('/confirm');
+    const isPasswordResetPage = pathname.startsWith('/password-reset');
+    return (
+      isConfirmPage ||
+      isPasswordResetPage ||
+      pathname === '/about' // Добавьте остальные нужные маршруты
+    );
+  };
+
     
   const hideFooter = () => 
-    pathname === '/signup' || 
-    pathname === '/signin' || 
-    pathname === '/forgottenpassword' || 
-    pathname === '/resetpassword' || 
-    pathname === '/payment' || 
-    pathname === '/505'|| 
-    pathname === '/404';
+    ['/signup', '/signin', '/forgottenpassword', '/resetpassword', '/payment', '/404', '/505']
+      .some(route => pathname.startsWith(route)) || pathname.startsWith('/password-reset/');
+        // Обработчик скролла
   
   // скрыт на указанных страницах
   if (hideFooter()) {

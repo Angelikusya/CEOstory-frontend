@@ -4,7 +4,7 @@ import React,  { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-function Login({ onLogin, errorMessage, isLoading }) {
+function Login({ onLogin, isLoading }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -125,8 +125,6 @@ function Login({ onLogin, errorMessage, isLoading }) {
                 />
               </div>
               <div className={`register__form-error ${errors?.password ? 'register__form-error_active' : ''}`}>{errors?.password?.message || 'Ошибка'}</div>
-              <div className='register__submit-error'>{errorMessage}</div> 
-
               <label htmlFor="consentCheckbox" className="checkbox__label login">
                   <p className="checkbox__text login"> 
                     Согласен на обработку 

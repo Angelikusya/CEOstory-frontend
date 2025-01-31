@@ -29,6 +29,8 @@ import BatashevR from '../StoryData/Business/BatashevR/BatashevR';
 import ConfirmationPayment from '../ConfirmationPayment/ConfirmationPayment';
 import KorotkovaE from '../StoryData/Career/KorotkovaE/KorotkovaE';
 import RegistrationSucceed from '../RegistrationSucceed/RegistrationSucceed';
+import PopupError from '../PopupError/PopupError';
+import PopupSuccess from '../PopupSuccess/PopupSuccess';
 
 //истории
  
@@ -38,39 +40,39 @@ function App() {
     const { pathname } = useLocation();
     const [logedIn, setLogedIn] = useState(false);
     const [currentUser, setCurrentUser] = useState({});
-    const [errorMessageRegister, setErrorMessageRegister] = useState('');
-    const [errorMessageLogin, setErrorMessageLogin] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     // const [savedStory, setSavedStory] = useState([]); // Инициализация состояния для сохраненных историй
     const [savedStories, setSavedStories] = useState([]);
     const [isEmailSent, setIsEmailSent] = useState(false);
-    const [errorMessageSendEmail, setErrorMessageSendEmail] = useState('');
-    const [views, setViews] = useState(0);
     const [showPopupConfirmationEmail, setShowPopupConfirmationEmail] = useState(false); // Состояние для показа попапа
+    const [isPopupErrorVisible, setIsPopupErrorVisible] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState(''); 
+    const [isPopupSuccessVisible, setIsPopupSuccessVisible] = useState(false);
 
     // регистрация
     // Обработчик регистрации
     const handleRegister = (name, email, password) => {
         setIsLoading(true);
         auth
-            .register(name, email, password)
-            .then((data) => {
-                setCurrentUser({ name, email });
-                setShowPopupConfirmationEmail(true);
-                // Здесь можно добавить логику для отправки уведомления о необходимости подтвердить почту
-            })
-            .catch((err) => {
-                console.error(err);
-                if (err === 'Ошибка: 409') {
-                    setErrorMessageRegister('Пользователь с таким e-mail уже существует');
-                } else if (err === 'Ошибка: 500') {
-                    setErrorMessageRegister('На сервере произошла ошибка');
-                } else {
-                    setErrorMessageRegister('При регистрации пользователя произошла ошибка');
-                }
-            })
-            .finally(() => setIsLoading(false));
-    };
+          .register(name, email, password)
+          .then((data) => {
+            setCurrentUser({ name, email });
+            setShowPopupConfirmationEmail(true); // Показываем popup успешной регистрации
+          })
+          .catch((err) => {
+            console.error(err);
+            let errorMessage = 'При регистрации пользователя произошла ошибка, попробуйте позднее';
+            if (err === 'Ошибка: 409') {
+              errorMessage = 'Пользователь с таким e-mail уже существует';
+            } else if (err === 'Ошибка: 500') {
+              errorMessage = 'На сервере произошла ошибка, попробуйте позднее';
+            }
+            setErrorMessage(errorMessage);
+            setIsPopupErrorVisible(true); // Показываем PopupError
+          })
+          .finally(() => setIsLoading(false));
+      };
 
     // Подтверждение почты
     const handleConfirmEmail = (userId, token) => {
@@ -79,44 +81,55 @@ function App() {
           .confirmEmail(userId, token)
           .then((data) => {
             if (data.accessToken) {
-              localStorage.setItem('token', data.accessToken);
-              navigate('/career-cases', { replace: true }); // Замените на нужный роут
+              localStorage.setItem('token', data.accessToken); // Сохраняем токен в localStorage
+              setSuccessMessage("Вы успешно зарегистрировались!"); // Устанавливаем сообщение
+              setIsPopupSuccessVisible(true); // Показываем popup
+              navigate('/career-stories', { replace: true }); // Перенаправляем пользователя
+            } else {
+              setErrorMessage('Не удалось получить токен доступа. Попробуйте снова позже.');
+              setIsPopupErrorVisible(true); // Открываем PopupError
             }
           })
           .catch((err) => {
-            console.error(err);
-            setErrorMessageRegister('Не удалось подтвердить почту. Попробуйте позже.');
+              console.error('Ошибка подтверждения почты:', err);
+              let error = 'Произошла ошибка при подтверждении почты.';
+              if (err.response && err.response.status === 401) {
+                error = 'Некорректная ссылка для подтверждения почты.';
+              } else if (err.response && err.response.status === 500) {
+                error = 'На сервере произошла ошибка. Попробуйте позже.';
+              }
+        
+              setErrorMessage(error); // Устанавливаем сообщение об ошибке
+              setIsPopupErrorVisible(true); // Показываем PopupError
           })
           .finally(() => setIsLoading(false));
       };
 
-    
-    
     // авторизация
-    const handleLogin = (email, password) => { 
-      setIsLoading(true);
-      auth
-        .login(email, password)
-        .then(data => {
-          if (data.token) {
-            localStorage.setItem('token', data.token);
-            getSavedStories();
-            navigate('/career-stories', {replace: true});
-            return data;
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          if (err === 'Ошибка: 401') {
-              setErrorMessageLogin('Неправильный e-mail или пароль');
-          } else if (err === 'Ошибка: 400') {
-            setErrorMessageLogin('На сервере произошла ошибка, попробуйте чуть позже');
-          } else {
-            setErrorMessageLogin('При входе произошла ошибка');
-          }
-        })
-        .finally(() => setIsLoading(false))
-    };
+    const handleLogin = (email, password) => {
+        setIsLoading(true);
+        auth
+          .login(email, password)
+          .then((data) => {
+            if (data.token) {
+              localStorage.setItem('token', data.token); // Сохраняем токен
+              getSavedStories();
+              navigate('/career-stories', { replace: true }); // Перенаправляем пользователя
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+            let error = 'При входе произошла ошибка.';
+            if (err === 'Ошибка: 401') {
+              error = 'Неправильный e-mail или пароль.';
+            } else if (err === 'Ошибка: 400') {
+              error = 'Неправильный e-mail или пароль.';
+            }
+            setErrorMessage(error);
+            setIsPopupErrorVisible(true);
+          })
+          .finally(() => setIsLoading(false));
+      };
 
     // получить данные о пользователе
     const getUser = () => {
@@ -130,55 +143,54 @@ function App() {
 
     // отправка email в случае если забыл пароль
     const handleSendEmail = (email) => {
-        setIsLoading(true); // Устанавливаем состояние загрузки
-
+        setIsLoading(true);
         auth
-            .sendPasswordResetEmail(email)
-            .then(async () => {
-                setIsEmailSent(true); // Успешная отправка email
-                setErrorMessageSendEmail(''); // Сбрасываем сообщение об ошибке
-                console.log(`Email отправлен на: ${email}`); 
-            })
-            .catch(async (err) => {
-                console.error(err);
-                let errorMessage = 'При отправке email произошла ошибка, попробуйте позже';
-                // Проверяем код ошибки Firebase
-                if (err.code === 'auth/user-not-found') {
-                    errorMessage = 'Пользователь с таким email не найден';
-                } else if (err.code === 'auth/invalid-email') {
-                    errorMessage = 'Некорректный адрес электронной почты';
-                }
-      
-                // Обрабатываем ответ от вашего сервера
-                if (err.response) {
-                try {
-                    const data = await err.response.json();
-                    errorMessage = data.error || errorMessage; // Используем сообщение от сервера, если оно есть
-                } catch (jsonError) {
-                    console.error('Ошибка при парсинге JSON:', jsonError);
-                }
-                }
-                setErrorMessageSendEmail(errorMessage);
-            })
-            .finally(() => setIsLoading(false)); // Сбрасываем состояние загрузки
-    };
-
-    const handleNewPassword = async (userId, token, password) => {
-        try {
-            const response = await auth.newPassword(userId, token, password);
-    
-            // Проверяем, если ответ содержит сообщение
-            if (response && response.message) {
-                console.log(response.message); // Выводим сообщение от сервера
+          .sendPasswordResetEmail(email)
+          .then(() => {
+            setIsEmailSent(true); // Успешная отправка email
+            setSuccessMessage('Ссылка на восстановление пароля направлена на указанную почту.'); // Устанавливаем сообщение
+            setIsPopupSuccessVisible(true); // Показываем PopupSuccess
+        })
+        .catch((err) => {
+            console.error(err);
+            let errorMessage = 'Пользователь с таким email не найден.';
+            if (err.response && err.response.status === 404) {
+              errorMessage = 'Пользователь с таким email не найден.';
             }
-    
-            getSavedStories();
-            navigate('/signin', { replace: true });
-            console.log('Пароль успешно изменен!'); // Уведомление об успешном изменении пароля
-    
-        } catch (error) {
-            console.error('Ошибка при сбросе пароля:', error);
-        }
+            setErrorMessage(errorMessage); // Устанавливаем сообщение об ошибке
+            setIsPopupErrorVisible(true); // Показываем PopupError
+        })
+        .finally(() => setIsLoading(false));
+    };
+      
+    const handleNewPassword = (userId, token, password) => {
+        setIsLoading(true);
+        auth
+            .newPassword(userId, token, password)
+            .then((response) => {
+                if (response.accessToken) {
+                    localStorage.setItem('token', response.accessToken); // Сохраняем токен
+                    navigate('/career-stories', { replace: true }); // Перенаправляем пользователя
+                } else {
+                    throw new Error('Ошибка: токен доступа не был получен.');
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+                let error = 'Просроченная или некорректная ссылка. Попробуйте еще раз.';
+                if (err.response) {
+                    if (err.response.status === 400) {
+                        error = 'Некорректные данные для сброса пароля.';
+                    } else if (err.response.status === 401) {
+                        error = 'Просроченная или некорректная ссылка. Попробуйте еще раз.';
+                    } else if (err.response.status === 500) {
+                        error = 'На сервере произошла ошибка. Попробуйте позже.';
+                    }
+                }
+                setErrorMessage(error);
+                setIsPopupErrorVisible(true);
+            })
+            .finally(() => setIsLoading(false));
     };
     
     
@@ -207,17 +219,11 @@ function App() {
         localStorage.removeItem('savedStories');
     };
 
-      // удаление всех ошибок 
-    // useEffect(() => {
-    //     setErrorMessageLogin('');
-    //     setErrorMessageRegister('');
-    // }, []);
-
     // показать Preloader
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false); // Выключаем прелоадер через 10 секунд
-        }, 3000); // Задержка на 10 секунд
+        }, 3000); // Задержка на 3 секунды
 
         return () => {
             clearTimeout(timer); // Очистка таймера при размонтировании
@@ -306,7 +312,6 @@ function App() {
         //         setCurrentUser({ name: paymentData.name, email: paymentData.email }); // Обновляем текущего пользователя, если необходимо
         //     } else {
         //         // Обработка ситуации, когда оплата не удалась
-        //         setErrorMessageRegister('Оплата не удалась. Пожалуйста, попробуйте еще раз.');
         //     }
     
         // } catch (err) {
@@ -316,24 +321,24 @@ function App() {
         //         // Если ошибка связана с ответом сервера
         //         switch (err.response.status) {
         //             case 500:
-        //                 setErrorMessageRegister('На сервере произошла ошибка');
         //                 break;
         //             case 400:
-        //                 setErrorMessageRegister('Некорректные данные для оплаты');
         //                 break;
         //             default:
-        //                 setErrorMessageRegister('При обработке платежа произошла ошибка');
         //                 break;
         //         }
         //     } else {
         //         // Если ошибка не связана с ответом сервера
-        //         setErrorMessageRegister('При обработке платежа произошла ошибка');
         //     }
         // } finally {
         //     setIsLoading(false); // Сбрасываем состояние загрузки
         // }
     };
-    
+
+    const handleClosePopup = () => {
+        setIsPopupErrorVisible(false);
+        setIsPopupSuccessVisible(false);
+    };
 
     //где header полностью черный
     const isSpecialPage = () => 
@@ -356,130 +361,135 @@ function App() {
                 <Header 
                     logout={logout}
                 />
-
-            <Routes>
-                <Route path="/" element={<Main />} />
-                <Route 
-                    path="/career-stories" 
-                    element={
-                        <CareerStories
-                            saveStory={saveStory}
-                            removeStory={removeStory} 
-                            onIncreaseView={increaseView}
-                            isStorySaved={isStorySaved}
-                       />
-                    } 
+                <PopupError
+                    isVisible={isPopupErrorVisible}
+                    onClose={handleClosePopup}
+                    errorMessage={errorMessage}
                 />
-                <Route 
-                    path="/business-stories" 
-                    element={
-                        <BusinessStories
-                            saveStory={saveStory}
-                            removeStory={removeStory} 
-                            onIncreaseView={increaseView}
-                            isStorySaved={isStorySaved}
-                       />
-                    } 
+                <PopupSuccess
+                    isVisible={isPopupSuccessVisible}
+                    onClose={handleClosePopup}
+                    successMessage={successMessage}
                 />
-                <Route 
-                    path="/about" element={
-                    <About 
-                        logout={logout}
-                  />}
-                />
-                <Route
-                    path="/saved"
-                    element={
-                        <Saved 
-                            stories={savedStories} 
-                            removeStory={removeStory}
-                            onIncreaseView={increaseView}
-                            isStorySaved={isStorySaved} 
-                    />} 
-                />
-                <Route 
-                    path="/signup" element={
-                    <Register 
-                        onRegister={handleRegister} 
-                        errorMessage={errorMessageRegister}
-                        isLoading={isLoading}
-                        showPopupConfirmationEmail={showPopupConfirmationEmail} // Передаем состояние
-                        setShowPopupConfirmationEmail={setShowPopupConfirmationEmail} // Передаем функцию обновления состояния
-                    />} 
-                />
-
-                <Route 
-                    path="/confirm/:userId/:token" 
-                    element={
-                        <RegistrationSucceed 
-                            onEmailConfirmation={handleConfirmEmail} 
+                <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route 
+                        path="/career-stories" 
+                        element={
+                            <CareerStories
+                                saveStory={saveStory}
+                                removeStory={removeStory} 
+                                onIncreaseView={increaseView}
+                                isStorySaved={isStorySaved}
                         />} 
-                />
-
-                <Route 
-                    path="/signin" element={
-                    <Login 
-                        onLogin={handleLogin}
-                    />} 
-                />
-                <Route 
-                    path="/forgottenpassword" element={
-                        <ForgottenPassword 
-                            onSendEmail={handleSendEmail}
-                            isLoading={isLoading}
-                            isEmailSent={isEmailSent}
-                    />} 
-                />
-                <Route path="/password-reset/:userId/:token" element={
-                    <ResetPassword 
-                        onNewPassword={handleNewPassword}
+                    />
+                    <Route 
+                        path="/business-stories" 
+                        element={
+                            <BusinessStories
+                                saveStory={saveStory}
+                                removeStory={removeStory} 
+                                onIncreaseView={increaseView}
+                                isStorySaved={isStorySaved}
+                        />}
+                    />
+                    <Route 
+                        path="/about" element={
+                        <About 
+                            logout={logout}
                     />}
-                />
+                    />
+                    <Route
+                        path="/saved"
+                        element={
+                            <Saved 
+                                stories={savedStories} 
+                                removeStory={removeStory}
+                                onIncreaseView={increaseView}
+                                isStorySaved={isStorySaved} 
+                        />} 
+                    />
+                    <Route 
+                        path="/signup" element={
+                        <Register 
+                            onRegister={handleRegister} 
+                            isLoading={isLoading}
+                            showPopupConfirmationEmail={showPopupConfirmationEmail} // Передаем состояние
+                            setShowPopupConfirmationEmail={setShowPopupConfirmationEmail} // Передаем функцию обновления состояния
+                        />} 
+                    />
 
+                    <Route 
+                        path="/confirm/:userId/:token" 
+                        element={
+                            <RegistrationSucceed 
+                                onEmailConfirmation={handleConfirmEmail} 
+                            />} 
+                    />
 
-                <Route path="/academy" element={<Academy />} />
-                <Route 
-                    path="/tariffs" element={
-                        <Tariffs 
-                            onPaymentSubmit={handlePaymentSubmit} 
-                        />} />
-                <Route path="/payment" element={<Payment />} />
-                <Route path="/confirmation" element={<ConfirmationPayment />} />
+                    <Route 
+                        path="/signin" element={
+                        <Login 
+                            onLogin={handleLogin}
+                        />} 
+                    />
+                    <Route 
+                        path="/forgottenpassword" element={
+                            <ForgottenPassword 
+                                onSendEmail={handleSendEmail}
+                                isLoading={isLoading}
+                                isEmailSent={isEmailSent}
+                        />} 
+                    />
+                    <Route path="/password-reset/:userId/:token" element={
+                        <ResetPassword 
+                            onNewPassword={handleNewPassword}
+                        />}
+                    />
 
-                <Route path="/documents/privacy-policy" element={<Policy />}/>
-                <Route path="/documents/personal-data" element={<PersonalData />}/>
-                <Route path="/documents/terms-of-use" element={<TermsOfUse />}/>
-                <Route path="/documents/personal-data-form" element={<PersonalDataForm />}/>
+                    <Route path="/academy" element={<Academy />} />
+                    <Route 
+                        path="/tariffs" element={
+                            <Tariffs 
+                                onPaymentSubmit={handlePaymentSubmit} 
+                            />} />
+                    <Route path="/payment" element={<Payment />} />
+                    <Route path="/confirmation" element={<ConfirmationPayment />} />
 
-                <Route path="/500" element={<ServerError/>} />
-                <Route path="/404" element={<NotFound />} />
-                <Route path="*" element={<Navigate to="/404" replace />} />
+                    <Route path="/documents/privacy-policy" element={<Policy />}/>
+                    <Route path="/documents/personal-data" element={<PersonalData />}/>
+                    <Route path="/documents/terms-of-use" element={<TermsOfUse />}/>
+                    <Route path="/documents/personal-data-form" element={<PersonalDataForm />}/>
 
-                
-                {/* ИСТОРИИ КАРЬЕРЫ */}
-                <Route path="/korotkovae-story" 
-                    element={<KorotkovaE
-                    saveStory={saveStory}
-                    removeStory={removeStory} 
-                    onIncreaseView={increaseView}
-                    isStorySaved={isStorySaved}
-                    />} 
-                />
+                    <Route path="/500" element={<ServerError/>} />
+                    <Route path="/404" element={<NotFound />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
 
-                {/* ИСТОРИИ БИЗНЕСА */}
-                <Route path="/batashev-story" 
-                    element={<BatashevR
-                    saveStory={saveStory}
-                    removeStory={removeStory} 
-                    onIncreaseView={increaseView}
-                    isStorySaved={isStorySaved}
-                    />} 
-                />
+                    
+                    {/* ИСТОРИИ КАРЬЕРЫ */}
+                    <Route path="/korotkovae-story" 
+                        element={<KorotkovaE
+                        saveStory={saveStory}
+                        removeStory={removeStory} 
+                        onIncreaseView={increaseView}
+                        isStorySaved={isStorySaved}
+                        />} 
+                    />
 
-            </Routes>
-            <Cookies />
-            <Footer />
-                </CurrentUserContext.Provider>
+                    {/* ИСТОРИИ БИЗНЕСА */}
+                    <Route path="/batashev-story" 
+                        element={<BatashevR
+                        saveStory={saveStory}
+                        removeStory={removeStory} 
+                        onIncreaseView={increaseView}
+                        isStorySaved={isStorySaved}
+                        />} 
+                    />
+
+                </Routes>
+                <Cookies />
+                <Footer />
+            </CurrentUserContext.Provider>
         </div>
     );
 }

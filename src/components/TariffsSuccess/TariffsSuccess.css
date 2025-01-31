@@ -23,11 +23,12 @@
 .tariffs__text.li{
     margin: 0;
     line-height: 150%;
+    max-width: 610px;
 }
 
 .tariffs__success-arrow {
     background-image: url('../../assets/arrow-tariifs.svg');
-    width: 22px;
+    width: 24px;
     height: 16px;
     margin: 10px 0 0;
 }
@@ -35,14 +36,13 @@
 .tariffs__success-list {
     margin: 0 0 30px;
     list-style: none;
-    margin: 0; 
     padding: 0;  
 }
 
 .tariffs__success-flex {
     display: flex;
     gap: 11px;
-
+    align-items: center;
 }
 
 @media screen and (max-width: 1279px) {

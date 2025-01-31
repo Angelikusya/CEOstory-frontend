@@ -22,7 +22,7 @@ export const register = (name, email, password) => {
 
 // Подтверждение почты API
 export const confirmEmail = (userId, token) => {
-  return fetch(`${BASE_URL}/users/confirm/${userId}/${token}`, {
+  return fetch(`${BASE_URL}/confirm/${userId}/${token}`, {
       method: 'GET',
       headers: {
           Accept: "application/json",

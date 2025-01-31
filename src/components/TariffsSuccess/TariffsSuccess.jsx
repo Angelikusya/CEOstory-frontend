@@ -88,16 +88,16 @@ const TariffsSuccess = () => {
                 Получить полезный материал от спикеров.              
               </p>
             </li>
-            <li className='tariffs__success-flex'>
+            {/* <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
                 Получить доступ к видео-урокам для развития карьеры и бизнеса от “CEOstory”.               
                 </p>
-            </li>
+            </li> */}
           </ul>
           <p className='tariffs__text'>
             Если наши спикеры смогли добиться успеха, то сможешь и ты, ведь они такие 
-            же простые ребята - тебе просто нужно повторить их опыт и сэкономить себе 
+            же простые ребята &mdash; тебе просто нужно повторить их опыт и сэкономить себе 
             кучу нервов и времени.
           </p>
         </div>

@@ -80,9 +80,9 @@ const Header = ({logout}) => {
 
   //где header не отображается
   const hideHeader = () => 
-    ['/signup', '/signin', '/forgottenpassword', '/resetpassword', '/payment', '/404', '/505'].includes(pathname);
-
-  // Обработчик скролла
+    ['/signup', '/signin', '/forgottenpassword', '/resetpassword', '/payment', '/404', '/505']
+      .some(route => pathname.startsWith(route)) || pathname.startsWith('/password-reset/');
+        // Обработчик скролла
   useEffect(() => {
     const handleScroll = () => {
       if (scrollDirection === "down") {

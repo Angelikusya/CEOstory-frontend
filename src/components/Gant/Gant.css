@@ -101,13 +101,15 @@
 }
 
 .gant__link {
-    margin: 40px 0 0 0;
-    padding: 12px 78px;
+    margin: 0 0 0 0;
+    padding: 12px 0;
+    display: flex;
+    justify-content: center;
 }
 
 @media screen and (max-width: 1279px) {
     .gant__link {
-        margin: 40px 0 0 0;
+        margin: 0 0 0 0;
         padding: 10px 0;
         display: flex;
         justify-content: center;
