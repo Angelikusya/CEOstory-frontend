@@ -64,11 +64,27 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 1280);
   // useEffect для остальных функций
   useEffect(() => {
   
+    // Функция для получения количества просмотров
+    const fetchViews = async () => {
+      try {
+        const viewData = await auth.getViews(storyId);
+        if (viewData && typeof viewData.views === 'number') {
+          setNewViews(viewData.views);
+        } else {
+          console.error('Неверный формат данных:', viewData);
+        }
+      } catch (error) {
+        console.error('Ошибка при получении просмотров:', error);
+      }
+    };
+  
     // Установка таймера для прелоадера
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 500); // Задержка на 1 секунду
   
+    // Вызов функции для получения просмотров
+    fetchViews();
     return () => clearTimeout(timer); // Очистка таймера при размонтировании
 
   }, [storyId]); // Добавьте storyId в 
@@ -342,3 +358,4 @@ useEffect(() => {
   );
 };
 export default KorotkovaE;
+

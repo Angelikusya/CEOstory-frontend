@@ -27,13 +27,11 @@ const StoriesPreview = ({
     readingTime,
     onIncreaseView,
     isSaved,
-    isSaving,
-    IsSaveBlocked,
 }) => {
     const [newViews, setNewViews] = useState(views);
+    const [isSaving, setIsSaving] = useState(false);
+    const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [screenSize, setScreenSize] = useState(window.innerWidth);
-
     const storyData = {
         _id,
         storyId,
@@ -54,6 +52,9 @@ const StoriesPreview = ({
         readingTime,
         views: newViews,
     };
+    const [screenSize, setScreenSize] = useState(window.innerWidth);
+    const [showTooltip, setShowTooltip] = useState(false);
+
 
     const handleResize = () => {
       setScreenSize(window.innerWidth);
@@ -66,28 +67,38 @@ const StoriesPreview = ({
         };
     }, []);
 
+    
 
     const handleIncreaseView = async () => {
-        try {
-          const updatedViews = await onIncreaseView(storyId);  // Увеличиваем или создаем
-          setNewViews(updatedViews);
-        } catch (error) {
-          console.error('Ошибка при обновлении просмотров:', error);
+        // Увеличиваем количество просмотров
+        const updatedViews = await onIncreaseView(storyId);
+        setNewViews(updatedViews);
+    };
+
+    useEffect(() => {
+        // Получаем количество просмотров при монтировании компонента
+        const fetchViews = async () => {
+            const viewData = await 
+            auth
+                .getViews(storyId);
+                setNewViews(viewData.views);
+        };
+
+        fetchViews();
+    }, [storyId]); // Зависимость от storyId
+
+    const handleSaveStory = async () => {
+        if (onSave) {
+            setIsSaving(true); // Устанавливаем состояние "сохранения"
+            try {
+                await onSave(storyData); // Вызываем функцию onSave
+            } catch (error) {
+                console.error("Ошибка при сохранении:", error);
+            } finally {
+                setIsSaving(false); // Сбрасываем состояние "сохранения"
+            }
         }
-      };
-
-    // useEffect(() => {
-    //     // Получаем количество просмотров при монтировании компонента
-    //     const fetchViews = async () => {
-    //         const viewData = await 
-    //         auth
-    //             .getViews(storyId);
-    //             setNewViews(viewData.views);
-    //     };
-
-    //     fetchViews();
-    // }, [storyId]); // Зависимость от storyId
-
+    };
 
 
     const handleRemoveStory = () => {
@@ -130,12 +141,6 @@ const StoriesPreview = ({
         
             return newColor;
         };
-
-        const getViewsText = (views) => {
-            if (views % 10 === 1 && views % 100 !== 11) return "прочтение";
-            if ([2, 3, 4].includes(views % 10) && ![12, 13, 14].includes(views % 100)) return "прочтения";
-            return "прочтений";
-        };
         
     return (
         <div>
@@ -168,8 +173,8 @@ const StoriesPreview = ({
                                 <h2 className='preview__title'>{title}</h2>
                                 <div className='preview__statistics'>
                                     <p className='preview__statistics-text'>{formatDate(publicationDate)}</p>
-                                    <p className='preview__statistics-text'>{newViews} {getViewsText(newViews)}</p>
-                                    {/* <p className='preview__statistics-text'>читать {readingTime}</p> */}
+                                    <p className='preview__statistics-text'>{newViews} просмотров, </p>
+                                    <p className='preview__statistics-text'>читать {readingTime}</p>
 
 
                                 </div>
@@ -189,7 +194,7 @@ const StoriesPreview = ({
                                 </div>
                                 <div className='preview__filters'>
                                     <div className='preview__filter'>
-                                        <p className='preview__name'>Доход</p>
+                                        <p className='preview__name'>доход</p>
                                         <div className='preview__filter-wrapper'>
                                             <p className='preview__filter-title'>{income}</p>
                                         </div>
@@ -197,7 +202,7 @@ const StoriesPreview = ({
 
                                     {type !== 'Бизнес' && (
                                         <div className='preview__filter'>
-                                            <p className='preview__name'>Опыт</p>
+                                            <p className='preview__name'>опыт</p>
                                             <div className='preview__filter-wrapper'>
                                                 <p className='preview__filter-title'>{experience}</p>
                                             </div>
@@ -205,7 +210,7 @@ const StoriesPreview = ({
                                     )}
 
                                     <div className='preview__filter'>
-                                        <p className='preview__name'>Сфера</p>
+                                        <p className='preview__name'>сфера</p>
                                         <div className='preview__filter-wrapper'>
                                             <p className='preview__filter-title'>{field}</p>
                                         </div>
@@ -213,7 +218,7 @@ const StoriesPreview = ({
 
                                     {type == 'Бизнес' && (
                                         <div className='preview__filter'>
-                                            <p className='preview__name'>Вложения</p>
+                                            <p className='preview__name'>вложения</p>
                                             <div className='preview__filter-wrapper'>
                                                 <p className='preview__filter-title'>{investments}</p>
                                             </div>
@@ -252,7 +257,7 @@ const StoriesPreview = ({
                                         <div className='preview__statistics'>
                                             <p className='preview__statistics-text'>{newViews} просмотров, </p>
                                             <p className='preview__statistics-text'>{formatDate(publicationDate)}</p>
-                                            {/* <p className='preview__statistics-text'>читать {readingTime}</p> */}
+                                            <p className='preview__statistics-text'>читать {readingTime}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -311,21 +316,16 @@ const StoriesPreview = ({
             )}
                 <div className='preview__buttons'>
                     {!isSaved ? (
-                        <div className='preview__buttons-container'>
-                            <button 
-                                className='preview__button-save' 
-                                onClick={() => onSave(storyData)} 
-                                type='button'
-                                disabled={isSaving} // Отключаем кнопку если нет токена
-                                title="Сохранить"                     
-                            >
-                            </button>
-
-                            {IsSaveBlocked === storyId && ( // Показываем блокировку только для конкретной истории
-                        <div className="preview__button-blocked">Войдите, чтобы сохранить</div>
-                    )}                      
-                        </div>
+                        <button 
+                            className='preview__button-save' 
+                            onClick={handleSaveStory} 
+                            type='button'
+                            disabled={isSaving} // Отключаем кнопку во время сохранения
+                            title="Сохранить"        
+                    >
+                    </button>
                     
+
                     ) : (
                         <button 
                             className='preview__button-delete'
@@ -341,3 +341,4 @@ const StoriesPreview = ({
 };
 
 export default StoriesPreview;
+

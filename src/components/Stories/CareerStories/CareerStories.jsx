@@ -6,104 +6,129 @@ import DATACareer from '../../Data/DataCareer';
 import { Link, useLocation } from 'react-router-dom';
 import PopupSendEmail from '../../PopupSendEmail/PopupSendEmail';
 
-const CareerStories = ({ 
-    data = DATACareer, 
-    onCloseFilter, 
-    saveStory, 
-    removeStory, 
-    onIncreaseView, 
-    isStorySaved,
-    isSaving,
-    IsSaveBlocked,
-    getViews,
-}) => {
-    const [filteredData, setFilteredData] = useState(data); // Показываем все истории по умолчанию
-    const [filters, setFilters] = useState(() => {
-        const savedFilters = JSON.parse(localStorage.getItem('careerFilters'));
-        return savedFilters || { field: '', searchTerm: '' }; // По умолчанию без фильтров
+const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStory, onIncreaseView, isStorySaved }) => {
+    const [filteredData, setFilteredData] = useState(data);
+    const [filters, setFilters] = useState({
+        businessType: '',
+        income: '',
+        field: '',
+        searchTerm: ''
     });
-
-    const [visibleCount, setVisibleCount] = useState(4); // Количество отображаемых историй
+    const [visibleCount, setVisibleCount] = useState(4); // начальное количество историй
     const [isLoading, setIsLoading] = useState(false);
+    const pathname = window.location.pathname; // Получаем текущий путь
     const [showPopup, setShowPopup] = useState(false);
-    const pathname = window.location.pathname;
+
+
+    // const headerText = '';
+    
+    // if (pathname.includes('career-stories')) {
+    //   headerText = 'Каталог историй про карьеру';
+    // } else if (pathname.includes('business-stories')) {
+    //   headerText = 'Каталог историй про бизнес';
+    // }
+
+    useEffect(() => {
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 10000); // Закрыть через 10 секунд
+    }, []);
+
+  
 
     useEffect(() => {
         document.title = 'Истории про карьеру — CEOstory';
         
-        // Загружаем сохраненные фильтры
-        const savedFilters = JSON.parse(localStorage.getItem('careerFilters'));
+        const savedFilters = JSON.parse(localStorage.getItem('storyFilters'));
         if (savedFilters) {
             setFilters(savedFilters);
-            applyFilters(savedFilters);
+            handleFilterChange(savedFilters);
         } else {
-            setFilteredData(data); // Если нет фильтров, показываем все истории
+            setFilteredData(data);
         }
     }, [data]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setShowPopup(false);
-        }, 10000);
-    }, []);
 
-    // Фильтрация данных при изменении фильтра
-    const applyFilters = (newFilters) => {
-        const { field, searchTerm } = newFilters;
-
-        const newFilteredData = data.filter((story) => {
-            const matchesField = field ? story.field === field : true;
-            const matchesSearchTerm = searchTerm ? story.title.toLowerCase().includes(searchTerm.toLowerCase()) : true;
-            return matchesField && matchesSearchTerm;
-        });
-
-        setFilteredData(newFilteredData);
-    };
-
-    // Обработчик изменения фильтров
     const handleFilterChange = (newFilters) => {
+        const { businessType, income, field, searchTerm } = newFilters;
+    
+        const newFilteredData = data.filter((story) => {
+            const matchesBusinessType = businessType ? story.type === businessType : true;
+            const matchesIncome = income ? story.income === income : true;
+            const matchesField = field ? story.field === field : true;
+    
+            const matchesSearchTerm = searchTerm ? 
+                Object.values(story).some(value => 
+                    value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+                ) : true;
+    
+            return matchesBusinessType && matchesIncome && matchesField && matchesSearchTerm;
+        });
+    
+        setFilteredData(newFilteredData);
         setFilters(newFilters);
-        localStorage.setItem('careerFilters', JSON.stringify(newFilters));
-        applyFilters(newFilters);
+        localStorage.setItem('storyFilters', JSON.stringify(newFilters));
+    
+        // Проверка наличия активных фильтров
+        const hasActiveFilters = businessType || income || field || searchTerm; // Исправлено условие
+    
     };
+    
 
-    // Показать больше историй
+    //отображаение большего количества историй
     const handleShowMore = () => {
         setIsLoading(true);
+        
+        // Имитация загрузки данных (замените на вашу логику)
         setTimeout(() => {
-            setVisibleCount(filteredData.length);
+            setVisibleCount(filteredData.length); // Показываем все оставшиеся элементы
             setIsLoading(false);
-        }, 1000);
+        }, 1000); // Задержка в 1 секунду для имитации загрузки
     };
 
     const getStoryLabel = (count) => {
-        if (count === 1) return 'история';
-        if (count >= 2 && count <= 4) return 'истории';
-        return 'историй';
+        if (count === 1) {
+            return 'история';
+        } else if (count >= 2 && count <= 4) {
+            return 'истории';
+        } else {
+            return 'историй';
+        }
     };
 
+    // Определяем текст заголовка в зависимости от текущей страницы
     let headerText = 'Каталог историй про ';
-    headerText += pathname.includes('career-stories') ? 'карьеру' : 'бизнес';
-
+    
+    if (pathname.includes('career-stories')) {
+      headerText += 'карьеру';
+    } else if (pathname.includes('business-stories')) {
+      headerText += 'бизнес';
+    } else {
+      headerText += 'истории'; // Значение по умолчанию, если не совпадает ни с одним из путей
+    }
+  
+    
     return (
-        <div className='stories'>
-            <div className='stories__titles'>
-                <h3 className='stories__about'>{headerText}</h3>
-                <p className='stories__free'>Везде есть бесплатная часть</p>
-            </div>
-            <div className='stories__filter'>
-                <Filter 
-                    onFilterChange={handleFilterChange} 
-                    onClose={onCloseFilter} 
-                    data={DATACareer}
-                />
-            </div>
+       <div className='stories'>
+        <div className='stories__titles'>
+        <h3 className='stories__about'>{headerText}</h3>
+
+            <p className='stories__free'>Везде есть бесплатная часть</p>
+        </div>
+        <div className='stories__filter'>
+            <Filter 
+                onFilterChange={handleFilterChange} 
+                onClose={onCloseFilter} 
+                data={DATACareer}
+            />
+        </div>
             <div className="stories__flex">
-                {filteredData.length > 0 ? (
+            {filteredData.length > 0 ? (
                     filteredData.slice(0, visibleCount).map((story, index) => (
+                    
                         <StoriesPreview
                             {...story}
-                            key={story.id || story._id || index }     
+                            key={story.id ||  story._id  || index }     
                             name={story.name}
                             type={story.type}
                             field={story.field}
@@ -124,34 +149,33 @@ const CareerStories = ({
                             onRemove={removeStory}
                             onIncreaseView={onIncreaseView}
                             isSaved={isStorySaved(story.storyId)} 
-                            isSaving={isSaving}
-                            IsSaveBlocked={IsSaveBlocked}
-                            getViews={getViews}
                         />
                     ))
                 ) : (
                     <div className='stories__empty-container'>
                         <p className='stories__empty-text'>К сожалению у нас нет историй по такому запросу</p>
-                        <p className='stories__empty-more'>Но есть более вдохновляющих 100 историй в бизнесе и карьере, которые могут вам понравиться</p>
+                        <p className='stories__empty-more'>Но есть более вдохновляющих 100 историй в бизнесе и карьере, которые могут Вам понравится</p>
                     </div>
                 )}
             </div>
             {visibleCount < filteredData.length && (
                 <button 
-                    className='link link__stories'  
+                    className='main__link main__link_mobile'  
                     onClick={handleShowMore}
-                    disabled={isLoading}
+                    disabled={isLoading} // Отключаем кнопку во время загрузки
                 >
-                    <span>
-                        {isLoading 
-                            ? 'Загружаю...' 
-                            : `Еще ${filteredData.length - visibleCount} ${getStoryLabel(filteredData.length - visibleCount)}`}
-                    </span>
+                    {isLoading 
+                        ? 'Загружаю...' 
+                        : `Еще ${filteredData.length - visibleCount} ${getStoryLabel(filteredData.length - visibleCount)}`}
                 </button>
             )}
-            {showPopup && <PopupSendEmail />}
+
+            {showPopup && (
+            <PopupSendEmail />
+            )}
         </div>
     );
 };
 
 export default CareerStories;
+
