@@ -111,50 +111,53 @@ export const deleteStory = (storyId) => {
     .then((res) => checkResponse(res));
 }
 
-// увеличить количество просмотров
+// Обновление просмотров
 export const updateViews = (storyId) => {
-  return fetch(`${BASE_URL}/views/${storyId}`, {
-      method: 'PATCH',
-      headers: {
-          "Content-Type": 'application/json',
-      },
-  }).then(response => {
-      if (!response.ok) {
-          throw new Error(`Ошибка при обновлении просмотров: ${response.statusText}`);
-      }
-      return checkResponse(response);
-  });
+    return fetch(`${BASE_URL}/views/${storyId}`, {
+        method: 'PATCH',
+        headers: {
+        "Content-Type": 'application/json',
+        },
+    }).then(response => {
+        if (!response.ok) {
+        throw new Error(`Ошибка при обновлении просмотров: ${response.statusText}`);
+        }
+        return checkResponse(response);
+    });
 };
-
-//создать карточку для начисления просмотров
+  
+// Создание новой карточки просмотров, если ее нет
 export const createViews = (storyId) => {
-  return fetch(`${BASE_URL}/views`, {
-      method: 'POST',
-      headers: {
-          "Content-Type": 'application/json',
-      },
-      body: JSON.stringify({ storyId }) 
-  }).then(response => {
-      if (!response.ok) {
-          throw new Error(`Ошибка при создании истории просмотров: ${response.statusText}`);
-      }
-      console.log(`Создана новая запись просмотров для истории ${storyId}`);
-      return checkResponse(response);
-  });
+    return fetch(`${BASE_URL}/views`, {
+        method: 'POST',
+        headers: {
+        "Content-Type": 'application/json',
+        },
+        body: JSON.stringify({ storyId, views: 1 }) // Создаем с 1 просмотром
+    }).then(response => {
+        if (!response.ok) {
+        throw new Error(`Ошибка при создании истории просмотров: ${response.statusText}`);
+        }
+        console.log(`Создана новая запись просмотров для истории ${storyId}`);
+        return checkResponse(response);
+    });
 };
-
-// получить количество просмотров
+  
+// Получить количество просмотров
 export const getViews = (storyId) => {
-  return fetch(`${BASE_URL}/views/${storyId}`, {
-      method: 'GET',
-      headers: {
-          "Content-Type": 'application/json',
-      },
-  }).then(checkResponse);
+    return fetch(`${BASE_URL}/views/${storyId}`, {
+        method: 'GET',
+        headers: {
+        "Content-Type": 'application/json',
+        },
+    }).then(response => {
+        if (response.status === 404) {
+        // Если 404, значит записи нет, возвращаем 0
+        return { views: 0 };
+        }
+        return checkResponse(response);
+    });
 };
-
-
-
 
 export const sendPasswordResetEmail = async (email) => {
   const response = await fetch(`${BASE_URL}/password-reset`, {

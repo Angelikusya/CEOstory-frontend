@@ -68,10 +68,13 @@ const StoriesPreview = ({
 
 
     const handleIncreaseView = async () => {
-        // Увеличиваем количество просмотров
-        const updatedViews = await onIncreaseView(storyId);
-        setNewViews(updatedViews);
-    };
+        try {
+          const updatedViews = await onIncreaseView(storyId);  // Увеличиваем или создаем
+          setNewViews(updatedViews);
+        } catch (error) {
+          console.error('Ошибка при обновлении просмотров:', error);
+        }
+      };
 
     // useEffect(() => {
     //     // Получаем количество просмотров при монтировании компонента

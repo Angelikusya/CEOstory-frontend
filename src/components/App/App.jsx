@@ -323,50 +323,25 @@ function App() {
     //     getSavedStories();
     // }, []);
     
-    // const increaseView = (storyId) => {
-    //     return auth
-    //         .increaseViews(storyId)
-    //         .then(response => response.views)  // Возвращаем обновленное количество просмотров
-    //         .catch(error => {
-    //             console.error(`Ошибка при отправке данных для истории с ID ${storyId}:`, error);
-    //             throw error; 
-    //         });
-    // };
-
-    const increaseView = (storyId) => {
-        // const sessionKey = `viewed_${storyId}`;
-    
-        // if (sessionStorage.getItem(sessionKey)) {
-        //     console.log(`Просмотр истории ${storyId} уже зафиксирован в этой сессии.`);
-        //     return Promise.resolve(null);
-        // }
-    
-        // return getViews(storyId)
-        //     .then(viewData => {
-        //         console.log(`Текущие просмотры: ${viewData.views}`);
-        //         return updateViews(storyId);
-        //     })
-        //     // .then(response => {
-        //     //     sessionStorage.setItem(sessionKey, 'true');
-        //     //     return response.views;
-        //     // })
-        //     .catch(error => {
-        //         if (error.message.includes('404')) {
-        //             console.warn(`Карточка для истории ${storyId} не найдена. Создаю новую...`);
-        //             return createViews(storyId)
-        //                 .then(() => new Promise(resolve => setTimeout(resolve, 1000))) // Ждём 1 сек перед повторным GET
-        //                 .then(() => getViews(storyId))
-        //                 .then(viewData => updateViews(storyId))
-        //                 .then(updatedResponse => {
-        //                     // sessionStorage.setItem(sessionKey, 'true');
-        //                     return updatedResponse.views;
-        //                 });
-        //         }
-    
-        //         console.error(`Ошибка при увеличении просмотров для истории с ID ${storyId}:`, error);
-        //         return 0;
-        //     });
-    };
+    const increaseView = async (storyId) => {
+        try {
+          // Проверяем, есть ли уже просмотры для этой карточки
+          const viewData = await auth.getViews(storyId);
+      
+          if (viewData.views === 0) {
+            // Если просмотров нет, создаем новый объект с 1 просмотром
+            await auth.createViews(storyId);
+            return 1; // Возвращаем первый просмотр
+          } else {
+            // Если просмотры уже есть, увеличиваем их
+            await auth.updateViews(storyId);
+            return viewData.views + 1; // Возвращаем обновленное количество просмотров
+          }
+        } catch (error) {
+          console.error('Ошибка при увеличении просмотров:', error);
+          throw error;
+        }
+      };
 
 
     const getViews = (storyId, setNewViews) => {
@@ -444,7 +419,6 @@ function App() {
         return () => clearInterval(intervalId);
     }, [token]);
 
-
     const totalStories = DATACareer.length + DATABusiness.length;
 
     const getHistoryWord1 = (count) => {
@@ -452,7 +426,6 @@ function App() {
         if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(totalStories % 100)) return "истории";
         return "историй";
     };
-
 
     const getHistoryWord3 = (count) => {
         if (count % 10 === 1 && count % 100 !== 11) return "история";
@@ -475,7 +448,6 @@ function App() {
         pathname === '/korotkovae-story' ||
         pathname === '/batashev-story';
     
-        
     return (
         <div className={`app ${isSpecialPage() ? 'special-page' : ''}`}>
             <CurrentUserContext.Provider value={currentUser}>   
