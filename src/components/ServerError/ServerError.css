@@ -1,12 +1,19 @@
 
-.giphy-iframe {
+.server-error__gif {
     width: 425px;
     height: 425px;
 }
-  
+.giphy-iframe {
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.link__not-found {
+    font-size: 20px;
+}
 
 @media screen and (max-width: 767px) {
-    .giphy-iframe {
+    .server-error__gif {
         width: 296px;
         height: 296px;
     }

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo-notloggedin-desk.svg';
 
 
-const TariffsSmall = ({onPaymentSubmit}) => {
+const TariffsSmall = ({onPaymentSubmit, totalStories, getHistoryWord1 }) => {
 
     const [screenSize, setScreenSize] = useState(window.innerWidth);
     const [paymentData, setPaymentData] = useState({
@@ -30,8 +30,6 @@ const TariffsSmall = ({onPaymentSubmit}) => {
         onPaymentSubmit(paymentData);
     };
 
-
-
     return (
         <div className='tariffs-small'>
             <div className='tariffs-small__container'>
@@ -47,13 +45,15 @@ const TariffsSmall = ({onPaymentSubmit}) => {
                         <p className='tariffs-small__period'>/год</p>
                     </div>
                     <p className='tariffs-small__discount'>скидка 58% до 31.03.2025</p>
-                    <button onClick={handleSubmitPayment} className='main__link tariffs-small__botton '>Получить доступ</button>
+                    <button onClick={handleSubmitPayment} className='link link__tariffs-small'>
+                        <span>Получить доступ</span>
+                    </button>
                     <div className='tariffs-small__benefits'>
                         <ul className='tariffs-small__price-list'>
                             <li className='tariffs-small__price-item'>
                                 <div className='tariffs-small__price-benefit-img'></div>
                                     <div className='tariffs-small__price-сontainer'>
-                                        <p className='tariffs-small__price-name'>10 историй про карьеру и бизнес</p>
+                                        <p className='tariffs-small__price-name'>{totalStories} {getHistoryWord1(totalStories)} про карьеру и бизнес</p>
                                         <p className='tariffs-small__price-text'>Полный доступ ко всем историям успеха, чтобы ты мог их повторить</p>
                                 </div>
                             </li>
@@ -82,7 +82,7 @@ const TariffsSmall = ({onPaymentSubmit}) => {
                     )}
                     </p>
                     <p className='tariffs-small__right-block-text'>С СEOstory ты узнаешь какой путь надо пройти, чтобы сделать успешную карьеру или бизнес. </p>
-                    <p className='tariffs-small__right-block-more'>Погрузись в 10 историй с советами, как с нуля добиться того же самого. </p>
+                    <p className='tariffs-small__right-block-more'>Погрузись в {totalStories} {getHistoryWord1(totalStories)} с советами, как с нуля добиться того же самого. </p>
                     <div className='tariffs-small__right-block-image'></div>
                 </div>
             </div>

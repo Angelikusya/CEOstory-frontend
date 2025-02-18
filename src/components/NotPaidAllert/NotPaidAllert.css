@@ -32,6 +32,7 @@
     flex-direction: column;
     align-items: center;
     border-radius: 20px 0 0 20px;
+    padding: 0 10px;
 }
 
 .notpaied__right-block {
@@ -64,13 +65,10 @@
     width: 345px;
 }
 
-.notpaied__botton {
-    font-weight: 400;
+.link__notpaied {
     font-size: 20px;
-    text-align: center;
-    color: #fff;
     width: 350px;
-    padding: 9px 56px;
+    margin: 0 0 96px 0;
 }
 
 .notpaied__logo-img {
@@ -144,9 +142,8 @@
         margin: 94px 0 20px;
     }
     
-    .notpaied__botton {
+    .link__notpaied {
         margin: 0 0 92px;
-        padding: 9px 56px;
     }
     
     .notpaied__right-block-image {
@@ -187,11 +184,9 @@
         max-width: 276px;
     }
     
-    .notpaied__botton {
-        font-size: 20px;
+    .link__notpaied {
         width: 275px;
         margin: 0 0 80px;
-        padding: 9px 36px;
     }
     
     .notpaied__logo-img {

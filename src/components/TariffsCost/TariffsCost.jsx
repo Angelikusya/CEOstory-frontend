@@ -7,8 +7,8 @@ const TariffsCost = () => {
         <h2 className='tariffs__cost-header'>Сколько это стоит? </h2>
         <div className='tariffs__cost-container'>
           <p className='tariffs__text'>
-            Для контекста, если покупать отдельно часовые консультации у всех наших спикеров, 
-            то цена выйдет не меньше 100 тысяч рублей, но скажу по секрету &mdash; на одно интервью 
+            Для контекста, если покупать отдельно <span className='tariffs__text span'>часовые консультации</span> у всех наших спикеров, 
+            то цена <span className='tariffs__text span'>выйдет не меньше 100 тысяч рублей</span>, но скажу по секрету &mdash; на одно интервью 
             уходит куда больше одного часа.
           </p>
           <p className='tariffs__text'>

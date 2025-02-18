@@ -10,7 +10,8 @@ function Login({ onLogin, isLoading }) {
   const [password, setPassword] = useState('');
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   const pathname = window.location.pathname; // Получаем текущий путь
-
+  const [showPassword, setShowPassword] = useState(false);
+  
   useEffect(() => {
       document.title = 'Вход — CEOstory';
   });
@@ -36,8 +37,6 @@ function Login({ onLogin, isLoading }) {
     e.preventDefault();
     onLogin(email, password);
   };
-
-  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
@@ -101,22 +100,12 @@ function Login({ onLogin, isLoading }) {
                 <input
                   id="password-input"
                   type={showPassword ? 'text' : 'password'}
-                  className='register__input'                        
+                  className='register__input-password'                        
                   placeholder="Пароль"
-                  // minLength="8"
-                  // maxLength="40"
                   value={password}
                   disabled={isLoading}
                   {...register('password', {
                     required: 'Введите Ваш пароль',
-                    // minLength: {
-                    //   value: 8,
-                    //   message: 'Минимальное количество символов: 8'
-                    // },
-                    // maxLength: {
-                    //   value: 40,
-                    //   message: 'Максимальное количество символов: 40'
-                    // }
                   })} 
                 />
                 <span 
@@ -125,6 +114,8 @@ function Login({ onLogin, isLoading }) {
                 />
               </div>
               <div className={`register__form-error ${errors?.password ? 'register__form-error_active' : ''}`}>{errors?.password?.message || 'Ошибка'}</div>
+              
+              {/* костыльное решение, чтобы форма держалась */}
               <label htmlFor="consentCheckbox" className="checkbox__label login">
                   <p className="checkbox__text login"> 
                     Согласен на обработку 
@@ -132,12 +123,14 @@ function Login({ onLogin, isLoading }) {
                     в&nbsp;соответствии с&nbsp;<Link to="/documents/privacy-policy" target='_blank' className="checkbox__policy button login">Политикой</Link>
                     </p>
                 </label>
-              <button className='register__submit button login' disabled={!isValid || isLoading} onClick={handleSubmitLogin}>Войти</button>
+                <button className='register__submit button login' disabled={!isValid || isLoading} onClick={handleSubmitLogin}>
+                  {isLoading ? "Подождите..." : "Войти"}
+                </button>
             </form>
 
             <Link to='/signup'className='register__button button'> Зарегистрироваться</Link>
             <Link to='/forgottenpassword'className='login__forgottenpassword button'>Забыли пароль?</Link>
-            <div className='login__with'>
+            {/* <div className='login__with'>
               <div className='login__lines'>
                 <div className='login__line'></div>
                   <p className='login__line-text'>или продолжите с</p>
@@ -147,7 +140,7 @@ function Login({ onLogin, isLoading }) {
                 <button className='login__icon yandex'></button>
                 <button className='login__icon vk'></button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

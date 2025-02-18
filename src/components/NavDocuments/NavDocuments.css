@@ -7,14 +7,9 @@
     display: none;
 }
 
-.documents-nav__list {
-    list-style-type: none; /* Убираем маркеры списка */
-    padding: 0;
-}
-
 .documents-nav__item {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    width: 260px;
+    width: 240px;
 }
 
 .documents-nav__item:last-of-type {
@@ -68,7 +63,7 @@
         z-index: 10;
         animation: fadeIn 1s ease;
         flex-direction: column;
-        padding: 30px 30px;
+        padding: 30px 20px;
         align-items: flex-start;
     }
 
@@ -86,6 +81,7 @@
         display: block;
         align-self: flex-start;
         margin: 0 0 40px 0;
+        background-color: #F7F8FC;
     }
 
     .documents-nav__item {

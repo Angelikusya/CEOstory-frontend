@@ -1,43 +1,48 @@
 import './About.css';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import profile from '../../assets/profile-header-desk.svg';
-import { Link, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 
+const About = ({ subscriptionEnd, hasActiveSubscription, logout }) => {
 
-
-function About ({logout}) {
   const currentUser = useContext(CurrentUserContext);
+    // Проверяем, истекла ли подписка
+    const currentDate = new Date();
+    const isSubscriptionExpired = subscriptionEnd ? currentDate > subscriptionEnd : true;
 
-  const handleExit = () => {
-    logout();
-  };
-  
-  return (
-    <section className='about'>
-      <div className='about__main'>
-        <div className='about__info'>
-          <p className='about__name'>{currentUser.name}</p>
-          <p className='about__subscribtion'>
-            {currentUser.subscriptionActive 
-              ? `Подписка активирована до ${currentUser.subscriptionEndDate}`
-              : 'Подписка не оплачена'}
-          </p>
-        </div>
-        <div className='about__profile'>
-          <div className='about__circle'>
-            <img className='about__icon' src={profile} alt='профиль'></img>
-          </div>
-        </div>          
-      </div>
+    // Форматирование даты (DD.MM.YYYY)
+    const formatDate = (date) => {
+        return date ? date.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'Нет подписки';
+    };
 
-      {!currentUser.subscriptionActive && (
-        <Link to='/tariffs' className='about__link button'>Оплатить подписку</Link>
-      )}
+    return (
+        <section className='about'>
+            <div className='about__main'>
+                <div className='about__info'>
+                    <p className='about__name'>{currentUser.name}</p>
+                    <p className='about__subscribtion'>
+                        {hasActiveSubscription
+                            ? `Подписка до ${formatDate(subscriptionEnd)}`
+                            : 'Подписка не оплачена'}
+                    </p>
+                </div>
+                <div className='about__profile'>
+                    <div className='about__circle'>
+                        <img className='about__icon' src={profile} alt='профиль' />
+                    </div>
+                </div>
+            </div>
 
-      <Link className='about__logout button' to='/' onClick={handleExit}>Выйти из аккаунта</Link>
-    </section>
-  )
-}
+            {(!hasActiveSubscription || isSubscriptionExpired) && (
+                <Link to='/tariffs' className='about__link button'>Оплатить подписку</Link>
+            )}
+
+            <Link className='about__logout button' to='/' onClick={logout}>
+                Выйти из аккаунта
+            </Link>
+        </section>
+    );
+};
 
 export default About;

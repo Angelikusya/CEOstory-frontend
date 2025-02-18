@@ -231,7 +231,7 @@ const KorotkovaEshort = () => {
                             <div className='korotkova-short__number-step'>7</div>
                             <div className='korotkova-short__number-container'>
                                 <p className='korotkova-short__number-title'>
-                                    Попадала в ожидания руководителя от меня
+                                    Попадала в ожидания руководителя
                                 </p>
                                 <p className='korotkova-short__number-text'>
                                     Я договаривалась на каких требованиях руководитель сфокусируется сейчас, 
@@ -284,7 +284,7 @@ const KorotkovaEshort = () => {
                                 замеру метрик по какому-то важному для бизнеса процессу будет не лишним в портфолио.
                             </p>
                             <p className='short-text korotkova-short__project-text'>
-                                После можно оцифровать процент заказов с ошибочно отобранными товарами по каждому сборщику и подумать, 
+                                Например, можно оцифровать процент заказов с ошибочно отобранными товарами по каждому сборщику и подумать, 
                                 говорят ли о чем-то эти цифры :)
                             </p>
                         </div>

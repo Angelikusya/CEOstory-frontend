@@ -17,8 +17,8 @@
     margin: 0;
     gap: 15px;
     justify-content: center;
-    padding: 18px 18px 15px 18px;
-    width: 296px;
+    padding: 18px 18px 15px;
+    width: 284px;
     margin-top: 169px;
 }
 
@@ -30,7 +30,7 @@
 
 .about__name {
     font-weight: 400;
-    font-size: 18px;
+    font-size: 20px;
     letter-spacing: -0.04em;
     color: rgba(255, 255, 255, 0.6);
     margin: 0;
@@ -39,12 +39,14 @@
 .about__subscribtion {
     margin: 0;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 18px;
     letter-spacing: -0.04em;
     text-align: center;
     color: rgba(255, 255, 255, 0.4);
     margin-top: 0px;
-    text-wrap: nowrap;
+    /* text-wrap: nowrap; */
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+
 }
 
 .about__circle {
@@ -68,7 +70,7 @@
     background: rgba(146, 203, 173, 0.8);
     border: 3px solid rgba(146, 203, 173, 0.5);
     border-radius: 20px;
-    width: 296px;
+    width: 320px;
     height: 60px;
     font-weight: 400;
     font-size: 16px;

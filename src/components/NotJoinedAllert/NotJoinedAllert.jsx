@@ -3,46 +3,63 @@ import './NotJoinedAllert.css';
 import logo from '../../assets/logo-notloggedin-desk.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import DATACareer from '../Data/DataCareer';
+import DATABusiness from '../Data/DataBusiness';
+
 
 const NotJoinedAllert = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [screenSize, setScreenSize] = useState(window.innerWidth);
     const currentUser = useContext(CurrentUserContext);
-    const location = useLocation(); 
-
+    const location = useLocation();
     const token = localStorage.getItem('token');
-    const isOnSpecialPage = token && location.pathname === '/shaikhullina-story';
-    const isSubscriptionInactive = token && !currentUser.subscriptionActive;
 
-    const handleScroll = () => {
-        const scrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
 
-        // условия отображения
-        if (scrollY > (documentHeight - windowHeight) * 0.1 && !token && (!isOnSpecialPage || !isSubscriptionInactive)) {
-            setIsVisible(true);
-        } else {
-            setIsVisible(false);
-        }
+    // Функция для проверки, находится ли пользователь на специальной странице
+    const isOnSpecialPage = (pathname) => {
+        return [
+            '/', '/about', '/career-stories', '/business-stories', '/signin',
+            '/tariffs', '/signup', '/forgottenpassword', '/resetpassword',
+            '/payment', '/404', '/500'
+        ].includes(pathname) || pathname.startsWith('/password-reset/');
     };
 
-    const handleResize = () => {
-        setScreenSize(window.innerWidth);
-    };
+    const isSubscriptionInactive = token && !currentUser?.subscriptionActive;
+
+    // Определяем, должен ли алерт отображаться
+    const shouldShowAlert = !token && !isOnSpecialPage(location.pathname) && !isSubscriptionInactive;
 
     useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+
+            setIsVisible(scrollY > (documentHeight - windowHeight) * 0.1 && shouldShowAlert);
+        };
+
         window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [shouldShowAlert]);
+
+    useEffect(() => {
+        const handleResize = () => setScreenSize(window.innerWidth);
         window.addEventListener('resize', handleResize);
 
-        handleScroll(); 
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [token, currentUser, location]); 
-    
+    if (!isVisible) return null; // Если алерт не должен отображаться, сразу выходим
+
+    const totalStories = DATACareer.length + DATABusiness.length;
+
+    const getHistoryWord1 = (count) => {
+        if (count % 10 === 1 && count % 100 !== 11) return "историю";
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(totalStories % 100)) return "истории";
+        return "историй";
+    };
 
     return (
         <div className={`notlogedin ${isVisible ? '' : 'notlogedin_disabled'}`}>
@@ -52,7 +69,9 @@ const NotJoinedAllert = () => {
                     и получи доступ к статьям
                     </p>
                     <p className='notlogedin__left-block-text'>На данный момент ты не участник CEOstory</p>
-                    <Link to='/signin' className='main__link notlogedin__botton '>Присоединиться</Link>
+                    <Link to='/signin' className='link link__notlogedin'>
+                        <span>Присоединиться</span>
+                    </Link>
                 </div>
 
                 <div className='notlogedin__right-block'>
@@ -60,7 +79,7 @@ const NotJoinedAllert = () => {
                         <img src={logo} className='notlogedin__logo-img' alt='CEOstory'/>
                     </Link>
                     <p className='notlogedin__right-block-header'>Раскрой секреты успеха  
-                    {screenSize >767 && (
+                    {screenSize > 767 && (
                         <span className='notlogedin__right-block-span'><br/>бизнесменов и&nbsp;топ-менеджеров</span>
                     )}
                     {screenSize < 767 && (
@@ -68,12 +87,14 @@ const NotJoinedAllert = () => {
                     )}
                     </p>
                     <p className='notlogedin__right-block-text'>С СEOstory ты узнаешь какой путь надо пройти, чтобы сделать успешную карьеру или бизнес. </p>
-                    <p className='notlogedin__right-block-more'>Погрузись в 10 историй с советами, как с нуля добиться того же самого. </p>
+                    <p className='notpaied__right-block-more'>
+                        Погрузись в {totalStories} {getHistoryWord1(totalStories)} с советами, как с нуля добиться того же самого
+                    </p>
                     <div className='notlogedin__right-block-image'></div>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default NotJoinedAllert;

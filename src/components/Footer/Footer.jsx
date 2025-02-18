@@ -35,7 +35,7 @@ function Footer() {
 
     
   const hideFooter = () => 
-    ['/signup', '/signin', '/forgottenpassword', '/resetpassword', '/payment', '/404', '/505']
+    ['/signup', '/signin', '/forgottenpassword', '/resetpassword', '/payment', '/404', '/500']
       .some(route => pathname.startsWith(route)) || pathname.startsWith('/password-reset/');
         // Обработчик скролла
   

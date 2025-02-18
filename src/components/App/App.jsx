@@ -31,9 +31,11 @@ import KorotkovaE from '../StoryData/Career/KorotkovaE/KorotkovaE';
 import RegistrationSucceed from '../RegistrationSucceed/RegistrationSucceed';
 import PopupError from '../PopupError/PopupError';
 import PopupSuccess from '../PopupSuccess/PopupSuccess';
+import NotJoinedAllert from '../NotJoinedAllert/NotJoinedAllert';
+import NotPaidAllert from '../NotPaidAllert/NotPaidAllert';
+import DATACareer from '../Data/DataCareer';
+import DATABusiness from '../Data/DataBusiness';
 
-//истории
- 
 function App() {
 
     const navigate = useNavigate();
@@ -41,7 +43,6 @@ function App() {
     const [logedIn, setLogedIn] = useState(false);
     const [currentUser, setCurrentUser] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    // const [savedStory, setSavedStory] = useState([]); // Инициализация состояния для сохраненных историй
     const [savedStories, setSavedStories] = useState([]);
     const [isEmailSent, setIsEmailSent] = useState(false);
     const [showPopupConfirmationEmail, setShowPopupConfirmationEmail] = useState(false); // Состояние для показа попапа
@@ -49,8 +50,29 @@ function App() {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState(''); 
     const [isPopupSuccessVisible, setIsPopupSuccessVisible] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+    const [IsSaveBlocked, setIsSaveBlocked] = useState(null);
+    const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+    const [subscriptionEnd, setSubscriptionEnd] = useState(null);
+    const token = localStorage.getItem('token');
 
-    // регистрация
+    
+    useEffect(() => {
+        const handleUnhandledRejection = (event) => {
+          console.error("Необработанная ошибка:", event.reason);
+    
+          if (event.reason.message.includes("Ошибка сервера 500")) {
+            navigate("/500"); // Редирект на страницу ошибки
+          }
+        };
+    
+        window.addEventListener("unhandledrejection", handleUnhandledRejection);
+    
+        return () => {
+          window.removeEventListener("unhandledrejection", handleUnhandledRejection);
+        };
+    }, [navigate]);
+
     // Обработчик регистрации
     const handleRegister = (name, email, password) => {
         setIsLoading(true);
@@ -63,16 +85,16 @@ function App() {
           .catch((err) => {
             console.error(err);
             let errorMessage = 'При регистрации пользователя произошла ошибка, попробуйте позднее';
-            if (err === 'Ошибка: 409') {
+            if (err.message.includes('409')) { // Проверяем код ошибки в тексте
               errorMessage = 'Пользователь с таким e-mail уже существует';
-            } else if (err === 'Ошибка: 500') {
+            } else if (err.message.includes('500')) {
               errorMessage = 'На сервере произошла ошибка, попробуйте позднее';
             }
             setErrorMessage(errorMessage);
             setIsPopupErrorVisible(true); // Показываем PopupError
           })
           .finally(() => setIsLoading(false));
-      };
+    };
 
     // Подтверждение почты
     const handleConfirmEmail = (userId, token) => {
@@ -120,9 +142,7 @@ function App() {
           .catch((err) => {
             console.error(err);
             let error = 'При входе произошла ошибка.';
-            if (err === 'Ошибка: 401') {
-              error = 'Неправильный e-mail или пароль.';
-            } else if (err === 'Ошибка: 400') {
+            if (err.message.includes('401') || err.message.includes('400')) {
               error = 'Неправильный e-mail или пароль.';
             }
             setErrorMessage(error);
@@ -162,7 +182,8 @@ function App() {
         })
         .finally(() => setIsLoading(false));
     };
-      
+    
+    // установка нового пароля после его сброса
     const handleNewPassword = (userId, token, password) => {
         setIsLoading(true);
         auth
@@ -210,14 +231,19 @@ function App() {
         };
     }, [tokenFromLocalStorage]);
 
+    // выход из аккаунта
+
     // выход из аккаунта 
     const logout = () => {
+        console.log('Выход из аккаунта');
         localStorage.removeItem('token');
-        setLogedIn(false);
         localStorage.removeItem('filters'); 
         localStorage.removeItem('storyFilters');
         localStorage.removeItem('savedStories');
+        setLogedIn(false);
+        setCurrentUser(null);
     };
+
 
     // показать Preloader
     useEffect(() => {
@@ -241,104 +267,198 @@ function App() {
             .catch((err) => console.log(err));
     };
 
-    // Функция для сохранения истории
-    const saveStory = (story) => {
-        auth.saveStory(story)
-            .then((newStory) => {
-                const newSavedStories = [newStory, ...savedStories];
-                setSavedStories(newSavedStories);
-                localStorage.setItem('savedStories', JSON.stringify(newSavedStories));
-                console.log('Сохраненные истории:', newSavedStories);
-            })
-            .catch((err) => console.log(err));
-    };
-
     // Удаление истории
-    const removeStory = async (story) => {
-        const savedStories = JSON.parse(localStorage.getItem('savedStories'));
+    const removeStory = (story) => {
+        const savedStories = JSON.parse(localStorage.getItem('savedStories')) || [];
         const foundSavedStory = savedStories.find((item) => item.storyId === story.storyId);
-
-        if (foundSavedStory) {
-            try {
-                await auth.deleteStory(foundSavedStory._id);
+    
+        if (!foundSavedStory) {
+            console.log('История не найдена');
+            return;
+        }
+    
+        auth.deleteStory(foundSavedStory._id)
+            .then(() => {
                 const updatedSavedStories = savedStories.filter((item) => item.storyId !== story.storyId);
                 localStorage.setItem('savedStories', JSON.stringify(updatedSavedStories));
                 setSavedStories(updatedSavedStories);
-                console.log('История удалена');
-            } catch (err) {
-                console.log('Ошибка при удалении истории:', err);
-            }
-        } else {
-            console.log('История не найдена');
-        }
+            })
+            .catch((err) => console.log('Ошибка при удалении истории:', err));
     };
 
     // Функция для проверки, сохранена ли история
     const isStorySaved = (storyId) => savedStories.some(story => story.storyId === storyId);
 
-    useEffect(() => {
-        getSavedStories();
-    }, []);
+    const handleSaveStory = (story) => {
+        // if (!logedIn) {
+        //     setIsSaveBlocked(story.storyId);
     
-    const increaseView = async (storyId) => {
-        try {
-            const response = await auth.increaseViews(storyId); // Вызов функции для отправки данных на сервер
+        //     // Убираем блокировку через 5 секунд
+        //     setTimeout(() => {
+        //         setIsSaveBlocked(null);
+        //     }, 3000);
     
-            return response.views;  // Возвращаем обновленное количество просмотров
-        } catch (error) {
-            console.error(`Ошибка при отправке данных для истории с ID ${storyId}:, error`);
-            throw error; 
+        //     return;
+        // }
+    
+        // setIsSaving(true);
+    
+        auth.saveStory(story)
+            .then((newStory) => {
+                const newSavedStories = [newStory, ...savedStories];
+                setSavedStories(newSavedStories);
+                localStorage.setItem('savedStories', JSON.stringify(newSavedStories));
+                // console.log('Сохраненные истории:', newSavedStories);
+            })
+            .catch((err) => {
+                console.log("Ошибка при сохранении:", err);
+            })
+            .finally(() => {
+                setIsSaving(false);
+            });
+    };
+
+    // убрала, так как постоянно идет запрос на отображаение карточек (при загрузки страницы, пересещении и тд)
+    // useEffect(() => {
+    //     getSavedStories();
+    // }, []);
+    
+    // const increaseView = (storyId) => {
+    //     return auth
+    //         .increaseViews(storyId)
+    //         .then(response => response.views)  // Возвращаем обновленное количество просмотров
+    //         .catch(error => {
+    //             console.error(`Ошибка при отправке данных для истории с ID ${storyId}:`, error);
+    //             throw error; 
+    //         });
+    // };
+
+    const increaseView = (storyId) => {
+        // const sessionKey = `viewed_${storyId}`;
+    
+        // if (sessionStorage.getItem(sessionKey)) {
+        //     console.log(`Просмотр истории ${storyId} уже зафиксирован в этой сессии.`);
+        //     return Promise.resolve(null);
+        // }
+    
+        // return getViews(storyId)
+        //     .then(viewData => {
+        //         console.log(`Текущие просмотры: ${viewData.views}`);
+        //         return updateViews(storyId);
+        //     })
+        //     // .then(response => {
+        //     //     sessionStorage.setItem(sessionKey, 'true');
+        //     //     return response.views;
+        //     // })
+        //     .catch(error => {
+        //         if (error.message.includes('404')) {
+        //             console.warn(`Карточка для истории ${storyId} не найдена. Создаю новую...`);
+        //             return createViews(storyId)
+        //                 .then(() => new Promise(resolve => setTimeout(resolve, 1000))) // Ждём 1 сек перед повторным GET
+        //                 .then(() => getViews(storyId))
+        //                 .then(viewData => updateViews(storyId))
+        //                 .then(updatedResponse => {
+        //                     // sessionStorage.setItem(sessionKey, 'true');
+        //                     return updatedResponse.views;
+        //                 });
+        //         }
+    
+        //         console.error(`Ошибка при увеличении просмотров для истории с ID ${storyId}:`, error);
+        //         return 0;
+        //     });
+    };
+
+
+    const getViews = (storyId, setNewViews) => {
+        if (!storyId) {
+            console.warn("getViews: storyId отсутствует.");
+            setNewViews(0);
+            return;
         }
+        auth
+            .getViews(storyId)
+            .then((viewData) => {
+                const views = viewData?.views || 0; // Если `views` нет, устанавливаем 0
+                setNewViews(views);
+                if (views !== null) {
+                    localStorage.setItem(`storyViews_${storyId}`, JSON.stringify(views)); // Сохраняем в localStorage
+                }
+            })
+            .catch((error) => {    
+                // Если ошибка 404, устанавливаем просмотры в 0
+                if (error?.response?.status === 404 || error?.message?.includes("404")) {
+                    setNewViews(0);
+                    localStorage.setItem(`storyViews_${storyId}`, JSON.stringify(0));
+                }
+            });
     };
 
     // оплата
     const handlePaymentSubmit = async (paymentData) => {
         setIsLoading(true); // Устанавливаем состояние загрузки
         console.log('Отправка данных на оплату:', paymentData);
-    
-        // try {
-        //     // Предполагаем, что paymentData содержит необходимые поля для оплаты
-        //     const paymentResult = await 
-        //     auth
-        //         .payForTariff(paymentData.amount, paymentData.currency, paymentData.description);
-            
-        //     console.log('Результат оплаты:', paymentResult);
-            
-        //     // Логика для обработки успешной оплаты
-        //     if (paymentResult.success) { // Предполагаем, что API возвращает объект с полем success
-        //         // Перенаправление пользователя или уведомление о успехе
-        //         navigate('/career-stories', { replace: true });
-        //         getSavedStories(); // Получаем сохраненные истории
-        //         setCurrentUser({ name: paymentData.name, email: paymentData.email }); // Обновляем текущего пользователя, если необходимо
-        //     } else {
-        //         // Обработка ситуации, когда оплата не удалась
-        //     }
-    
-        // } catch (err) {
-        //     console.error(err);
-        //     // Обработка ошибок
-        //     if (err.response) {
-        //         // Если ошибка связана с ответом сервера
-        //         switch (err.response.status) {
-        //             case 500:
-        //                 break;
-        //             case 400:
-        //                 break;
-        //             default:
-        //                 break;
-        //         }
-        //     } else {
-        //         // Если ошибка не связана с ответом сервера
-        //     }
-        // } finally {
-        //     setIsLoading(false); // Сбрасываем состояние загрузки
-        // }
     };
 
     const handleClosePopup = () => {
         setIsPopupErrorVisible(false);
         setIsPopupSuccessVisible(false);
     };
+
+    useEffect(() => {
+        if (!token) {
+            setHasActiveSubscription(false);
+            setSubscriptionEnd(null);
+            setCurrentUser(null);
+            return;
+        }
+
+        const fetchUserSubscription = () => {
+            console.log('🔄 Запрос на проверку подписки...');
+            auth.checkToken(token)
+                .then((res) => {
+                    if (res && res.subscriptionEnd !== undefined) {
+                        const subscriptionEndDate = res.subscriptionEnd ? new Date(res.subscriptionEnd) : null;
+                        const currentDate = new Date();
+
+                        // console.log('📢 Текущая дата (UTC):', currentDate.toISOString());
+                        // console.log('📢 Дата окончания подписки (UTC):', subscriptionEndDate ? subscriptionEndDate.toISOString() : 'Нет подписки');
+
+                        const isActive = subscriptionEndDate !== null && currentDate < subscriptionEndDate;
+                        // console.log('📢 Подписка:', isActive ? 'АКТИВНА' : 'ИСТЕКЛА / ОТСУТСТВУЕТ');
+
+                        setHasActiveSubscription(isActive);
+                        setSubscriptionEnd(subscriptionEndDate); // Сохраняем подписку
+                        setCurrentUser(res); // Обновляем `currentUser`
+                    }
+                })
+                .catch((error) => {
+                    console.error('⚠️ Ошибка обновления подписки:', error);
+                    setHasActiveSubscription(false);
+                    setSubscriptionEnd(null);
+                });
+        };
+
+        fetchUserSubscription();
+        const intervalId = setInterval(fetchUserSubscription, 15000); // ✅ Обновляем каждые 10 сек
+
+        return () => clearInterval(intervalId);
+    }, [token]);
+
+
+    const totalStories = DATACareer.length + DATABusiness.length;
+
+    const getHistoryWord1 = (count) => {
+        if (count % 10 === 1 && count % 100 !== 11) return "историю";
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(totalStories % 100)) return "истории";
+        return "историй";
+    };
+
+
+    const getHistoryWord3 = (count) => {
+        if (count % 10 === 1 && count % 100 !== 11) return "история";
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return "истории";
+        return "историй";
+      };
 
     //где header полностью черный
     const isSpecialPage = () => 
@@ -354,6 +474,7 @@ function App() {
         pathname === '/confirmation' ||
         pathname === '/korotkovae-story' ||
         pathname === '/batashev-story';
+    
         
     return (
         <div className={`app ${isSpecialPage() ? 'special-page' : ''}`}>
@@ -371,34 +492,50 @@ function App() {
                     onClose={handleClosePopup}
                     successMessage={successMessage}
                 />
+                <NotPaidAllert 
+                    hasActiveSubscription={hasActiveSubscription}
+                />
+                <NotJoinedAllert />
                 <Routes>
-                    <Route path="/" element={<Main />} />
+                    <Route 
+                        path="/" 
+                        element={
+                        <Main 
+                            totalStories={totalStories}
+                            getHistoryWord1={getHistoryWord1}
+                            getHistoryWord3={getHistoryWord3}
+                        />} 
+                    />
                     <Route 
                         path="/career-stories" 
                         element={
                             <CareerStories
-                                saveStory={saveStory}
+                                saveStory={handleSaveStory}
                                 removeStory={removeStory} 
                                 onIncreaseView={increaseView}
                                 isStorySaved={isStorySaved}
+                                isSaving={isSaving}
+                                IsSaveBlocked={IsSaveBlocked}
+                                getViews={getViews}
                         />} 
                     />
                     <Route 
                         path="/business-stories" 
                         element={
                             <BusinessStories
-                                saveStory={saveStory}
+                                saveStory={handleSaveStory}
                                 removeStory={removeStory} 
                                 onIncreaseView={increaseView}
                                 isStorySaved={isStorySaved}
+                                isSaving={isSaving}
+                                IsSaveBlocked={IsSaveBlocked}
+                                getViews={getViews}
                         />}
                     />
-                    <Route 
-                        path="/about" element={
-                        <About 
-                            logout={logout}
-                    />}
-                    />
+                    <Route
+                        path="/about"
+                        element={logedIn ? <About subscriptionEnd={subscriptionEnd} hasActiveSubscription={hasActiveSubscription} /> : <Navigate to="/" replace />}
+                    />                   
                     <Route
                         path="/saved"
                         element={
@@ -452,7 +589,11 @@ function App() {
                         path="/tariffs" element={
                             <Tariffs 
                                 onPaymentSubmit={handlePaymentSubmit} 
-                            />} />
+                                totalStories={totalStories}
+                                getHistoryWord1={getHistoryWord1}
+                                getHistoryWord3={getHistoryWord3}
+                            />} 
+                    />
                     <Route path="/payment" element={<Payment />} />
                     <Route path="/confirmation" element={<ConfirmationPayment />} />
 
@@ -462,14 +603,21 @@ function App() {
                     <Route path="/documents/personal-data-form" element={<PersonalDataForm />}/>
 
                     <Route path="/500" element={<ServerError/>} />
-                    <Route path="/404" element={<NotFound />} />
+                    <Route 
+                        path="/404" 
+                            element={
+                                <NotFound
+                                    totalStories={totalStories}
+                                    getHistoryWord={getHistoryWord1} 
+                            />} 
+                        />
                     <Route path="*" element={<Navigate to="/404" replace />} />
 
                     
                     {/* ИСТОРИИ КАРЬЕРЫ */}
                     <Route path="/korotkovae-story" 
                         element={<KorotkovaE
-                        saveStory={saveStory}
+                        saveStory={handleSaveStory}
                         removeStory={removeStory} 
                         onIncreaseView={increaseView}
                         isStorySaved={isStorySaved}
@@ -479,12 +627,13 @@ function App() {
                     {/* ИСТОРИИ БИЗНЕСА */}
                     <Route path="/batashev-story" 
                         element={<BatashevR
-                        saveStory={saveStory}
+                        saveStory={handleSaveStory}
                         removeStory={removeStory} 
                         onIncreaseView={increaseView}
                         isStorySaved={isStorySaved}
+                        isSaving={isSaving}
                         />} 
-                    />
+                    /> 
 
                 </Routes>
                 <Cookies />

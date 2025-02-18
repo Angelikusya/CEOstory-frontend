@@ -30,7 +30,6 @@ function Register({ onRegister, isLoading, showPopupConfirmationEmail, setShowPo
     watch 
   } = useForm({ mode: 'onChange' });
   
-
   useEffect(() => {
     const subscription = watch(({name, email, password}) => {
       setName(name);
@@ -51,7 +50,6 @@ function Register({ onRegister, isLoading, showPopupConfirmationEmail, setShowPo
   const closePopup = () => {
     setShowPopupConfirmationEmail(false); // Закрываем попап
   };
-
 
   const togglePasswordVisibility = () => {
       setShowPassword(!showPassword);
@@ -136,7 +134,7 @@ function Register({ onRegister, isLoading, showPopupConfirmationEmail, setShowPo
               <input
                 id="password-input"
                 type={showPassword ? 'text' : 'password'}
-                className='register__input'
+                className='register__input-password'
                 placeholder="Пароль*"
                 minLength="6"
                 maxLength="40"
@@ -160,7 +158,7 @@ function Register({ onRegister, isLoading, showPopupConfirmationEmail, setShowPo
                   }
                 })}
               />
-              <span 
+              <div 
                 className={`toggle-password ${showPassword ? 'eye-open' : 'eye-close'}`} 
                 onClick={togglePasswordVisibility} 
               />
@@ -179,7 +177,10 @@ function Register({ onRegister, isLoading, showPopupConfirmationEmail, setShowPo
                       checked={isCheckboxChecked}
                 />
                 <label htmlFor="consentCheckbox" className="checkbox__label">
-                  <p className="checkbox__text"> Согласен на обработку <Link to="/documents/terms-of-use" target='_blank' className="checkbox__policy">персональных данных</Link> в&nbsp;соответствии с&nbsp;<Link to="/documents/privacy-policy" target='_blank' className="checkbox__policy button">Политикой конфиденциальности</Link></p>
+                  <p className="checkbox__text"> Согласен на обработку 
+                    <Link to="/documents/terms-of-use" target='_blank' className="checkbox__policy">персональных данных</Link> в&nbsp;соответствии с&nbsp;
+                    <Link to="/documents/privacy-policy" target='_blank' className="checkbox__policy button">Политикой конфиденциальности</Link>
+                  </p>
                 </label>
                 </div>
                 {isLoading ? (

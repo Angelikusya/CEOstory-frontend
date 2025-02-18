@@ -200,6 +200,7 @@
     height: 44px;
     position: relative;
     background-color: transparent;
+    z-index: 1;
 }
 
 .preview__button-save:hover {
@@ -207,7 +208,6 @@
     width: 33px;
     height: 44px;
 }
-
 
 .preview__button-delete {
     background: url('../../assets/save-stories-desk-active.svg') no-repeat center;
@@ -240,18 +240,58 @@
     line-height: 90%;
 }
 
-.tooltip {
-    background: rgba(0, 0, 0, 0.3);
-    font-weight: 500;
-    font-size: 12px;
-    color: #fff;
-    font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
-    position: absolute;
-    bottom: -25px;
-    right: -15px;
-    border-radius: 3px;
-    padding: 3px 8px;
+.preview__buttons-container {
+    position: relative;
 }
+
+.preview__button-save.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.preview__buttons-container {
+    position: relative;
+    display: inline-block;
+}
+
+.preview__button-save {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.preview__button-save:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.preview__button-blocked {
+    position: absolute;
+    bottom: 120%; /* Поднимаем подсказку над кнопкой */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.preview__button-blocked::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+
 
 @media screen and (max-width: 1279px) {
     .preview__link {

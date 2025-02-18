@@ -6,6 +6,8 @@
 .documents-nav__list {
     list-style-type: none; /* Убираем маркеры списка */
     padding: 0;
+    margin: 0;
+    width: 260px;
 }
 
 .documents-nav__item {
@@ -47,6 +49,10 @@
     line-height: normal;
 }
 
+.link__documents-nav {
+    width: 332px;
+}
+
 @media screen and (max-width: 1279px) {
 
     .documents-nav__item {
@@ -64,9 +70,9 @@
         width: 210px;
     }
 
-    .documents-nav__stories {
-        margin-top: 50px;
-
+    .link__documents-nav {
+        margin-top: 10px;
+        width: 300px;
     }
 }
 

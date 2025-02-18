@@ -208,7 +208,8 @@
         line-height: 120%;
     }
     .short-text {
-        font-size: 15px;
+        /* font-size: 15px; */
+        font-size: 19px;
     }
     .batashov-short__number-title {
         font-size: 17px;

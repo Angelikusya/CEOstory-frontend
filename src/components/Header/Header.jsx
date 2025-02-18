@@ -72,15 +72,10 @@ const Header = ({logout}) => {
     pathname === '/documents/terms-of-use'||
     pathname === '/documents/personal-data-form';
 
-  //отображаем базовый header
-  const activeBasicHeader = () => 
-    pathname === '/' || 
-    pathname === '/saved' ||
-    pathname === '/about';
 
   //где header не отображается
   const hideHeader = () => 
-    ['/signup', '/signin', '/forgottenpassword', '/resetpassword', '/payment', '/404', '/505']
+    ['/signup', '/signin', '/forgottenpassword', '/resetpassword', '/payment', '/404', '/500']
       .some(route => pathname.startsWith(route)) || pathname.startsWith('/password-reset/');
         // Обработчик скролла
   useEffect(() => {

@@ -2,19 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Filter.css';
 import lupe from '../../assets/lupe-filter-desk.svg';
 // import data from '../Data/DataCareer';
-import { useSwipeable } from 'react-swipeable'; // Импортируем библиотеку
+import { useSwipeable } from 'react-swipeable';
+import { useLocation } from 'react-router-dom';
 
 
 const Filter = ({ onFilterChange, data }) => {
+    const location = useLocation();
+    const isCareerPage = location.pathname.includes('career-stories'); 
+
+    // Отдельные ключи для хранения фильтров в localStorage
+    const storageKey = isCareerPage ? 'careerFilters' : 'businessFilters';
+
     const [filters, setFilters] = useState(() => {
-        // Загружаем фильтры из localStorage или устанавливаем начальные значения
-        const savedFilters = localStorage.getItem('filters');
+        const savedFilters = localStorage.getItem(storageKey);
         return savedFilters ? JSON.parse(savedFilters) : {
-            income: '',
+            ...(isCareerPage ? {} : { income: '' }), // Убираем "Доход" из CareerStories
             field: '',
             searchTerm: ''
         };
     });
+
     const [showDropdown, setShowDropdown] = useState('');
     const [isActiveSearchline, setIsActiveSearchline] = useState(false);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -22,6 +29,35 @@ const Filter = ({ onFilterChange, data }) => {
     const prevFilters = useRef(filters);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
     const [hasActiveFilters, setHasActiveFilters] = useState(false);
+
+    useEffect(() => {
+        localStorage.setItem(storageKey, JSON.stringify(filters));
+        if (JSON.stringify(prevFilters.current) !== JSON.stringify(filters)) {
+            onFilterChange(filters);
+            prevFilters.current = filters;
+        }
+    }, [filters, onFilterChange, storageKey]);
+
+    // Данные для фильтра исходя из данных в data
+    const options = {
+        field: [...new Set(data.map(story => story.field))],
+    };
+
+    const handleOptionClick = (key, option) => {
+        setFilters((prev) => ({
+            ...prev,
+            [key]: prev[key] === option ? '' : option
+        }));
+        setTimeout(() => {
+            setShowDropdown('');
+        }, 0);
+    };
+
+    const resetFilters = () => {
+        setFilters(isCareerPage ? { field: '', searchTerm: '' } : { income: '', field: '', searchTerm: '' });
+        setShowDropdown('');
+        localStorage.removeItem(storageKey);
+    };
 
     // Функция для преобразования строки в числовое значение
     const parseIncome = (income) => {
@@ -38,15 +74,13 @@ const Filter = ({ onFilterChange, data }) => {
         return options.sort((a, b) => {
             const aValue = parseIncome(a);
             const bValue = parseIncome(b);
-            return aValue - bValue; // Сравниваем числовые значения
+            return bValue - aValue; // Сортируем по убыванию
         });
     };
 
-    // Данные для фильтра исходя из данных в data
-    const options = {
-        income: sortIncomeOptions([...new Set(data.map(story => story.income))]),
-        field: [...new Set(data.map(story => story.field))]
-    };
+    if (!isCareerPage) {
+        options.income = sortIncomeOptions([...new Set(data.map(story => story.income))]);
+    }
     
     // Отображение фильтра в зависимости от ширины экрана
     const handleResize = () => {
@@ -97,35 +131,10 @@ const Filter = ({ onFilterChange, data }) => {
         setShowDropdown((prev) => (prev === type ? '' : type));
     };
 
-    // Выбор фильтра
-    const handleOptionClick = (key, option) => {
-        setFilters((prev) => {
-            const newFilters = { ...prev, [key]: filters[key] === option ? undefined : option };
-            localStorage.setItem('filters', JSON.stringify(newFilters));
-    
-            return newFilters;
-        });
-        setTimeout(() => {
-            setShowDropdown('');
-        }, 0);
-    };
-
     // Поиск по searchline
     const handleSearchChange = (e) => {
         setFilters((prev) => ({ ...prev, searchTerm: e.target.value }));
     };
-
-    //сброс всех фильтров
-    const resetFilters = () => {
-        setFilters({
-            income: '',
-            field: '',
-            searchTerm: ''
-        });
-        setShowDropdown('');
-        localStorage.removeItem('filters'); // Удаляем сохраненные фильтры из localStorage
-    };
-
 
     useEffect(() => {
         const activeFilters = Object.values(filters).some(filter => filter);
@@ -199,7 +208,6 @@ const Filter = ({ onFilterChange, data }) => {
 
     // Функция для закрытия фильтра
     const handleFilterToggle = () => {
-        console.log(isFilterOpen)
         setIsFilterOpen((prev) => !prev); // Переключаем состояние фильтра
 
     };

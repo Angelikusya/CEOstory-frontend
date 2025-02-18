@@ -21,17 +21,13 @@ const StoriesMore = ({
     publicationDate, 
     free,
     photo,
-    onSave, 
-    onRemove,
     views,
     readingTime,
     onIncreaseView,
-    isSaved,
 }) => {
     const [newViews, setNewViews] = useState(views);
-    const [isSaving, setIsSaving] = useState(false);
-    const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [screenSize, setScreenSize] = useState(window.innerWidth);
     const storyData = {
         _id,
         storyId,
@@ -52,7 +48,6 @@ const StoriesMore = ({
         readingTime,
         views: newViews,
     };
-    const [screenSize, setScreenSize] = useState(window.innerWidth);
 
     const handleResize = () => {
       setScreenSize(window.innerWidth);
@@ -66,43 +61,6 @@ const StoriesMore = ({
     }, []);
 
 
-    const handleIncreaseView = async () => {
-        // Увеличиваем количество просмотров
-        const updatedViews = await onIncreaseView(storyId);
-        setNewViews(updatedViews);
-    };
-
-    useEffect(() => {
-        // Получаем количество просмотров при монтировании компонента
-        const fetchViews = async () => {
-            const viewData = await 
-            auth
-                .getViews(storyId);
-                setNewViews(viewData.views);
-        };
-
-        fetchViews();
-    }, [storyId]); // Зависимость от storyId
-
-    const handleSaveStory = async () => {
-        if (onSave) {
-            setIsSaving(true); // Устанавливаем состояние "сохранения"
-            try {
-                await onSave(storyData); // Вызываем функцию onSave
-            } catch (error) {
-                console.error("Ошибка при сохранении:", error);
-            } finally {
-                setIsSaving(false); // Сбрасываем состояние "сохранения"
-            }
-        }
-    };
-
-
-    const handleRemoveStory = () => {
-        if (onRemove) {
-            onRemove(storyData); // Вызываем функцию onRemove
-        }
-    };
 
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -141,7 +99,7 @@ const StoriesMore = ({
         
     return (
         <div className='more__card'>
-            <button className='more__click' onClick={handleIncreaseView}>
+            <button className='more__click' onClick={onIncreaseView}>
                 <div className='more__mobile'>
                     {free && <div className='more__free'>Бесплатно</div>}
                         <Link to={navigation} className='more__link'>

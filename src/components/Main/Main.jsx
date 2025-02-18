@@ -7,7 +7,7 @@ import KorotkovaE from '../../assets/speaker-photoes/korotkova-tiny.webp';
 import BotashovR from '../../assets/speaker-photoes/speaker-photo-main-3.webp';
 import VafeevT from '../../assets/speaker-photoes/speaker-photo-main-4.webp';
 
-const Main = () => {
+const Main = ({totalStories, getHistoryWord1, getHistoryWord3 }) => {
 
 const [screenSize, setScreenSize] = useState(window.innerWidth);
 const pathname = window.location.pathname; // Получаем текущий путь
@@ -27,6 +27,7 @@ useEffect(() => {
   };
 }, []);
 
+
   return (
     <section className='main'>
     {screenSize >767 && (
@@ -35,22 +36,24 @@ useEffect(() => {
       <div className='main__wrapper'>
         <div alt='CEOstory' className='main__logo'/>
          {/* для десктопной версии */}
-        {screenSize > 1279 && (
+        {/* {screenSize > 1279 && (
           <h1 className='main__title'><span className='main__title-span'>раскрой секреты успеха<br/></span>бизнесменов и топ-менеджеров
           </h1>
-        )}
-        {screenSize > 767 && screenSize < 1280 &&(
+        )} */}
+        {screenSize > 767 &&(
           <h1 className='main__title'><span className='main__title-span'>Раскрой секреты успеха<br/></span>бизнесменов и топ-менеджеров
           </h1>
         )}
-        {screenSize < 767 && (
+        {screenSize <= 767 && (
           <h1 className='main__title'><span className='main__title-span'>Раскрой <br/>секреты успеха</span> бизнесменов и 
             <br/>топ-менеджеров
           </h1>
         )}
-        <p className='main__subtitle'>Погрузись в&nbsp;10 историй с советами, <span className='main__subtitle-span'>как с&nbsp;нуля добиться того же самого</span></p>
+        <p className='main__subtitle'>Погрузись в&nbsp;{totalStories} {getHistoryWord1(totalStories)} с советами, <span className='main__subtitle-span'>как с&nbsp;нуля добиться того же самого.</span>
+        </p>
         <div className='main__line'></div>
-        <Link to='/career-stories' className='main__link main__link-margin'  onClick={() => { window.scrollTo({ top: 0 }) }}>Читать истории</Link>
+        <Link to='/career-stories' className='link link__main'  onClick={() => { window.scrollTo({ top: 0 }) }}>          
+          <span>Читать истории</span></Link>
       </div>
       <div className='main__stories'>
         <h3 className='main__about'>Узнай, что нужно сделать <span className='main__about-span'>чтобы добиться успеха</span></h3>
@@ -58,7 +61,7 @@ useEffect(() => {
         <div className='main__cards'>
 
           <Link to='/korotkovae-story' className='main__card' onClick={() => { window.scrollTo({ top: 0 }) }}>
-            <img className='main__card-photo grey' src={BursalidiD} alr='Фотография спикера'/>
+            <img className='main__card-photo grey' src={BursalidiD} alt='Фотография спикера'/>
             {/* {screenSize <1279 && (
                 <div className='main__filter'>
                   <p className='main__filter-info'>NDA</p>
@@ -100,14 +103,14 @@ useEffect(() => {
             </div>
           </Link>
           <Link to='/korotkovae-story' className='main__card' onClick={() => { window.scrollTo({ top: 0 }) }}>
-            <img className='main__card-photo purple' src={VafeevT} alr='Фотография спикера'/>
-            {screenSize <1279 && (
+            <img className='main__card-photo purple' src={VafeevT} alt='Фотография спикера'/>
+            {/* {screenSize <1279 && (
                 <div className='main__filter'>
-                  <p className='main__filter-info'>от 100 млн р.</p>
+                  <p className='main__filter-info'>от 100 млн руб.</p>
                 </div>
-            )}
+            )} */}
             <div className='main__card-wrapper'>
-              <h4 className='main__card-title'>Как сделать бизнес на&nbsp;<span className='main__card-title-purple'>WB</span> с&nbsp;оборотом более 200&nbsp;млн.&nbsp;р. 
+              <h4 className='main__card-title'>Как сделать бизнес на&nbsp;<span className='main__card-title-purple'>WB</span> с&nbsp;оборотом более 200&nbsp;млн&nbsp;руб. 
               в месяц менее чем за год</h4>
               <div className='main__card-features'>
                 <div className='main__card-feature'>
@@ -123,22 +126,22 @@ useEffect(() => {
               <div className='main__filters'>
                 <div className='main__filter'>
                   <p className='main__filter-title'>доход</p>
-                  <p className='main__filter-info'>от 1 млн.р.</p>
+                  <p className='main__filter-info'>от 1 млн&nbsp;руб.</p>
                 </div>
                 <div className='main__filter'>
                   <p className='main__filter-title'>сфера</p>
                   <p className='main__filter-info'>Маркетплейсы</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>стоимость открытия</p>
-                  <p className='main__filter-info'>1 млн. р.</p>
+                  <p className='main__filter-title'>вложения</p>
+                  <p className='main__filter-info'>1 млн&nbsp;руб.</p>
                 </div>
               </div>
               )}
             </div>
           </Link>
           <Link to='/korotkovae-story' className='main__card' onClick={() => { window.scrollTo({ top: 0 }) }}>
-            <img className='main__card-photo pink' src={KorotkovaE} alr='Фотография спикера'/>
+            <img className='main__card-photo pink' src={KorotkovaE} alt='Фотография спикера'/>
             {/* {screenSize <1279 && (
                 <div className='main__filter'>
                   <p className='main__filter-info'>Очень много</p>
@@ -181,14 +184,14 @@ useEffect(() => {
           </Link>
         {screenSize >750 && (
           <Link to='/korotkovae-story' className='main__card' onClick={() => { window.scrollTo({ top: 0 }) }}>
-            <img className='main__card-photo green' src={BotashovR} alr='Фотография спикера'/>
-            {screenSize <1279 && (
+            <img className='main__card-photo green' src={BotashovR} alt='Фотография спикера'/>
+            {/* {screenSize <1279 && (
                 <div className='main__filter'>
-                  <p className='main__filter-info'>от 3 млн&nbsp;р.</p>
+                  <p className='main__filter-info'>от 3 млн&nbsp;руб.</p>
                 </div>
-              )}
+              )} */}
             <div className='main__card-wrapper'>
-              <h4 className='main__card-title'>Как построить бизнес с&nbsp;оборотом более 120&nbsp;млн.р.
+              <h4 className='main__card-title'>Как построить бизнес с&nbsp;оборотом более 120&nbsp;млн&nbsp;руб.
               в год на <span className='main__card-title-red'>”глупых зданиях”</span></h4>
               <div className='main__card-features'>
                 <div className='main__card-feature'>
@@ -204,15 +207,15 @@ useEffect(() => {
               <div className='main__filters'>
                 <div className='main__filter'>
                   <p className='main__filter-title'>доход</p>
-                  <p className='main__filter-info'>от 3&nbsp;млн р.</p>
+                  <p className='main__filter-info'>от 3&nbsp;млн&nbsp;руб.</p>
                 </div>
                 <div className='main__filter'>
                   <p className='main__filter-title'>сфера</p>
                   <p className='main__filter-info'>Строительство</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>стоимость открытия</p>
-                  <p className='main__filter-info'>0 р.</p>
+                  <p className='main__filter-title'>вложения</p>
+                  <p className='main__filter-info'>0 руб.</p>
                 </div>
               </div>
               )}
@@ -222,10 +225,13 @@ useEffect(() => {
         </div>
         <div className='main__numbers'>
               <div className='main__numbers-arrow'></div>
-              <p className='main__numbers-text'><span className='main__numbers-text-span'>Более 10 историй</span> подобных этим</p>
+              <p className='main__numbers-text'><span className='main__numbers-text-span'>{totalStories} {getHistoryWord3(totalStories)}</span> подобных этим</p>
           </div>
-
-        <Link to='/career-stories' className='main__link main__link-margin-button' onClick={() => { window.scrollTo({ top: 0 }) }}>Читать истории</Link>
+        <Link to='/career-stories' className='link link__main-bottom' onClick={() => { window.scrollTo({ top: 0 }) }}> 
+          <span>Читать истории</span>
+        </Link>
+        
+      
       </div>
 
     </section>

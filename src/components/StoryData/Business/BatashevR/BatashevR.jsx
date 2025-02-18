@@ -242,21 +242,22 @@ const BatashevR = ({
           </div>
           {isShort ? 
             <button 
-              className='main__link story__button' 
+            className='link link__story' 
               onClick={() => {
                 setIsShort(false);
                 window.scrollTo({ top: 0 });
               }}
-            >Узнать весь путь героя
+            > <span>Узнать весь путь героя</span>
             </button>
           : 
             <button 
-              className='main__link story__button' 
+            className='link link__story' 
               onClick={() => {
               setIsShort(true);
               window.scrollTo({ top: 0 });
             }}
-          > Коротко о главном
+          >             
+            <span>Коротко о главном</span>
           </button>
           }
         </div>

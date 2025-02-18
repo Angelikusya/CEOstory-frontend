@@ -1,12 +1,20 @@
 export const BASE_URL = 'http://localhost:3001';
+// export const BASE_URL = 'https://api.ceostory.ru';
 
-const checkResponse = (res) => {
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`)
+const checkResponse = async (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+
+  if (res.status === 500) {
+    console.error("Ошибка сервера 500: перенаправление на /500");
+
+    return Promise.reject(new Error("Ошибка сервера 500"));
+  }
+
+  return Promise.reject(new Error(`Ошибка: ${res.status}`));
 };
-  
+
 //регистрация
 export const register = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -32,8 +40,6 @@ export const confirmEmail = (userId, token) => {
   .then((res) => checkResponse(res));
 };
 
-
-  
 //вход
 export const login = (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
@@ -89,7 +95,7 @@ export const getSavedStory = () => {
             "Content-Type": 'application/json',
             "Authorization" : localStorage.getItem('token')
         },
-})
+    })
     .then((res) => checkResponse(res));
 }
   
@@ -105,52 +111,62 @@ export const deleteStory = (storyId) => {
     .then((res) => checkResponse(res));
 }
 
-export const increaseViews = async (storyId) => {
-    const response = await fetch(`${BASE_URL}/views/${storyId}`, {
+// увеличить количество просмотров
+export const updateViews = (storyId) => {
+  return fetch(`${BASE_URL}/views/${storyId}`, {
       method: 'PATCH',
       headers: {
-        "Content-Type": 'application/json',
-      },
-    });
-  
-    // Если история не найдена, создаем новую
-    if (response.status === 404) {
-      const createResponse = await fetch(`${BASE_URL}/views`, {
-        method: 'POST',
-        headers: {
           "Content-Type": 'application/json',
-        },
-        body: JSON.stringify({ storyId }) // Создаем новую историю с 0 просмотрами
-      });
-  
-      return checkResponse(createResponse);
-    }
-  
-    return checkResponse(response);
-  };
-
-  export const getViews = async (storyId) => {
-    const response = await fetch(`${BASE_URL}/views/${storyId}`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": 'application/json',
       },
-    });
-  
-    return checkResponse(response);
-  };
+  }).then(response => {
+      if (!response.ok) {
+          throw new Error(`Ошибка при обновлении просмотров: ${response.statusText}`);
+      }
+      return checkResponse(response);
+  });
+};
 
-  export const sendPasswordResetEmail = async (email) => {
-    const response = await fetch(`${BASE_URL}/password-reset`, {
+//создать карточку для начисления просмотров
+export const createViews = (storyId) => {
+  return fetch(`${BASE_URL}/views`, {
       method: 'POST',
       headers: {
-        "Content-Type": 'application/json',
+          "Content-Type": 'application/json',
       },
-      body: JSON.stringify({ email }),
-    });
-  
-    return checkResponse(response);
-  };
+      body: JSON.stringify({ storyId }) 
+  }).then(response => {
+      if (!response.ok) {
+          throw new Error(`Ошибка при создании истории просмотров: ${response.statusText}`);
+      }
+      console.log(`Создана новая запись просмотров для истории ${storyId}`);
+      return checkResponse(response);
+  });
+};
+
+// получить количество просмотров
+export const getViews = (storyId) => {
+  return fetch(`${BASE_URL}/views/${storyId}`, {
+      method: 'GET',
+      headers: {
+          "Content-Type": 'application/json',
+      },
+  }).then(checkResponse);
+};
+
+
+
+
+export const sendPasswordResetEmail = async (email) => {
+  const response = await fetch(`${BASE_URL}/password-reset`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  return checkResponse(response);
+};
 
   export const newPassword = async (userId, token, password) => {
     const response = await fetch(`${BASE_URL}/password-reset/${userId}/${token}`, {

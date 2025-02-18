@@ -11,7 +11,7 @@ import TariffsGarancy from '../TariffsGarancy/TariffsGarancy';
 import TariffsSmall from '../TariffsSmall/TariffsSmall';
 import Preloader from '../Preloader/Preloader';
 
-const Tariffs = ({ onPaymentSubmit }) => {
+const Tariffs = ({ onPaymentSubmit, totalStories, getHistoryWord1, getHistoryWord3  }) => {
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -53,16 +53,23 @@ const Tariffs = ({ onPaymentSubmit }) => {
         </div>
         <h2 className='tariffs__header'>Узнай что нужно сделать, <span className='tariffs__underline'> чтобы добиться успеха</span></h2>
         <p className='tariffs__more'>
-          Погрузись в 10 историй с советами, как открыть успешный бизнес или стать топ-менеджером
+          Погрузись в {totalStories} {getHistoryWord1(totalStories)} с советами, как открыть успешный бизнес или стать топ-менеджером
         </p>
-        <a href="#" onClick={scrollToTariffsPrice} className='main__link tariffs__link'>Смотреть тарифы</a>
+        <a href="#" onClick={scrollToTariffsPrice} className='link link__tariffs'>
+          <span>Смотреть тарифы</span>
+        </a>
       </div>
 
       <TariffsPeople />
       <div className='tariffs__line'></div>
       <TariffsAbout />
-      <TariffsCards />
-      <a href="#" onClick={scrollToTariffsPrice} className='main__link tariffs__link'>Смотреть тарифы</a>
+      <TariffsCards 
+        getHistoryWord3={getHistoryWord3}
+        totalStories={totalStories}
+      />
+      <a href="#" onClick={scrollToTariffsPrice} className='link link__tariffs'>
+          <span>Смотреть тарифы</span>
+      </a>
       
       <div className='tariffs__line'></div>
       <TariffsSuccess />
@@ -71,14 +78,22 @@ const Tariffs = ({ onPaymentSubmit }) => {
       <div ref={tariffsPriceRef}>
         <TariffsCost />
         {/* <TariffsPrice /> */}
-        <TariffsSmall onPaymentSubmit={onPaymentSubmit} />
+        <TariffsSmall 
+          onPaymentSubmit={onPaymentSubmit} 
+          totalStories={totalStories}
+          getHistoryWord1={getHistoryWord1}
+        />
       </div>
 
       <TariffsFAQ />
       <TariffsGarancy />
       <div ref={tariffsPriceRef}>
         {/* <TariffsPrice /> */}
-        <TariffsSmall onPaymentSubmit={onPaymentSubmit} />
+        <TariffsSmall 
+          onPaymentSubmit={onPaymentSubmit} 
+          totalStories={totalStories}
+          getHistoryWord1={getHistoryWord1}
+        />
       </div>
       </div>
       )}

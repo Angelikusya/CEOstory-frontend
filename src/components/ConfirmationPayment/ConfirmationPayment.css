@@ -13,7 +13,7 @@
     text-align: left;
     color: #000;
     margin: 0;
-}
+    font-family: 'Dela Gotic', Arial, Helvetica, sans-serif;}
 
 .confirmation__container {
     margin: 0;
@@ -28,10 +28,11 @@
     background-repeat: no-repeat;
 }
 
-.confirmation__margin {
+
+.link__confirmation {
     margin: 0;
-    max-width: 300px;
     text-wrap: nowrap;
+    width: 332px;
 }
 
 .confirmation__block {
@@ -91,7 +92,8 @@
         background-size: contain;
         position: absolute;
         z-index: 1;
-        top: -180px;
+        top: -140px;
+        left: 60px;
     }
 
     .confirmation__block {
@@ -106,7 +108,8 @@
         max-width: 300px;
     }
 
-    .confirmation__margin {
+    .link__confirmation {
         margin: 10px 0 0;
+        width: 309px;
     }
 }

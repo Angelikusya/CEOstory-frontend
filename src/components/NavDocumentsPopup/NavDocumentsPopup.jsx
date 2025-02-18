@@ -57,10 +57,12 @@ const NavDocumentsPopup = ({ onCloseNavDocuments }) => {
       </ul>
       <Link 
         to='/career-stories' 
-        className='main__link documents-nav__stories'
+        className='link link__documents-nav'
         onClick={handleCloseNavDocuments}
         >
-          Перейти обратно к историям
+          <span>
+            Перейти обратно к историям
+          </span>
       </Link>
     </nav>
   );

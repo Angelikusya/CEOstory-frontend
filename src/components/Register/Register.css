@@ -100,8 +100,37 @@
     color: rgba(255, 255, 255, 0.2);
 }
 
-.register__input:focus {
+/* .register__input:focus {
     border: 2px solid  rgba(255, 255, 255, 0.8);
+} */
+
+.register__input-password {
+    border: 0;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    background-color: transparent;
+    overflow: hidden;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 10px 10px;
+}
+.register__input-password::placeholder {
+    font-weight: 400;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* .register__input-password:focus {
+    border: 1px solid  rgba(255, 255, 255, 0.8);
+} */
+
+.toggle-password {
+    cursor: pointer;
+    background-size: contain;    
+    background-repeat: no-repeat;
+    margin-top: 15px;
 }
 
 /* .register__input_error  {
@@ -175,7 +204,7 @@
 /* Оформление кастомного чекбокса */
 .register-checkbox + label {
     position: relative;
-    padding-left: 27px;
+    padding-left: 30px;
     cursor: pointer;
 }
 
@@ -241,27 +270,23 @@
 }
 
 .register__password {
-    position: relative;
-}
-
-.toggle-password {
-    position: absolute;
-    bottom: 13px;
-    right: 20px;
-    width: 26px;
-    height: 16px;
-    cursor: pointer;
-    background-size: contain;    
-    background-repeat: no-repeat;
+    display: flex;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
 }
 
 .eye-close {
     background-image: url('../../assets/eye-open.svg');
+    width: 26px;
+    height: 16px;
+    margin: 15px 10px 0 10px;
 }
 
 .eye-open {
     background-image: url('../../assets/eye-close.svg');
     height: 10px;
+    width: 26px;
+    margin: 20px 10px 0 10px;
 }
 
 @media screen and (max-width: 1279px) {

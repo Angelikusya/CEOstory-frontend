@@ -26,7 +26,9 @@ const ConfirmationPayment = () => {
                     Искренне твой, <br />
                 <span className='confirmation__text-bold'>Айвар</span>, основатель CEOstory
                 </p>
-                <Link to='/career-stories' className='main__link confirmation__margin'>Читать истории</Link>
+                <Link to='/career-stories' className='link link__confirmation'>
+                    <span>Читать истории</span>
+                </Link>
             </div>
         </div>
       </div>

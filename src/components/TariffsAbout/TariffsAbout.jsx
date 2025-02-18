@@ -65,18 +65,18 @@ const TariffsAbout = () => {
           </p>
           <p className='tariffs__text'>
             И это дало мега результат &mdash; в 2024 году я занял должность руководителя направления развития операций 
-            в “Магните” и теперь руковожу 10+ людьми и зарабатываю около <span className='tariffs__text span'>400 тысяч рублей в месяц.</span>          
+            в “Магните” и теперь руковожу 10+ людьми и зарабатываю около <span className='tariffs__text span'>ооочень хорошие деньги</span>          
           </p>
           <p className='tariffs__text'>
             И именно для таких ребят, для ребят которые 
-            <span className='tariffs__text span'>стремятся к высотам</span>,
+            <span className='tariffs__text span'> стремятся к высотам</span>,
              мы и создали эту платформу.          
           </p>
           <p className='tariffs__text'>
             Платформу, которая объединяет в себе советы и инструменты для развития карьеры и бизнеса.          
           </p>
           <div className='tariffs__text-flex'>
-            <p className='tariffs__text quotation'>
+            <p className='tariffs__text quotation platform'>
               Платформу
             </p>
             <div className='tariffs__logo'></div>

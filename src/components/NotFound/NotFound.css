@@ -43,6 +43,17 @@
     margin: 20px 0 0;
     width: 497px;
 }
+
+.not-found__text-support {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: rgba(255, 255, 255, 0.8);
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
 .not-found__text-span {
     font-weight: 700;
 }
@@ -51,23 +62,21 @@
     margin: 20px 0 36px;
 }
 
-.not-found__link {
-    display: flex;
-    align-items:center;
-    justify-content: center;
-    margin: 0;
-    max-width: 310px;
-    padding: 9px 0;
+.link__not-found {
+    max-width: 309px;
+
 }
   
 .not-found__gif {
     margin: 0;
-}
-
-.giphy-embed {
     width: 480px;
     height: 269px;
 }
+.giphy-embed {
+    max-width: 100%;
+    object-fit: contain;
+}
+
   
 
 @media screen and (max-width: 1279px) {
@@ -107,6 +116,9 @@
         font-size: 15px;        
         width: 296px;
     }
+    .not-found__text-support {
+        font-size: 15px;    
+    }
     
     .not-found__text:last-of-type {
         margin: 20px 0 30px;
@@ -121,7 +133,8 @@
         padding: 9px 0;
     }
 
-    .giphy-embed {
+    .not-found__gif {
+        margin: 0;
         width: 296px;
         height: 169px;
     }

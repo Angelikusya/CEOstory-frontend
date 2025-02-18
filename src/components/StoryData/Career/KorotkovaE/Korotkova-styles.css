@@ -1,18 +1,12 @@
 
-.story-content {
-    position: relative;
-    /* width: 100vw; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 40px 0 0 ;
-    align-items: flex-start;
+.korotkova-background {
+    background-color: #F892D3;
 }
 
 .korotkova-short__story {
     display: flex;
     flex-direction: column;
+    max-width: 694px;
 }
 
 .korotkova-short__question {
@@ -65,7 +59,7 @@
     font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
     position: absolute;
     left: -25px;
-    top: 0;
+    top: -4px;
     margin: 0;
 }
 
@@ -84,7 +78,7 @@
     max-width: 630px;
     font-weight: 700;
     font-size: 25px;
-    line-height: 150%;
+    line-height: 120%;
     letter-spacing: -0.02em;
     color: #670125;
     font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
@@ -188,10 +182,10 @@
 
 .korotkova-short__number-text {
     font-weight: 400;
-    font-size: 15px;
+    font-size: 19px;
     line-height: 150%;
     letter-spacing: -0.02em;
-    color: #313232;
+    color: #000;
     margin: 3px 0 0 0;
     width: 500px;
     font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
@@ -369,7 +363,7 @@
 
     .korotkova-short__project-number {
         font-size: 25px;
-        left: -18px;
+        left: -24px;
     }
 
     .korotkova-short__red-block {
@@ -403,6 +397,10 @@
         font-size: 20px;
         /* max-width: 623px; */
         max-width: 95%;
+    }
+
+    .short-text-link {
+        font-size: 20px;
     }
 
 
@@ -536,11 +534,12 @@
     }
     .korotkova-short__project-title {
         font-size: 19px;
-        line-height: 100%;
     }
     .korotkova-short__project-number {
         font-size: 19px;
         line-height: 100%;
+        top: 1.5px;
+        left: -19px;
     }
 
     .korotkova-short__projects {
@@ -653,6 +652,9 @@
 
     .korotkova-short__number-title {
         max-width: 250px;
+    }
+    .short-text-link {
+        font-size: 15px;
     }
 
 }

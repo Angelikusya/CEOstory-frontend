@@ -40,10 +40,10 @@ const PopupContent = ({ sections }) => {
         });
 
         // Логика для sticky
-        const batashovShortElement = document.querySelector('.story-content');
-        if (batashovShortElement) {
-            const rect = batashovShortElement.getBoundingClientRect();
-            const isInViewport = rect.bottom > 500 && rect.top < window.innerHeight;
+        const shortElement = document.querySelector('.story-content');
+        if (shortElement) {
+            const rect = shortElement.getBoundingClientRect();
+            const isInViewport = rect.bottom > 400 && rect.top < window.innerHeight;
 
             if (offset > 300 && isInViewport) {
                 setIsSticky(true);
@@ -71,8 +71,8 @@ const PopupContent = ({ sections }) => {
         <div className=''>
             {isMobile ? (
                 <div className='content__mobile'>
-                    {/* Здесь можно добавить контент для мобильной версии */}
-                    <ul className='content-mobile__list-link'>
+                    <div className='content-mobile__wrapper'>
+                        <ul className='content-mobile__list-link'>
                             {sections.map(({ id, title }) => (
                                 <li key={id} 
                                     className={`content-mobile__link-container button ${activeId === id ? 'active' : ''}`} 
@@ -85,6 +85,7 @@ const PopupContent = ({ sections }) => {
                                 </li>
                             ))}
                         </ul>
+                    </div>
                 </div>
             ) : (
                 <div className={`content__desktop ${isSticky ? 'content-sticky' : ''}`}>

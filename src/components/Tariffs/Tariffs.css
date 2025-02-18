@@ -65,9 +65,9 @@
     margin: 22px 0 29px 0;
 }
 
-.tariffs__link {
-    padding: 11px 55px;
+.link__tariffs {
     margin: 0;
+    width: 322px;
 }
 
 .tariffs__line {
@@ -136,10 +136,10 @@
         margin: 27px 0 30px;
     }
     
-    .tariffs__link {
-        padding: 10px 15px;
+    .link__tariffs {
         margin: 0;
-        width: 90%;
+        width: 100%;
+        max-width: 317px;
     }
     
     .tariffs__line {

@@ -27,7 +27,7 @@ const DATACareer = [
         storyId: 2, 
         name: 'Дмитрий Иванов', 
         title: 'Как стать директором по продукту в крупной компании в 50 лет', 
-        navigation: '/ivanovd-story',
+        navigation: '/korotkovae-story',
         job: 'Топ-менеджер',
         type: 'Карьера',
         field: 'IT',

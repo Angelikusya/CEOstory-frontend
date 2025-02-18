@@ -21,6 +21,7 @@ const Saved = ({
     removeStory,
     onIncreaseView, 
     isStorySaved,
+    IsSaveBlocked,
 }) => {
     const pathname = window.location.pathname; // Получаем текущий путь
 
@@ -63,17 +64,20 @@ const Saved = ({
                                     onRemove={removeStory} 
                                     onIncreaseView={onIncreaseView}
                                     isSaved={isStorySaved(story.storyId)}
+                                    IsSaveBlocked={IsSaveBlocked}
                                 />
                             </div>
                         </div>
                     ))
                 ) : (
                     <div className='saved__container'>
-                        <p className='saved__text'>У Вас нет сохраненных историй</p>
-                        <p className='saved__more'>Но Вы можете найти для себя более 100
-                        историй и сохранить их здесь
+                        <p className='saved__text'>У тебя нет сохраненных историй</p>
+                        <p className='saved__more'>
+                            Найди самые полезные истории про карьеру и бизнес и сохрани их здесь
                         </p>
-                        <Link className='saved__link button' to='/career-stories'>Перейти к историям</Link>
+                        <Link className='link link__saved' to='/career-stories'>
+                            <span>Перейти к историям</span>
+                        </Link>
                     </div>
                 )}
             </div>

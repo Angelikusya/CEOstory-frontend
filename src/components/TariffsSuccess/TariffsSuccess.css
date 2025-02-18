@@ -28,9 +28,11 @@
 
 .tariffs__success-arrow {
     background-image: url('../../assets/arrow-tariifs.svg');
-    width: 24px;
+    width: 20px;
     height: 16px;
-    margin: 10px 0 0;
+    background-size: contain;
+    margin: 8px 0 0;
+    background-repeat: no-repeat;
 }
 
 .tariffs__success-list {
@@ -42,7 +44,8 @@
 .tariffs__success-flex {
     display: flex;
     gap: 11px;
-    align-items: center;
+    /* align-items: center; */
+    align-items: flex-start;
 }
 
 @media screen and (max-width: 1279px) {

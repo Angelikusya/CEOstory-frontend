@@ -64,13 +64,10 @@
     margin: 0 0 31px 0;
 }
 
-.notlogedin__botton {
-    font-weight: 400;
+.link__notlogedin {
     font-size: 20px;
-    text-align: center;
-    color: #fff;
-    width: 100%;
-    padding: 9px 0;
+    width: 350px;
+    margin: 0 0 96px 0;
 }
 
 .notlogedin__logo-img {
@@ -133,6 +130,7 @@
     
     .notlogedin__left-block {
         border-radius: 20px 20px 0 0 ;
+        padding: 0 30px;
     }
     
     .notlogedin__right-block {
@@ -145,8 +143,8 @@
         margin: 90px 0 20px;
     }
     
-    .notlogedin__botton {
-        margin: 0 0 90px;
+    .link__notlogedin {
+        margin: 0 0 92px;
     }
     
     .notlogedin__right-block-image {
@@ -165,6 +163,7 @@
     .notlogedin__left-block {
         width: 300px; 
         border-radius: 20px 20px 0 0 ;
+        padding: 0 10px;
     }
     
     .notlogedin__right-block {
@@ -187,10 +186,9 @@
         max-width: 276px;
     }
     
-    .notlogedin__botton {
-        font-size: 20px;
+    .link__notlogedin{
         width: 275px;
-        margin: 0 0 30px;
+        margin: 0 0 80px;
     }
     
     .notlogedin__logo-img {

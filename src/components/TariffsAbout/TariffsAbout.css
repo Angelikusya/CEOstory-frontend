@@ -41,6 +41,10 @@
     gap: 10px;
 }
 
+.tariffs__text.quotation.platform {
+    margin-top: 5px;
+}
+
 @media screen and (max-width: 767px) {
     .tariffs__about {
         margin: 25px 0 0 ;

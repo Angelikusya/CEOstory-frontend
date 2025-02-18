@@ -11,7 +11,7 @@ const DATABusiness = [
         job: 'Бизнесмен',
         type: 'Бизнес',
         field: 'Строительство',
-        income: 'от 100 млн р.', 
+        income: 'от 100 млн руб.', 
         textPreview1: 'Раскрытие финансовых показателей бизнеса',
         textPreview2: 'Описание основных бизнес-процессов и нюансов бизнеса',
         textPreview3: 'Советы по поиску клиентов',
@@ -19,7 +19,7 @@ const DATABusiness = [
         experience: '0 лет',
         free: true,
         readingTime: '24 мин.',
-        investments:'1 тыс. р.',
+        investments:'1 тыс. руб.',
         photo: BotashovR,
     },
     { 
@@ -36,7 +36,7 @@ const DATABusiness = [
         textPreview3: 'Советы по поиску клиентов',
         publicationDate: "2024-09-25",
         experience: 'нет',
-        investments:'2 млн р.',
+        investments:'2 млн руб.',
         free: true,
         readingTime: '24 мин.',
         photo: VafeevT

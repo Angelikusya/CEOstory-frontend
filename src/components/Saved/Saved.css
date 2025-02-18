@@ -63,6 +63,9 @@
     text-decoration: none;
 }
 
+.link__saved {
+    width: 314px;
+}
 
 @media screen and (max-width: 1279px) { 
     .saved__container {

@@ -90,10 +90,10 @@
     margin: 5px 0 10px;
 }
 
-.tariffs-small__botton {
+.link__tariffs-small {
     margin: 0;
-    padding: 9px 0;
     width: 100%;
+    font-size: 20px;
 }
 
 .tariffs-small__benefits {
@@ -224,9 +224,7 @@
         max-width: 362px;
     }
 
-    .tariffs-small__botton {
-        margin: 0;
-        padding: 9px 0;
+    .link__tariffs-small {
         width: 100%;
     }
 

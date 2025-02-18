@@ -1,118 +1,101 @@
 import React, { useState, useEffect } from 'react';
-import '../Stories.css';;
+import '../Stories.css';
 import Filter from '../../Filter/Filter';
-import DATABusiness from '../../Data/DataBusiness'; 
+import DATABusiness from '../../Data/DataBusiness';
 import { Link, useLocation } from 'react-router-dom';
 import StoriesPreview from '../../StoriesPreview/StoriesPreview';
 
-const BusinessStories = ({ data = DATABusiness, onCloseFilter, saveStory, removeStory, onIncreaseView, isStorySaved }) => {
-    const [filteredData, setFilteredData] = useState(data);
-    const [filters, setFilters] = useState({
-        businessType: '',
-        income: '',
-        field: '',
-        searchTerm: ''
+const BusinessStories = ({ 
+    data = DATABusiness, 
+    onCloseFilter, 
+    saveStory, 
+    removeStory, 
+    onIncreaseView, 
+    isStorySaved,
+    isSaving,
+    IsSaveBlocked,
+}) => {
+    const [filteredData, setFilteredData] = useState(data); // Показываем все истории по умолчанию
+    const [filters, setFilters] = useState(() => {
+        const savedFilters = JSON.parse(localStorage.getItem('businessFilters'));
+        return savedFilters || { income: '', field: '', searchTerm: '' };
     });
-    const [visibleCount, setVisibleCount] = useState(4); // начальное количество историй
-    const [isLoading, setIsLoading] = useState(false);
 
-    const pathname = window.location.pathname; // Получаем текущий путь
+    const [visibleCount, setVisibleCount] = useState(4); // Количество отображаемых историй
+    const [isLoading, setIsLoading] = useState(false);
+    const pathname = window.location.pathname;
 
     useEffect(() => {
         document.title = 'Истории про бизнес — CEOstory';
-    });
-  
-
-    useEffect(() => {
-        const savedFilters = JSON.parse(localStorage.getItem('storyFilters'));
+        
+        // Загружаем сохраненные фильтры
+        const savedFilters = JSON.parse(localStorage.getItem('businessFilters'));
         if (savedFilters) {
             setFilters(savedFilters);
-            handleFilterChange(savedFilters);
+            applyFilters(savedFilters);
         } else {
-            setFilteredData(data);
+            setFilteredData(data); // Если нет фильтров, показываем все истории
         }
     }, [data]);
 
-    const handleFilterChange = (newFilters) => {
-        const { businessType, income, field, searchTerm } = newFilters;
-    
+    // Фильтрация данных при изменении фильтра
+    const applyFilters = (newFilters) => {
+        const { income, field, searchTerm } = newFilters;
+
         const newFilteredData = data.filter((story) => {
-            const matchesBusinessType = businessType ? story.type === businessType : true;
             const matchesIncome = income ? story.income === income : true;
             const matchesField = field ? story.field === field : true;
-    
-            const matchesSearchTerm = searchTerm ? 
-                Object.values(story).some(value => 
-                    value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-                ) : true;
-    
-            return matchesBusinessType && matchesIncome && matchesField && matchesSearchTerm;
+            const matchesSearchTerm = searchTerm ? story.title.toLowerCase().includes(searchTerm.toLowerCase()) : true;
+            return matchesIncome && matchesField && matchesSearchTerm;
         });
-    
+
         setFilteredData(newFilteredData);
-        setFilters(newFilters);
-        localStorage.setItem('storyFilters', JSON.stringify(newFilters));
-    
-        // Проверка наличия активных фильтров
-        const hasActiveFilters = businessType || income || field || searchTerm; // Исправлено условие
-
     };
-    
 
-    //отображаение большего количества историй
+    // Обработчик изменения фильтров
+    const handleFilterChange = (newFilters) => {
+        setFilters(newFilters);
+        localStorage.setItem('businessFilters', JSON.stringify(newFilters));
+        applyFilters(newFilters);
+    };
+
+    // Показать больше историй
     const handleShowMore = () => {
         setIsLoading(true);
-        
-        // Имитация загрузки данных (замените на вашу логику)
         setTimeout(() => {
-            setVisibleCount(filteredData.length); // Показываем все оставшиеся элементы
+            setVisibleCount(filteredData.length);
             setIsLoading(false);
-        }, 1000); // Задержка в 1 секунду для имитации загрузки
+        }, 1000);
     };
 
     const getStoryLabel = (count) => {
-        if (count === 1) {
-            return 'история';
-        } else if (count >= 2 && count <= 4) {
-            return 'истории';
-        } else {
-            return 'историй';
-        }
+        if (count === 1) return 'история';
+        if (count >= 2 && count <= 4) return 'истории';
+        return 'историй';
     };
 
-    // Определяем текст заголовка в зависимости от текущей страницы
     let headerText = 'Каталог историй про ';
-    
-    if (pathname.includes('career-stories')) {
-      headerText += 'карьеру';
-    } else if (pathname.includes('business-stories')) {
-      headerText += 'бизнес';
-    } else {
-      headerText += 'истории'; // Значение по умолчанию, если не совпадает ни с одним из путей
-    }
-  
-    
-    return (
-       <div className='stories'>
-        <div className='stories__titles'>
-        <h3 className='stories__about'>{headerText}</h3>
+    headerText += pathname.includes('career-stories') ? 'карьеру' : 'бизнес';
 
-            <p className='stories__free'>Везде есть бесплатная часть</p>
-        </div>
-        <div className='stories__filter'>
-            <Filter 
-                onFilterChange={handleFilterChange} 
-                onClose={onCloseFilter} 
-                data={DATABusiness} 
-            />
-        </div>
+    return (
+        <div className='stories'>
+            <div className='stories__titles'>
+                <h3 className='stories__about'>{headerText}</h3>
+                <p className='stories__free'>Везде есть бесплатная часть</p>
+            </div>
+            <div className='stories__filter'>
+                <Filter 
+                    onFilterChange={handleFilterChange} 
+                    onClose={onCloseFilter} 
+                    data={DATABusiness}
+                />
+            </div>
             <div className="stories__flex">
-            {filteredData.length > 0 ? (
+                {filteredData.length > 0 ? (
                     filteredData.slice(0, visibleCount).map((story, index) => (
-                    
                         <StoriesPreview
                             {...story}
-                            key={story.id ||  story._id  || index }     
+                            key={story.id || story._id || index }     
                             name={story.name}
                             type={story.type}
                             field={story.field}
@@ -133,24 +116,28 @@ const BusinessStories = ({ data = DATABusiness, onCloseFilter, saveStory, remove
                             onRemove={removeStory}
                             onIncreaseView={onIncreaseView}
                             isSaved={isStorySaved(story.storyId)} 
+                            isSaving={isSaving}
+                            IsSaveBlocked={IsSaveBlocked}
                         />
                     ))
                 ) : (
                     <div className='stories__empty-container'>
-                        <p className='stories__empty-text'>К сожалению у нас нет историй по такому запросу</p>
-                        <p className='stories__empty-more'>Но есть более вдохновляющих 100 историй в бизнесе и карьере, которые могут Вам понравится</p>
+                        <p className='stories__empty-text'>К сожалению, у нас нет историй по такому запросу</p>
+                        <p className='stories__empty-more'>Но есть более вдохновляющих 100 историй в бизнесе и карьере, которые могут вам понравиться</p>
                     </div>
                 )}
             </div>
             {visibleCount < filteredData.length && (
                 <button 
-                    className='main__link main__link_mobile'  
+                    className='link link__stories'  
                     onClick={handleShowMore}
-                    disabled={isLoading} // Отключаем кнопку во время загрузки
+                    disabled={isLoading}
                 >
-                    {isLoading 
-                        ? 'Загружаю...' 
-                        : `Еще ${filteredData.length - visibleCount} ${getStoryLabel(filteredData.length - visibleCount)}`}
+                    <span>
+                        {isLoading 
+                            ? 'Загружаю...' 
+                            : `Еще ${filteredData.length - visibleCount} ${getStoryLabel(filteredData.length - visibleCount)}`}
+                    </span>
                 </button>
             )}
         </div>

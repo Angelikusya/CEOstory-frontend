@@ -79,6 +79,11 @@
     font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
 }
 
+.link__stories {
+    margin: 0 0 42px ;
+    width: 309px;
+}
+
 
 @media screen and (max-width: 1279px) {
     .stories__empty-container {
@@ -138,9 +143,6 @@
         transition: opacity 0s ease; /* Плавный переход для цвета фона и непрозрачности */
     }
 
-    .main__link_mobile {
-        margin: 0 0 42px ;
-  }
 
     .stories__titles {
         width: 281px;
