@@ -507,7 +507,7 @@ const KorotkovaElong = () => {
                 <div className='korotkova-short__text-container'>
                     <p className='short-text'>
                         У меня есть тг-канал, который я сейчас активно развиваю:<br />
-                        <Link to='https://t.me/+s9mnar-Gxq5jYzYy' target='_blank' className='short-text-link'>https://t.me/+s9mnar-Gxq5jYzYy</Link>
+                        <Link to='https://t.me/+s9mnar-Gxq5jYzYy' target='_blank' className='short-text-link button'>https://t.me/+s9mnar-Gxq5jYzYy</Link>
                     </p>
                     {/* <p className='short-text'>
                         И ко мне можно записываться на консультацию в эйч:<br />                      

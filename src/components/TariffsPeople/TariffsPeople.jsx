@@ -2,7 +2,7 @@ import './TariffsPeople.css';
 import { useState, useEffect } from 'react';
 import BursalidiD from '../../assets/speaker-photoes/bursalidi-tariffs-desk.webp';
 import KorotkovaPhoto from '../../assets/speaker-photoes/korotkova-wide.webp';
-import BotashovR from '../../assets/speaker-photoes/botashov-tariffs-desk.webp';
+import BatashovR from '../../assets/speaker-photoes/botashov-tariffs-desk.webp';
 import VafeevT from '../../assets/speaker-photoes/vafeev-tariffs-desk.webp';
 import Kirillov from '../../assets/speaker-photoes/kirillov-tariffs-desk.webp';
 
@@ -10,7 +10,7 @@ const speakers = [
   { name: 'Екатерина', salary: 'топ-менеджер', image: KorotkovaPhoto },
   { name: 'Петя', salary: 'топ-менеджер', image: BursalidiD },
   { name: 'Айвар', salary: 'бизнесмен', image: VafeevT },
-  { name: 'Коля', salary: 'бизнесмен', image: BotashovR },
+  { name: 'Коля', salary: 'бизнесмен', image: BatashovR },
   { name: 'Иван', salary: 'бизнесмен', image: Kirillov },
 ];
 

@@ -215,7 +215,7 @@
 .main__filter {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 5px;
     align-items: center;
 }
 
@@ -235,7 +235,8 @@
     color: rgba(47, 42, 48, 0.5);
     font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
     border: 1px solid rgba(47, 42, 48, 0.3);
-    border-radius: 50px;
+    /* border-radius: 50px; */
+    border-radius: 10px;
     padding: 6px 15px;
     margin: 0;
 }

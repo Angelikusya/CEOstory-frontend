@@ -11,10 +11,9 @@ const BusinessStories = ({
     saveStory, 
     removeStory, 
     onIncreaseView, 
-    isStorySaved,
-    isSaving,
-    IsSaveBlocked,
+    isStorySaved 
 }) => {
+
     const [filteredData, setFilteredData] = useState(data); // Показываем все истории по умолчанию
     const [filters, setFilters] = useState(() => {
         const savedFilters = JSON.parse(localStorage.getItem('businessFilters'));
@@ -24,6 +23,12 @@ const BusinessStories = ({
     const [visibleCount, setVisibleCount] = useState(4); // Количество отображаемых историй
     const [isLoading, setIsLoading] = useState(false);
     const pathname = window.location.pathname;
+
+    useEffect(() => {
+        if (data && data.length > 0) {
+            setFilteredData(data);
+        }
+    }, [data]);
 
     useEffect(() => {
         document.title = 'Истории про бизнес — CEOstory';
@@ -95,7 +100,7 @@ const BusinessStories = ({
                     filteredData.slice(0, visibleCount).map((story, index) => (
                         <StoriesPreview
                             {...story}
-                            key={story.id || story._id || index }     
+                            key={story.id ||  story._id  || index }     
                             name={story.name}
                             type={story.type}
                             field={story.field}
@@ -116,8 +121,6 @@ const BusinessStories = ({
                             onRemove={removeStory}
                             onIncreaseView={onIncreaseView}
                             isSaved={isStorySaved(story.storyId)} 
-                            isSaving={isSaving}
-                            IsSaveBlocked={IsSaveBlocked}
                         />
                     ))
                 ) : (

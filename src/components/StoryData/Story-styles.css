@@ -166,7 +166,7 @@
     width: 257px;
 }
 
-.link__story{
+.link__story {
     margin-bottom: 0;
     width: 330px;
 }
@@ -267,7 +267,6 @@
     left: -220px;
     top: 0;
 }
-
 
 @media screen and (max-width: 1279px) {
     .story {

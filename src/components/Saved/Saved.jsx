@@ -5,12 +5,12 @@ import './Saved.css';
 import DATA from '../Data/DataCareer'; 
 
 import KorotkovaE from '../../assets/speaker-photoes/korotkova-tiny.webp';
-import BotashovR from '../../assets/speaker-photoes/speaker-photo-main-3.webp';
+import BatashovR from '../../assets/speaker-photoes/batashov-tiny.webp';
 import BursalidiD from '../../assets/speaker-photoes/speaker-photo-main-2.webp';
 import VafeevT from '../../assets/speaker-photoes/speaker-photo-main-4.webp';
 
 const photoMap = {
-    3: BotashovR,
+    3: BatashovR,
     1: KorotkovaE,
     2: BursalidiD,
     4: VafeevT,

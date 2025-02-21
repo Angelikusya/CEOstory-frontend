@@ -179,13 +179,14 @@
 
 .preview__filter-wrapper {
     border: 1px solid rgba(47, 42, 48, 0.3);
-    border-radius: 50px;
+    /* border-radius: 50px; */
+    border-radius: 10px;
     padding: 5px 13px;
 }
 
 .preview__filter-title {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     color: rgba(47, 42, 48, 0.5);
     font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
     margin: 0;

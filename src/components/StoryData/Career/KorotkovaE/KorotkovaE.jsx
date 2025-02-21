@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import '../../Story-styles.css';
 import StoriesPreview from '../../../StoriesPreview/StoriesPreview';
 import DATA from '../../../Data/DataCareer';
 import Preloader from '../../../Preloader/Preloader';
-import * as auth from '../../../../utils/MainApi';
 import KorotkovaPhoto from '../../../../assets/speaker-photoes/korotkova-wide.webp';
 import DATACareer  from '../../../Data/DataCareer';
 import StoriesMore from '../../../StoriesMore/StoriesMore';
 import KorotkovaEshort from './KorotkovaE-short';
 import KorotkovaElong from './KorotkovaE-long';
+import NotPaidAllert from '../../../NotPaidAllert/NotPaidAllert';
 
 
 ////поменять в фалйе
@@ -17,14 +16,16 @@ import KorotkovaElong from './KorotkovaE-long';
 // storyId
 
 const KorotkovaE = ({ 
+  fetchViews,
   saveStory,
   removeStory,
   isStorySaved,
   onIncreaseView,
+  newViews,
+  hasActiveSubscription,
 }) => {
 
   const [isLoading, setIsLoading] = useState(true);
-  const [newViews, setNewViews] = useState(0);
   const [isShort, setIsShort] = useState(true);
   const [visibleStories, setVisibleStories] = useState(3);
   const pathname = window.location.pathname; // Получаем текущий путь
@@ -34,17 +35,24 @@ const KorotkovaE = ({
   const story = DATA.find(story => story.storyId === 1);
   const storyId = 1;
 
+
   useEffect(() => {
     document.title = `${story.title}  — CEOstory`;
-  });
+  }, []);
 
-// Фильтруем карточки, чтобы оставить только те, которые не равны storyId
-const combinedStories = DATACareer.filter(story => story.storyId !== storyId);
+  // useEffect для получения количества просмотров только при открытии страницы
+  useEffect(() => {
+    // Здесь можно добавить логику для запроса количества просмотров
+    fetchViews(storyId);  // Вызываем функцию для получения просмотров только при монтировании компонента
+    setIsLoading(false);  // После получения данных, устанавливаем флаг загрузки в false
+  }, []); // Пустой массив зависимостей, чтобы сработало только при монтировании
 
-// Теперь combinedStories содержит карточки, которые не равны storyId
-const [isMobile, setIsMobile] = useState(window.innerWidth <= 1280);
 
+  // Фильтруем карточки, чтобы оставить только те, которые не равны storyId
+  const combinedStories = DATACareer.filter(story => story.storyId !== storyId);
 
+  // Теперь combinedStories содержит карточки, которые не равны storyId
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1280);
 
   //изменение формата даты
   const months = [
@@ -60,69 +68,8 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 1280);
     
     return `${day} ${month} ${year}`; // Формат: день месяц год
   };
-  
-  // useEffect для остальных функций
-  useEffect(() => {
-  
-    // Функция для получения количества просмотров
-    const fetchViews = async () => {
-      try {
-        const viewData = await auth.getViews(storyId);
-        if (viewData && typeof viewData.views === 'number') {
-          setNewViews(viewData.views);
-        } else {
-          console.error('Неверный формат данных:', viewData);
-        }
-      } catch (error) {
-        console.error('Ошибка при получении просмотров:', error);
-      }
-    };
-  
-    // Установка таймера для прелоадера
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500); // Задержка на 1 секунду
-  
-    // Вызов функции для получения просмотров
-    fetchViews();
-    return () => clearTimeout(timer); // Очистка таймера при размонтировании
-
-  }, [storyId]); // Добавьте storyId в 
 
   // Функция для обновления количества видимых историй в зависимости от ширины экрана
-  // const updateLayout = () => {
-  //   setIsMobile(window.innerWidth <= 1280);
-  //   if (window.innerWidth >= 1280) {
-  //     setVisibleStories(3);
-  //   } else if (window.innerWidth >= 768) {
-  //     setVisibleStories(2);
-  //   } else {
-  //     setVisibleStories(1);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   updateLayout(); // Устанавливаем начальное значение при монтировании
-  //   window.addEventListener('resize', updateLayout);
-
-  //   return () => {
-  //     window.removeEventListener('resize', updateLayout);
-  //   };
-  // }, []);
-
-
-  // const handleResize = () => {
-  //   setIsMobile(window.innerWidth <= 1279);
-  // };
-
-  // useEffect(() => {
-  //     window.addEventListener('resize', handleResize);
-  //     return () => {
-
-  //         window.removeEventListener('resize', handleResize);
-  //     };
-  // }, []); 
-
   const updateLayout = () => {
     const width = window.innerWidth;
     setIsMobile(width <= 1280);
@@ -133,17 +80,26 @@ const [isMobile, setIsMobile] = useState(window.innerWidth <= 1280);
     } else {
         setVisibleStories(1);
     }
-};
+  };
 
-useEffect(() => {
-    updateLayout(); // Устанавливаем начальное значение при монтировании
-    window.addEventListener('resize', updateLayout);
+  useEffect(() => {
+      updateLayout(); // Устанавливаем начальное значение при монтировании
+      window.addEventListener('resize', updateLayout);
 
-    return () => {
-        window.removeEventListener('resize', updateLayout);
-    };
-}, []);
+      return () => {
+          window.removeEventListener('resize', updateLayout);
+      };
+  }, []);
 
+  const getReadingForm = (count) => {
+    if (count % 10 === 1 && count % 100 !== 11) {
+        return 'прочтение';
+    }
+    if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+        return 'прочтения';
+    }
+    return 'прочтений';
+    };   
 
   return (
     <section>
@@ -151,19 +107,23 @@ useEffect(() => {
         <Preloader />
       ) : (
         <div className='story'>
+          <NotPaidAllert 
+            hasActiveSubscription={hasActiveSubscription}
+            free={story.free} 
+          />
           <div  className='story-container'>
 
           {isMobile ? (
             <div className='story__main-mobile'>
               <div className='story__main-mobile-container'> 
-                <img className='story__story__main-mobile-photo' src={KorotkovaPhoto} alt={story.name}/>
+                <img className='story__story__main-mobile-photo pink' src={KorotkovaPhoto} alt={story.name}/>
                 <div className='story__main-mobile-small-container'>
-                  <p className='story__main-mobile-name'>Топ-менеджер,<br/> {story.name}</p>
-                  <p className='story__main-mobile-date'>{formatDate(story.publicationDate)}, {newViews} прочтений</p>
+                  <p className='story__main-mobile-name'>{story.job},<br/> {story.name}</p>
+                  <p className='story__main-mobile-date'>{formatDate(story.publicationDate)}, {newViews} {getReadingForm(newViews)}</p>
                 </div>
               </div>
               <h2 className='story__main-mobile-title'>{story.title}</h2>
-                          <div className='story__preview'>
+                <div className='story__preview'>
                     {story && (
                       <StoriesPreview
                         key={story.storyId}
@@ -222,13 +182,13 @@ useEffect(() => {
             </div>
 
               <div className='story__photo-container'>
-                <img className='story__photo' src={KorotkovaPhoto} alt={story.name}/>
+                <img className='story__photo pink' src={KorotkovaPhoto} alt={story.name}/>
               </div>
 
               <div className='story__title-block'>
                 <h2 className='story__title'>{story.title}</h2>
-                <p className='story__date'>Топ-менеджер, {story.name}</p>
-                <p className='story__view'>{formatDate(story.publicationDate)}, {newViews} прочтений</p>
+                <p className='story__date'>{story.job}, {story.name}</p>
+                <p className='story__view'>{formatDate(story.publicationDate)}, {newViews} {getReadingForm(newViews)}</p>
               </div>
           </div>
           )}
@@ -279,45 +239,32 @@ useEffect(() => {
           </div>
           )}
 
-        {/* {isMobile ? (
-          <div className='story__switcher-mobile'>
-              {isShort 
-                ? 
-                <p className='story__switcher-mobile-text'>Краткая инструкция по открытию бизнеса <br />
-                  <span className='story__switcher-mobile-span'>
-                    чтобы с нуля добиться того же самое
-                    </span>
-                </p> 
-                : 
-                <p className='story__switcher-mobile-text'>Полное интервью с героем, <br />
-                  <span className='story__switcher-mobile-span'>
-                   чтобы узнать все его секреты
-                  </span>
-                </p>
-              }
-          </div>
-        ) : ( null )} */}
-
           <div className='story__container'>
             {isShort ? <KorotkovaEshort /> : <KorotkovaElong />}
           </div>
           {isShort ? 
             <button 
-              className='main__link story__button' 
+              className='link link__story' 
               onClick={() => {
                 setIsShort(false);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-            >Узнать весь путь героя
+            >
+              <span>
+                Узнать весь путь героя
+              </span>
             </button>
           : 
             <button 
-              className='main__link story__button' 
+              className='link link__story' 
               onClick={() => {
               setIsShort(true);
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-          > Коротко о главном
+          > 
+          <span>
+            Коротко о главном
+          </span>
           </button>
           }
           </div>
@@ -350,6 +297,7 @@ useEffect(() => {
               photo={story.photo}
               onIncreaseView={onIncreaseView}
               isSaved={isStorySaved(story.storyId)} 
+              newViews={story.views}
             />
           ))}
         </div>

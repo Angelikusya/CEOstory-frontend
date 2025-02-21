@@ -27,11 +27,12 @@ const StoriesPreview = ({
     readingTime,
     onIncreaseView,
     isSaved,
-}) => {
+    showLoginMessage
+    }) => {
     const [newViews, setNewViews] = useState(views);
     const [isSaving, setIsSaving] = useState(false);
-    const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+
     const storyData = {
         _id,
         storyId,
@@ -57,22 +58,25 @@ const StoriesPreview = ({
 
 
     const handleResize = () => {
-      setScreenSize(window.innerWidth);
+        setScreenSize(window.innerWidth);
     };
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
         return () => {
-          window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
-    
-
-    const handleIncreaseView = async () => {
-        // Увеличиваем количество просмотров
-        const updatedViews = await onIncreaseView(storyId);
-        setNewViews(updatedViews);
+    // Увеличиваем количество просмотров
+    const handleIncreaseView = () => {
+        onIncreaseView(storyId)
+            .then((updatedViews) => {
+                setNewViews(updatedViews);  // Обновляем количество просмотров
+            })
+            .catch((error) => {
+                console.error("Ошибка при увеличении просмотров:", error);
+            });
     };
 
     useEffect(() => {
@@ -100,7 +104,6 @@ const StoriesPreview = ({
         }
     };
 
-
     const handleRemoveStory = () => {
         if (onRemove) {
             onRemove(storyData); // Вызываем функцию onRemove
@@ -113,35 +116,46 @@ const StoriesPreview = ({
         return date.toLocaleDateString('ru-RU', options);
     };
 
-        // Массив с цветами
-        const colors = ['#0F1E37', '#353E44', '#283C35', '#3D0150', '#F6EFE7'];
+    // Массив с цветами
+    const colors = ['#0F1E37', '#353E44', '#283C35', '#3D0150', '#F6EFE7'];
+
+    // Функция для выбора случайного цвета
+    let lastColor = null;
+    let repeatCount = 0;
     
-        // Функция для выбора случайного цвета
-        let lastColor = null;
-        let repeatCount = 0;
+    // Функция для выбора случайного цвета
+    const getRandomColor = () => {
+        let newColor;
         
-        // Функция для выбора случайного цвета
-        const getRandomColor = () => {
-            let newColor;
+        do {
+            newColor = colors[Math.floor(Math.random() * colors.length)];
             
-            do {
-                newColor = colors[Math.floor(Math.random() * colors.length)];
-                
-                // Проверяем, совпадает ли новый цвет с последним
-                if (newColor === lastColor) {
-                    repeatCount++;
-                } else {
-                    repeatCount = 1; // Сбрасываем счетчик, если цвет изменился
-                }
+            // Проверяем, совпадает ли новый цвет с последним
+            if (newColor === lastColor) {
+                repeatCount++;
+            } else {
+                repeatCount = 1; // Сбрасываем счетчик, если цвет изменился
+            }
+    
+        } while (repeatCount > 2); // Продолжаем выбирать, пока не найдем подходящий цвет
+    
+        // Обновляем последний цвет
+        lastColor = newColor;
+    
+        return newColor;
+    };
+    
+    const getReadingForm = (count) => {
+        if (count % 10 === 1 && count % 100 !== 11) {
+            return 'прочтение';
+        }
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+            return 'прочтения';
+        }
+        return 'прочтений';
+    };    
         
-            } while (repeatCount > 2); // Продолжаем выбирать, пока не найдем подходящий цвет
-        
-            // Обновляем последний цвет
-            lastColor = newColor;
-        
-            return newColor;
-        };
-        
+
     return (
         <div>
             <div className='preview__card'>
@@ -173,8 +187,8 @@ const StoriesPreview = ({
                                 <h2 className='preview__title'>{title}</h2>
                                 <div className='preview__statistics'>
                                     <p className='preview__statistics-text'>{formatDate(publicationDate)}</p>
-                                    <p className='preview__statistics-text'>{newViews} просмотров, </p>
-                                    <p className='preview__statistics-text'>читать {readingTime}</p>
+                                    <p className='preview__statistics-text'>{newViews} {getReadingForm(newViews)} </p>
+                                    {/* <p className='preview__statistics-text'>читать {readingTime}</p> */}
 
 
                                 </div>
@@ -194,7 +208,7 @@ const StoriesPreview = ({
                                 </div>
                                 <div className='preview__filters'>
                                     <div className='preview__filter'>
-                                        <p className='preview__name'>доход</p>
+                                        <p className='preview__name'>Доход</p>
                                         <div className='preview__filter-wrapper'>
                                             <p className='preview__filter-title'>{income}</p>
                                         </div>
@@ -202,7 +216,7 @@ const StoriesPreview = ({
 
                                     {type !== 'Бизнес' && (
                                         <div className='preview__filter'>
-                                            <p className='preview__name'>опыт</p>
+                                            <p className='preview__name'>Опыт</p>
                                             <div className='preview__filter-wrapper'>
                                                 <p className='preview__filter-title'>{experience}</p>
                                             </div>
@@ -210,7 +224,7 @@ const StoriesPreview = ({
                                     )}
 
                                     <div className='preview__filter'>
-                                        <p className='preview__name'>сфера</p>
+                                        <p className='preview__name'>Сфера</p>
                                         <div className='preview__filter-wrapper'>
                                             <p className='preview__filter-title'>{field}</p>
                                         </div>
@@ -218,7 +232,7 @@ const StoriesPreview = ({
 
                                     {type == 'Бизнес' && (
                                         <div className='preview__filter'>
-                                            <p className='preview__name'>вложения</p>
+                                            <p className='preview__name'>Вложения</p>
                                             <div className='preview__filter-wrapper'>
                                                 <p className='preview__filter-title'>{investments}</p>
                                             </div>
@@ -255,9 +269,9 @@ const StoriesPreview = ({
                                             <p className='preview__job'>{name}</p>
                                         </div>
                                         <div className='preview__statistics'>
-                                            <p className='preview__statistics-text'>{newViews} просмотров, </p>
+                                            <p className='preview__statistics-text'>{newViews} прочтений </p>
                                             <p className='preview__statistics-text'>{formatDate(publicationDate)}</p>
-                                            <p className='preview__statistics-text'>читать {readingTime}</p>
+                                            {/* <p className='preview__statistics-text'>читать {readingTime}</p> */}
                                         </div>
                                     </div>
                                 </div>
@@ -314,27 +328,31 @@ const StoriesPreview = ({
                     )}
                 </button>
             )}
-                <div className='preview__buttons'>
-                    {!isSaved ? (
-                        <button 
-                            className='preview__button-save' 
-                            onClick={handleSaveStory} 
-                            type='button'
-                            disabled={isSaving} // Отключаем кнопку во время сохранения
-                            title="Сохранить"        
+
+            <div className='preview__buttons'>
+                {showLoginMessage && (
+                    <div className="preview__button-blocked">
+                        Войдите, чтобы сохранить
+                    </div>
+                )}
+                {!isSaved ? (
+                    <button 
+                        className='preview__button-save' 
+                        onClick={handleSaveStory} 
+                        type='button'
+                        disabled={isSaving} // Отключаем кнопку во время сохранения
+                        title="Сохранить"        
                     >
                     </button>
-                    
-
-                    ) : (
-                        <button 
-                            className='preview__button-delete'
-                            onClick={handleRemoveStory} 
-                            type='button'
-                        >
-                        </button>
-                    )}
-                </div>
+                ) : (
+                    <button 
+                        className='preview__button-delete'
+                        onClick={handleRemoveStory} 
+                        type='button'
+                    >
+                    </button>
+                )}
+            </div>
             </div>
         </div>
     )

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import BursalidiD from '../../assets/speaker-photoes/speaker-photo-main-2.webp';
 import KorotkovaE from '../../assets/speaker-photoes/korotkova-tiny.webp';
-import BotashovR from '../../assets/speaker-photoes/speaker-photo-main-3.webp';
 import VafeevT from '../../assets/speaker-photoes/speaker-photo-main-4.webp';
 
 const TariffsCards = ({totalStories, getHistoryWord3}) => {

@@ -55,7 +55,7 @@ function App() {
     const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
     const [subscriptionEnd, setSubscriptionEnd] = useState(null);
     const token = localStorage.getItem('token');
-
+    const [newViews, setNewViews] = useState(0);
     
     useEffect(() => {
         const handleUnhandledRejection = (event) => {
@@ -123,9 +123,9 @@ function App() {
         
               setErrorMessage(error); // Устанавливаем сообщение об ошибке
               setIsPopupErrorVisible(true); // Показываем PopupError
-          })
-          .finally(() => setIsLoading(false));
-      };
+        })
+        .finally(() => setIsLoading(false));
+    };
 
     // авторизация
     const handleLogin = (email, password) => {
@@ -147,9 +147,9 @@ function App() {
             }
             setErrorMessage(error);
             setIsPopupErrorVisible(true);
-          })
-          .finally(() => setIsLoading(false));
-      };
+        })
+        .finally(() => setIsLoading(false));
+    };
 
     // получить данные о пользователе
     const getUser = () => {
@@ -210,10 +210,9 @@ function App() {
                 }
                 setErrorMessage(error);
                 setIsPopupErrorVisible(true);
-            })
-            .finally(() => setIsLoading(false));
+        })
+        .finally(() => setIsLoading(false));
     };
-    
     
     // проверка токена
     const tokenFromLocalStorage = localStorage.getItem('token');
@@ -243,7 +242,6 @@ function App() {
         setLogedIn(false);
         setCurrentUser(null);
     };
-
 
     // показать Preloader
     useEffect(() => {
@@ -290,18 +288,6 @@ function App() {
     const isStorySaved = (storyId) => savedStories.some(story => story.storyId === storyId);
 
     const handleSaveStory = (story) => {
-        // if (!logedIn) {
-        //     setIsSaveBlocked(story.storyId);
-    
-        //     // Убираем блокировку через 5 секунд
-        //     setTimeout(() => {
-        //         setIsSaveBlocked(null);
-        //     }, 3000);
-    
-        //     return;
-        // }
-    
-        // setIsSaving(true);
     
         auth.saveStory(story)
             .then((newStory) => {
@@ -322,49 +308,16 @@ function App() {
     // useEffect(() => {
     //     getSavedStories();
     // }, []);
-    
-    const increaseView = async (storyId) => {
-        try {
-          // Проверяем, есть ли уже просмотры для этой карточки
-          const viewData = await auth.getViews(storyId);
-      
-          if (viewData.views === 0) {
-            // Если просмотров нет, создаем новый объект с 1 просмотром
-            await auth.createViews(storyId);
-            return 1; // Возвращаем первый просмотр
-          } else {
-            // Если просмотры уже есть, увеличиваем их
-            await auth.updateViews(storyId);
-            return viewData.views + 1; // Возвращаем обновленное количество просмотров
-          }
-        } catch (error) {
-          console.error('Ошибка при увеличении просмотров:', error);
-          throw error;
-        }
-      };
 
 
-    const getViews = (storyId, setNewViews) => {
-        if (!storyId) {
-            console.warn("getViews: storyId отсутствует.");
-            setNewViews(0);
-            return;
-        }
-        auth
-            .getViews(storyId)
-            .then((viewData) => {
-                const views = viewData?.views || 0; // Если `views` нет, устанавливаем 0
-                setNewViews(views);
-                if (views !== null) {
-                    localStorage.setItem(`storyViews_${storyId}`, JSON.stringify(views)); // Сохраняем в localStorage
-                }
+    const increaseView = (storyId) => {
+        return auth.increaseViews(storyId)  // Вызов функции для отправки данных на сервер
+            .then((response) => {
+                return response.views;  // Возвращаем обновленное количество просмотров
             })
-            .catch((error) => {    
-                // Если ошибка 404, устанавливаем просмотры в 0
-                if (error?.response?.status === 404 || error?.message?.includes("404")) {
-                    setNewViews(0);
-                    localStorage.setItem(`storyViews_${storyId}`, JSON.stringify(0));
-                }
+            .catch((error) => {
+                console.error(`Ошибка при отправке данных для истории с ID ${storyId}:`, error);
+                throw error;  // Перебрасываем ошибку дальше
             });
     };
 
@@ -431,7 +384,22 @@ function App() {
         if (count % 10 === 1 && count % 100 !== 11) return "история";
         if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return "истории";
         return "историй";
-      };
+    };
+
+    // Функция для получения количества просмотров
+    const fetchViews = (storyId) => {
+        auth.getViews(storyId)
+            .then(viewData => {
+            if (viewData && typeof viewData.views === 'number') {
+                setNewViews(viewData.views);
+            } else {
+                console.error('Неверный формат данных:', viewData);
+            }
+            })
+            .catch(error => {
+            console.error('Ошибка при получении просмотров:', error);
+            });
+    };
 
     //где header полностью черный
     const isSpecialPage = () => 
@@ -446,8 +414,9 @@ function App() {
         pathname === '/academy' ||
         pathname === '/confirmation' ||
         pathname === '/korotkovae-story' ||
-        pathname === '/batashev-story';
+        pathname === '/batashovr-story';
     
+
     return (
         <div className={`app ${isSpecialPage() ? 'special-page' : ''}`}>
             <CurrentUserContext.Provider value={currentUser}>   
@@ -464,9 +433,9 @@ function App() {
                     onClose={handleClosePopup}
                     successMessage={successMessage}
                 />
-                <NotPaidAllert 
+                {/* <NotPaidAllert 
                     hasActiveSubscription={hasActiveSubscription}
-                />
+                /> */}
                 <NotJoinedAllert />
                 <Routes>
                     <Route 
@@ -482,31 +451,29 @@ function App() {
                         path="/career-stories" 
                         element={
                             <CareerStories
-                                saveStory={handleSaveStory}
-                                removeStory={removeStory} 
-                                onIncreaseView={increaseView}
-                                isStorySaved={isStorySaved}
-                                isSaving={isSaving}
-                                IsSaveBlocked={IsSaveBlocked}
-                                getViews={getViews}
+                            saveStory={handleSaveStory}
+                            removeStory={removeStory} 
+                            onIncreaseView={increaseView}
+                            isStorySaved={isStorySaved}
                         />} 
                     />
                     <Route 
                         path="/business-stories" 
                         element={
                             <BusinessStories
-                                saveStory={handleSaveStory}
-                                removeStory={removeStory} 
-                                onIncreaseView={increaseView}
-                                isStorySaved={isStorySaved}
-                                isSaving={isSaving}
-                                IsSaveBlocked={IsSaveBlocked}
-                                getViews={getViews}
+                            saveStory={handleSaveStory}
+                            removeStory={removeStory} 
+                            onIncreaseView={increaseView}
+                            isStorySaved={isStorySaved}
                         />}
                     />
                     <Route
                         path="/about"
-                        element={logedIn ? <About subscriptionEnd={subscriptionEnd} hasActiveSubscription={hasActiveSubscription} /> : <Navigate to="/" replace />}
+                        element={logedIn ? <About 
+                            logout={logout} 
+                            subscriptionEnd={subscriptionEnd} 
+                            hasActiveSubscription={hasActiveSubscription} 
+                        /> : <Navigate to="/" replace />}
                     />                   
                     <Route
                         path="/saved"
@@ -589,21 +556,26 @@ function App() {
                     {/* ИСТОРИИ КАРЬЕРЫ */}
                     <Route path="/korotkovae-story" 
                         element={<KorotkovaE
-                        saveStory={handleSaveStory}
-                        removeStory={removeStory} 
-                        onIncreaseView={increaseView}
-                        isStorySaved={isStorySaved}
+                            saveStory={handleSaveStory}
+                            removeStory={removeStory} 
+                            isStorySaved={isStorySaved}
+                            fetchViews={fetchViews} 
+                            newViews={newViews}
+                            onIncreaseView={increaseView}
+                            hasActiveSubscription={hasActiveSubscription}
                         />} 
                     />
 
                     {/* ИСТОРИИ БИЗНЕСА */}
-                    <Route path="/batashev-story" 
+                    <Route path="/batashovr-story" 
                         element={<BatashevR
-                        saveStory={handleSaveStory}
-                        removeStory={removeStory} 
-                        onIncreaseView={increaseView}
-                        isStorySaved={isStorySaved}
-                        isSaving={isSaving}
+                            saveStory={handleSaveStory}
+                            removeStory={removeStory} 
+                            isStorySaved={isStorySaved}
+                            fetchViews={fetchViews} 
+                            newViews={newViews}
+                            onIncreaseView={increaseView}
+                            hasActiveSubscription={hasActiveSubscription}
                         />} 
                     /> 
 

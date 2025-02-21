@@ -1,22 +1,16 @@
-.story-content {
-    position: relative;
-    /* width: 100vw; */
-    display: flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content: center;
-    margin: 40px 0 0 ;
-}
 
-.batashov-short__relative {
-    position: absolute;
-    left: -200px;
-    top: 0;
+.batashov-background {
+    background-color: #F892D3;
 }
 
 .batashov-short__story {
     display: flex;
     flex-direction: column;
+    max-width: 694px;
+}
+
+.story__title-block-batashov {
+    padding: 5rem 0 0 27.75rem;
 }
 
 .batashov-short__question {
@@ -30,6 +24,21 @@
     line-height: 120%;
 }
 
+.batashov-short__question.margin-top {
+    margin-top: 20px;
+ }
+
+
+.batashov-short__red-block {
+    background: #eceff3;;
+    padding: 10px 20px 10px 20px;
+    margin: 20px 0 0 ;
+}
+
+.batashov-short__question.red {
+    max-width: 654px;
+}
+
 .batashov-short__text-container {
     margin: 0 0 30px;
     display: flex;
@@ -37,45 +46,67 @@
     flex-direction: column;
 }
 
-.batashov-short__list-bulits li::before {
-    content: '•'; 
-    margin-right: 8px; 
-    color: #000; 
+.batashov-short__red-line {
+    border-bottom:  0.20px solid #000;
 }
 
-.batashov-short__list-bulit {
-    list-style-type: none;
-    padding: 0;
+.batashov-short__projects {
+    padding: 0 0 0 19px ;
 }
 
-
-.short-text.short-span{
+.batashov-short__project-number {
     font-weight: 700;
+    font-size: 19px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
     color: #007268;
-}
-
-.short-text.short-span_underlined {
-    font-weight: 700;
-    color: #007268;
-    border-bottom: 3px solid #007268;
-}
-
-.batashov-short__quoute {
-    background: #eceff3;
-    padding: 20px 34px 20px 35px;
-    position: relative;
-    margin: 0 0 30px 0;
-    max-width: 694px;
-}
-
-.batashov-short__quoute-img {
-    background-image: url('../../../../assets/quoute-story-desk.svg');
-    width: 29px;
-    height: 43px;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
     position: absolute;
-    top: 15px;
-    left: 5px;
-    background-repeat: no-repeat;
+    left: -19px;
+    top: 0;
+    margin: 0;
+}
+
+.short-text {
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #000;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    max-width: 694px;
+    margin: 0;
+}
+
+.batashov-short__project-title {
+    max-width: 630px;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #670125;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    margin: 0 ;
+}
+
+.batashov-short__project-text {
+        max-width: 624px;
+}
+
+.short-text.span-red {
+    color: #670125;
+    font-weight: 700;
+}
+
+
+.batashov-short__project{
+    font-weight: 700;
+    color: #670125;
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .batashov-short__list-numbers {
@@ -94,16 +125,17 @@
     gap: 30px;
     align-items: center;
     margin: 0;
+    z-index: 1;
 }
 
-.batashov-short__item-number.dark {
-    background: #eceff3;
+.batashov-short__item-number-green {
+    background: #eceff3;;
 }
 
 .batashov-short__number-line {
     position: absolute;
     height: 100%;
-    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 1px solid rgba(0, 114, 104, 0.1);
     left: 31px;
     bottom: 0px;
 }
@@ -121,7 +153,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #000;
+    background: #007268;
     font-weight: 400;
     font-size: 19px;
     line-height: 150%;
@@ -130,6 +162,7 @@
     border-radius: 100%;
     width: 32px;
     height: 32px;
+    z-index: 2;
 }
 
 .batashov-short__number-container {
@@ -143,50 +176,297 @@
     font-weight: 700;
     font-size: 19px;
     letter-spacing: -0.02em;
-    color: #000;
+    color: #007268;
     line-height: 120%;
     margin: 0;
-}
-
-.batashov-short__number-text {
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 130%;
-    letter-spacing: -0.02em;
-    color: #313232;
-    margin: 0;
-}
-
-.story__switcher-mobile-text {
-    font-weight: 700;
-    font-size: 15px;
-    line-height: 120%;
-    letter-spacing: -0.02em;
-    color: #000;
+    width: 567px;
     font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
 }
 
-.story__switcher-mobile-span {
-    color: #8a878a;
+
+.batashov-short__number-text {
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #000;
+    margin: 3px 0 0 0;
+    width: 500px;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+}
+
+.batashov-long__list {
+    padding: 0 0 0 32px;
+    margin: -20px 0 0 0 !important;
+}
+
+.batashov-long__list-item {
+}
+
+.batashov-long__quotation {
+    padding: 10px 10px 10px 5px;
+    background: #eceff3;
+    display: flex;
+    align-items: flex-start;
+}
+
+.batashov-long__quotation-quote {
+    background: url('../../../../assets/speaker-photoes/BatashovR/quoute-batashov-desk.svg');
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 35px;
+    margin-right: 5px;
+    background-size: contain;
+}
+
+.batashov-long__quotation-text {
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #000;
+    max-width: 613px;
+}
+
+.batashov-long__quotation-text-span{
+    color: #007268 !important;
+    font-weight: 700 !important;
+}
+
+.batashov-long__photo-container {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.batashov-long__photo-container.reverse {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+
+.batashov-long__photo-container-wrapper {
+    position: relative;
+}
+
+.batashov-long__photo-container-text-1 {
+    position: absolute;
+    background: url('../../../../assets/speaker-photoes/BatashovR/batashow-arrow-desk.svg');
+    background-repeat:no-repeat;
+    width: 192px;
+    height: 137px;
+    bottom: 50px;
+    left: 100px;
+    background-size: contain;
+}
+
+.batashov-long__photo-container-text-3 {
+    position: absolute;
+    background: url('../../../../assets/speaker-photoes/KorotkovaE/text-korotkova-desk-3.svg');
+    background-repeat:no-repeat;
+    width: 298px;
+    height: 398px;
+    right: -180px;
+    top: -60px;
+    background-size: contain;
+
+}
+
+.batashov-long__photo-container-text-4 {
+    position: absolute;
+    background: url('../../../../assets/speaker-photoes/KorotkovaE/text-korotkova-desk-4.svg');
+    background-repeat:no-repeat;
+    width: 387px;
+    height: 130px;
+    bottom: -65px;
+    left: 100px;
+    background-size: contain;
+}
+
+.batashov-long__photo-container-photo {
+    width: 694px;
+    height: 521px;
+    object-fit: contain;
 }
 
 
-@media screen and (max-width: 1280px) {
-    .batashov-short__relative {
-        position: unset;
-        margin-bottom: 20px;
-        /* max-width: 694px; */
-    }
+.batashov-long__text-span {
+    color: #007268;
+    font-weight: 700;
+    border-bottom:solid #007268 3px;
+    /* text-decoration: underline;
+    text-decoration-thickness: 3px; */
+}
 
+.batashov-long__gant {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 30px 0;
+}
+
+.batashov-short__digram {
+    width: 694px;
+    height: 419px;  
+    object-fit: contain;
+    background-image: url('../../../../assets/speaker-photoes/KorotkovaE/digram-korotkova-desk.svg')
+}
+
+.batashov-long__text-span-inoagents {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.batashov-short-text-link {
+    font-weight: 700;
+    color: #DD424C;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 1279px) {
+    .short-text {
+        font-size: 20px;
+        /* max-width: 668px; */
+        max-width: 100%;
+    }
+    
     .batashov-short {
         margin: 40px 0 0 ;
         padding: 0 8px;
     }
+
+    .batashov-short__number-title {
+        font-size: 25px;
+    }
+
+    .batashov-short__number-text {
+        font-size: 20px;
+    }
+    .batashov-short__number-line {
+        display: none;
+    }
+    .batashov-short__item-number {
+        align-items: flex-start;
+    }
+
+    .batashov-short__question {
+        font-size: 25px;
+        margin: 0 0 15px;
+        max-width: 100%;
+    }
+
+    .batashov-short__project  {
+        margin-top: 25px;
+    }
+
+    .batashov-short__project-number {
+        font-size: 19px;
+        left: -19px;
+    }
+
+    .batashov-short__red-block {
+        padding: 10px 10px 25px 10px;
+        margin: 20px 0 0 ;
+    }
+
+    .batashov-short__projects {
+        padding: 0 0 0 29px ;
+    }
+
+
+    .batashov-long__quotation {
+        padding: 10px 0 15px 10px;
+        /* max-width: 658px; */
+        max-width: 100%;
+    }
+    
+    .batashov-long__quotation-quote {
+        background: url('../../../../assets/speaker-photoes/BatashovR/quoute-batashov-desk.svg');
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 25px;
+        margin-right: 5px;
+        background-size: contain;
+    }
+    
+    .korotkova-long__quotation-text {
+        font-weight: 400;
+        font-size: 20px;
+        /* max-width: 623px; */
+        max-width: 95%;
+    }
+
+    .batashov-short-text-link {
+        font-size: 15px;
+    }
+
+
+    .batashov-long__photo-container-photo {
+        width: 694px;
+        height: 100%;
+        object-fit: contain;
+    }
+    
+    .batashov-long__photo-container-text-3 {
+        position: absolute;
+        background: url('../../../../assets/speaker-photoes/KorotkovaE/text-korotkova-tablet-3.svg');
+        background-repeat:no-repeat;
+        width: 186px;
+        height: 191px;
+        right: 135px;
+        top: 200px;
+        background-size: contain;
+    }
+    
+    .batashov-long__photo-container-text-4 {
+        position: absolute;
+        background: url('../../../../assets/speaker-photoes/KorotkovaE/text-korotkova-tablet-4.svg');
+        background-repeat:no-repeat;
+        width: 186px;
+        height: 191px;
+        bottom: -35px;
+        left: 130px;
+        background-size: contain;
+    }
+
+    .batashov-long__photo-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 5px;
+        justify-content: flex-start;
+    }
+
+    .batashov-long__photo-container.reverse {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 5px;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+
+    .batashov-short__digram {
+        width: 668px;
+        height: 419px;
+        object-fit: contain;
+    }
+    
 }
 
 @media screen and (max-width: 767px) {
-    .batashov-short__relative {
-        position: unset;
+    .batashov-short__story {
+        display: flex;
+        flex-direction: column;
+        padding: 0 0;
+    }
+    .short-text {
+        font-size: 20px;
+        /* max-width: 326px; */
+        max-width: 100%;
     }
 
     .batashov-short__item-number {
@@ -198,6 +478,10 @@
         align-items: center;
     }
 
+    .batashov-short__red-line {
+        display: none;
+    }
+
     .batashov-short {
         margin: 40px 0 0 ;
         padding: 0 18px;
@@ -207,12 +491,13 @@
         font-size: 20px;
         line-height: 120%;
     }
+
     .short-text {
-        /* font-size: 15px; */
-        font-size: 19px;
+        font-size: 15px;
     }
     .batashov-short__number-title {
-        font-size: 17px;
+        font-size: 20px;
+        width: 100%;
     }
     .batashov-short__text-container {
         margin: 0 0 20px;
@@ -221,18 +506,114 @@
     
     .batashov-short__number-text {
         font-size: 14px;
-        line-height: 110%;
+        width: 100%;
     }
     .batashov-short__number-step {
         font-size: 15px;
         line-height: 100%;
     }
+    .batashov-short__project-title {
+        font-size: 19px;
+    }
+    .batashov-short__project-number {
+        font-size: 15px;
+        line-height: 100%;
+        top: 4px;
+        left: -15px;
+    }
+
+    .batashov-short__projects {
+        padding: 0 0 0 16px ;
+    }
+
+    .batashov-long__gant {
+        display: flex;
+        justify-content: flex-start;
+        margin: 7px 0 5px 0;
+    }
+
+    .batashov-long__photo-container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+
+    
+    .batashov-long__photo-container-text-3 {
+        position: absolute;
+        background: url('../../../../assets/speaker-photoes/KorotkovaE/text-korotkova-mobile-3.svg');
+        background-repeat: no-repeat;
+        width: 184px;
+        height: 169px;
+        left: 100px;
+        top: 220px;
+        background-size: contain;
+    }
+    
+    .batashov-long__photo-container-text-4 {
+        position: absolute;
+        background: url('../../../../assets/speaker-photoes/KorotkovaE/text-korotkova-mobile-4.svg');
+        background-repeat: no-repeat;
+        width: 179px;
+        height: 136px;
+        bottom: 20px;
+        left: 20px;
+        background-size: contain;
+    }
+
+    .batashov-long__photo-container.reverse {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 5px;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+    }
+
+    .batashov-short__digram {
+        background-image: url('../../../../assets/speaker-photoes/KorotkovaE/digram-korotkova-mobile.svg');
+        width: 311px;
+        height: 394px;
+        object-fit: contain;
+    }
+
+    .batashov-long__quotation {
+        padding: 9px 10px 10px 10px;
+        /* max-width: 300px; */
+        max-width: 100%;
+    }
+
+    .batashov-long__quotation-text {
+        font-weight: 400;
+        font-size: 15px;
+        /* max-width: 265px; */
+        max-width: 90%;
+    }
+
+    .batashov-long__photo-container-photo {
+        max-width: 693px;
+        height: 100%;
+        object-fit: contain;
+        width: 100%;
+    }
+
+    .batashov-long__photo-container-text-1 {
+        position: absolute;
+        background: url('../../../../assets/speaker-photoes/BatashovR/batashow-arrow-desk.svg');
+        background-repeat:no-repeat;
+        width: 130px;
+        height: 100%;
+        bottom: 0;
+        top: 100px;
+        left: 10px;
+        background-size: contain;
+    }
+
 
 }
 
 @media screen and (max-width: 460px) {
     .batashov-short__number-text {
-        max-width: 288px;
+        max-width: 220px;
     }
 
     .batashov-short__item-number {
@@ -244,7 +625,10 @@
     }
 
     .batashov-short__number-title {
-        max-width: 288px;
+        max-width: 250px;
+    }
+    .batashov-short-text-link {
+        font-size: 15px;
     }
 
 }

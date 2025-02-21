@@ -6,7 +6,14 @@ import DATACareer from '../../Data/DataCareer';
 import { Link, useLocation } from 'react-router-dom';
 import PopupSendEmail from '../../PopupSendEmail/PopupSendEmail';
 
-const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStory, onIncreaseView, isStorySaved }) => {
+const CareerStories = ({ 
+    data = DATACareer, 
+    onCloseFilter, 
+    saveStory, 
+    removeStory, 
+    onIncreaseView, 
+    isStorySaved 
+}) => {
     const [filteredData, setFilteredData] = useState(data);
     const [filters, setFilters] = useState({
         businessType: '',
@@ -18,23 +25,24 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
     const [isLoading, setIsLoading] = useState(false);
     const pathname = window.location.pathname; // Получаем текущий путь
     const [showPopup, setShowPopup] = useState(false);
+    const [showLoginMessage, setShowLoginMessage] = useState(false); // Стейт для показа сообщения
 
+    const token = localStorage.getItem('token');
 
-    // const headerText = '';
-    
-    // if (pathname.includes('career-stories')) {
-    //   headerText = 'Каталог историй про карьеру';
-    // } else if (pathname.includes('business-stories')) {
-    //   headerText = 'Каталог историй про бизнес';
-    // }
+    useEffect(() => {
+        if (!token) {
+            setShowLoginMessage(true);
+            setTimeout(() => {
+                setShowLoginMessage(false);
+            }, 5000); // Показываем 5 секунд
+        }
+    }, [token]);
 
     useEffect(() => {
             setTimeout(() => {
                 setShowPopup(false);
             }, 10000); // Закрыть через 10 секунд
     }, []);
-
-  
 
     useEffect(() => {
         document.title = 'Истории про карьеру — CEOstory';
@@ -74,7 +82,6 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
     
     };
     
-
     //отображаение большего количества историй
     const handleShowMore = () => {
         setIsLoading(true);
@@ -87,14 +94,14 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
     };
 
     const getStoryLabel = (count) => {
-        if (count === 1) {
+        if (count % 10 === 1 && count % 100 !== 11) {
             return 'история';
-        } else if (count >= 2 && count <= 4) {
-            return 'истории';
-        } else {
-            return 'историй';
         }
-    };
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+            return 'истории';
+        }
+        return 'историй';
+    }; 
 
     // Определяем текст заголовка в зависимости от текущей страницы
     let headerText = 'Каталог историй про ';
@@ -106,7 +113,6 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
     } else {
       headerText += 'истории'; // Значение по умолчанию, если не совпадает ни с одним из путей
     }
-  
     
     return (
        <div className='stories'>
@@ -125,7 +131,6 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
             <div className="stories__flex">
             {filteredData.length > 0 ? (
                     filteredData.slice(0, visibleCount).map((story, index) => (
-                    
                         <StoriesPreview
                             {...story}
                             key={story.id ||  story._id  || index }     
@@ -149,6 +154,7 @@ const CareerStories = ({ data = DATACareer, onCloseFilter, saveStory, removeStor
                             onRemove={removeStory}
                             onIncreaseView={onIncreaseView}
                             isSaved={isStorySaved(story.storyId)} 
+                            showLoginMessage={showLoginMessage}
                         />
                     ))
                 ) : (

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import RunningLine from '../RunningLine/RunningLine';
 import BursalidiD from '../../assets/speaker-photoes/speaker-photo-main-2.webp';
 import KorotkovaE from '../../assets/speaker-photoes/korotkova-tiny.webp';
-import BotashovR from '../../assets/speaker-photoes/speaker-photo-main-3.webp';
+import BatashovR from '../../assets/speaker-photoes/batashov-tiny.webp';
 import VafeevT from '../../assets/speaker-photoes/speaker-photo-main-4.webp';
 
 const Main = ({totalStories, getHistoryWord1, getHistoryWord3 }) => {
@@ -91,11 +91,11 @@ useEffect(() => {
                   <p className='main__filter-info'>NDA</p>
                 </div> */}
                 <div className='main__filter'>
-                  <p className='main__filter-title'>опыт</p>
+                  <p className='main__filter-title'>Опыт</p>
                   <p className='main__filter-info'>9 лет</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>сфера</p>
+                  <p className='main__filter-title'>Сфера</p>
                   <p className='main__filter-info'>IT</p>
                 </div>
               </div>
@@ -125,15 +125,15 @@ useEffect(() => {
               {screenSize >1279 && (
               <div className='main__filters'>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>доход</p>
+                  <p className='main__filter-title'>Доход</p>
                   <p className='main__filter-info'>от 1 млн&nbsp;руб.</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>сфера</p>
+                  <p className='main__filter-title'>Сфера</p>
                   <p className='main__filter-info'>Маркетплейсы</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>вложения</p>
+                  <p className='main__filter-title'>Вложения</p>
                   <p className='main__filter-info'>1 млн&nbsp;руб.</p>
                 </div>
               </div>
@@ -171,11 +171,11 @@ useEffect(() => {
                   <p className='main__filter-info'>Очень много</p>
                 </div> */}
                 <div className='main__filter'>
-                  <p className='main__filter-title'>опыт</p>
+                  <p className='main__filter-title'>Опыт</p>
                   <p className='main__filter-info'>9 лет</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>сфера</p>
+                  <p className='main__filter-title'>Сфера</p>
                   <p className='main__filter-info'>Логистика</p>
                 </div>
               </div>
@@ -183,16 +183,16 @@ useEffect(() => {
             </div>
           </Link>
         {screenSize >750 && (
-          <Link to='/korotkovae-story' className='main__card' onClick={() => { window.scrollTo({ top: 0 }) }}>
-            <img className='main__card-photo green' src={BotashovR} alt='Фотография спикера'/>
+          <Link to='/batashovr-story' className='main__card' onClick={() => { window.scrollTo({ top: 0 }) }}>
+            <img className='main__card-photo green' src={BatashovR} alt='Фотография спикера'/>
             {/* {screenSize <1279 && (
                 <div className='main__filter'>
                   <p className='main__filter-info'>от 3 млн&nbsp;руб.</p>
                 </div>
               )} */}
             <div className='main__card-wrapper'>
-              <h4 className='main__card-title'>Как построить бизнес с&nbsp;оборотом более 120&nbsp;млн&nbsp;руб.
-              в год на <span className='main__card-title-red'>”глупых зданиях”</span></h4>
+              <h4 className='main__card-title'>Как построить бизнес с&nbsp;оборотом более 90&nbsp;млн&nbsp;руб.
+              в год на <span className='main__card-title-red'>”умных домах”</span></h4>
               <div className='main__card-features'>
                 <div className='main__card-feature'>
                   <div className='main__card-arrow'></div>
@@ -206,15 +206,15 @@ useEffect(() => {
               {screenSize >1279 && (
               <div className='main__filters'>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>доход</p>
+                  <p className='main__filter-title'>Доход</p>
                   <p className='main__filter-info'>от 3&nbsp;млн&nbsp;руб.</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>сфера</p>
+                  <p className='main__filter-title'>Сфера</p>
                   <p className='main__filter-info'>Строительство</p>
                 </div>
                 <div className='main__filter'>
-                  <p className='main__filter-title'>вложения</p>
+                  <p className='main__filter-title'>Вложения</p>
                   <p className='main__filter-info'>0 руб.</p>
                 </div>
               </div>

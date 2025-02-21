@@ -111,52 +111,39 @@ export const deleteStory = (storyId) => {
     .then((res) => checkResponse(res));
 }
 
-// Обновление просмотров
-export const updateViews = (storyId) => {
-    return fetch(`${BASE_URL}/views/${storyId}`, {
+export const increaseViews = async (storyId) => {
+    const response = await fetch(`${BASE_URL}/views/${storyId}`, {
         method: 'PATCH',
         headers: {
         "Content-Type": 'application/json',
         },
-    }).then(response => {
-        if (!response.ok) {
-        throw new Error(`Ошибка при обновлении просмотров: ${response.statusText}`);
-        }
-        return checkResponse(response);
     });
-};
-  
-// Создание новой карточки просмотров, если ее нет
-export const createViews = (storyId) => {
-    return fetch(`${BASE_URL}/views`, {
+
+    // Если история не найдена, создаем новую
+    if (response.status === 404) {
+        const createResponse = await fetch(`${BASE_URL}/views`, {
         method: 'POST',
         headers: {
-        "Content-Type": 'application/json',
+            "Content-Type": 'application/json',
         },
-        body: JSON.stringify({ storyId, views: 1 }) // Создаем с 1 просмотром
-    }).then(response => {
-        if (!response.ok) {
-        throw new Error(`Ошибка при создании истории просмотров: ${response.statusText}`);
-        }
-        console.log(`Создана новая запись просмотров для истории ${storyId}`);
-        return checkResponse(response);
-    });
+        body: JSON.stringify({ storyId }) // Создаем новую историю с 0 просмотрами
+        });
+
+        return checkResponse(createResponse);
+    }
+
+    return checkResponse(response);
 };
-  
-// Получить количество просмотров
-export const getViews = (storyId) => {
-    return fetch(`${BASE_URL}/views/${storyId}`, {
+
+export const getViews = async (storyId) => {
+    const response = await fetch(`${BASE_URL}/views/${storyId}`, {
         method: 'GET',
         headers: {
         "Content-Type": 'application/json',
         },
-    }).then(response => {
-        if (response.status === 404) {
-        // Если 404, значит записи нет, возвращаем 0
-        return { views: 0 };
-        }
-        return checkResponse(response);
     });
+
+    return checkResponse(response);
 };
 
 export const sendPasswordResetEmail = async (email) => {

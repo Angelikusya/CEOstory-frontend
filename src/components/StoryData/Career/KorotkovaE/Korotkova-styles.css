@@ -15,7 +15,7 @@
     letter-spacing: -0.02em;
     color: #000;
     font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
-    margin: 0 0 10px ;
+    margin: 0 0 20px ;
     max-width: 694px;
     line-height: 120%;
 }
@@ -193,7 +193,7 @@
 
 .korotkova-long__list {
     padding: 0 0 0 32px;
-    margin: -10px 0 0 0;
+    margin: -10px 0 0 0 !important;
 }
 
 .korotkova-long__list-item {

@@ -13,14 +13,20 @@ const isOnSpecialPage = (pathname) => {
     ].includes(pathname) || pathname.startsWith('/password-reset/');
 };
 
-const NotPaidAllert = ({ hasActiveSubscription }) => {
+const NotPaidAllert = ({ hasActiveSubscription, free }) => {
     const [isVisible, setIsVisible] = useState(false);
     const location = useLocation();
     const token = localStorage.getItem('token');
     const [screenSize, setScreenSize] = useState(window.innerWidth);
 
     // Если есть токен и подписка истекла — показываем попап
-    const shouldShowAlert = token && !hasActiveSubscription;
+    const shouldShowAlert = token && !hasActiveSubscription && free === false
+
+    // Условие для отображения попапа:
+    // Если free === true, попап всегда скрыт.
+    // Если free === false, попап скрывается, если есть токен и активная подписка.
+    // const shouldShowAlert = (free === false && token && !hasActiveSubscription) || (free === false && !token);
+
 
     // Обновление размера экрана
     useEffect(() => {
@@ -36,8 +42,6 @@ const NotPaidAllert = ({ hasActiveSubscription }) => {
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
-
-            console.log('📢 Скролл', scrollY, 'Высота окна', windowHeight, 'Общая высота документа', documentHeight);
 
             const shouldShow = scrollY > (documentHeight - windowHeight) * 0.1 &&
                 shouldShowAlert &&

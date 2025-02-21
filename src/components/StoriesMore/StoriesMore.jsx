@@ -21,13 +21,17 @@ const StoriesMore = ({
     publicationDate, 
     free,
     photo,
+    onSave, 
+    onRemove,
     views,
     readingTime,
     onIncreaseView,
+    isSaved,
 }) => {
     const [newViews, setNewViews] = useState(views);
+    const [isSaving, setIsSaving] = useState(false);
+    const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [screenSize, setScreenSize] = useState(window.innerWidth);
     const storyData = {
         _id,
         storyId,
@@ -48,6 +52,7 @@ const StoriesMore = ({
         readingTime,
         views: newViews,
     };
+    const [screenSize, setScreenSize] = useState(window.innerWidth);
 
     const handleResize = () => {
       setScreenSize(window.innerWidth);
@@ -61,6 +66,36 @@ const StoriesMore = ({
     }, []);
 
 
+    const handleIncreaseView = async () => {
+        // Увеличиваем количество просмотров
+        const updatedViews = await onIncreaseView(storyId);
+        setNewViews(updatedViews);
+    };
+
+    useEffect(() => {
+        // Получаем количество просмотров при монтировании компонента
+        const fetchViews = async () => {
+            const viewData = await 
+            auth
+                .getViews(storyId);
+                setNewViews(viewData.views);
+        };
+
+        fetchViews();
+    }, [storyId]); // Зависимость от storyId
+
+    const handleSaveStory = async () => {
+        if (onSave) {
+            setIsSaving(true); // Устанавливаем состояние "сохранения"
+            try {
+                await onSave(storyData); // Вызываем функцию onSave
+            } catch (error) {
+                console.error("Ошибка при сохранении:", error);
+            } finally {
+                setIsSaving(false); // Сбрасываем состояние "сохранения"
+            }
+        }
+    };
 
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -68,38 +103,48 @@ const StoriesMore = ({
         return date.toLocaleDateString('ru-RU', options);
     };
 
-        // Массив с цветами
-        const colors = ['#0F1E37', '#353E44', '#283C35', '#3D0150', '#F6EFE7'];
+    // Массив с цветами
+    const colors = ['#0F1E37', '#353E44', '#283C35', '#3D0150', '#F6EFE7'];
+
+    // Функция для выбора случайного цвета
+    let lastColor = null;
+    let repeatCount = 0;
     
-        // Функция для выбора случайного цвета
-        let lastColor = null;
-        let repeatCount = 0;
+    // Функция для выбора случайного цвета
+    const getRandomColor = () => {
+        let newColor;
         
-        // Функция для выбора случайного цвета
-        const getRandomColor = () => {
-            let newColor;
+        do {
+            newColor = colors[Math.floor(Math.random() * colors.length)];
             
-            do {
-                newColor = colors[Math.floor(Math.random() * colors.length)];
-                
-                // Проверяем, совпадает ли новый цвет с последним
-                if (newColor === lastColor) {
-                    repeatCount++;
-                } else {
-                    repeatCount = 1; // Сбрасываем счетчик, если цвет изменился
-                }
-        
-            } while (repeatCount > 2); // Продолжаем выбирать, пока не найдем подходящий цвет
-        
-            // Обновляем последний цвет
-            lastColor = newColor;
-        
-            return newColor;
-        };
+            // Проверяем, совпадает ли новый цвет с последним
+            if (newColor === lastColor) {
+                repeatCount++;
+            } else {
+                repeatCount = 1; // Сбрасываем счетчик, если цвет изменился
+            }
+    
+        } while (repeatCount > 2); // Продолжаем выбирать, пока не найдем подходящий цвет
+    
+        // Обновляем последний цвет
+        lastColor = newColor;
+    
+        return newColor;
+    };
+
+    const getReadingForm = (count) => {
+        if (count % 10 === 1 && count % 100 !== 11) {
+            return 'прочтение';
+        }
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) {
+            return 'прочтения';
+        }
+        return 'прочтений';
+    };    
         
     return (
         <div className='more__card'>
-            <button className='more__click' onClick={onIncreaseView}>
+            <button className='more__click' onClick={handleIncreaseView}>
                 <div className='more__mobile'>
                     {free && <div className='more__free'>Бесплатно</div>}
                         <Link to={navigation} className='more__link'>
@@ -122,9 +167,8 @@ const StoriesMore = ({
                                         <p className='more__job'>{name}</p>
                                     </div>
                                     <div className='more__statistics'>
-                                        <p className='more__statistics-text'>{newViews} просмотров, </p>
+                                        <p className='more__statistics-text'>{newViews} {getReadingForm(newViews)}</p>
                                         <p className='more__statistics-text'>{formatDate(publicationDate)}</p>
-                                        <p className='more__statistics-text'>читать {readingTime}</p>
                                     </div>
                                 </div>
                             </div>
