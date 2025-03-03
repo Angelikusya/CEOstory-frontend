@@ -170,38 +170,29 @@ export const newPassword = async (userId, token, password) => {
     return checkResponse(response);
 };
 
-export const payForTariff = (amount, currency, description) => {
-    return fetch(`${BASE_URL}/payment`, {
-        method: 'POST',
-        headers: {
-            Accept: "application/json",
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ amount, currency, description })
-    })
-    .then((res) => checkResponse(res));
-};
 
 // Получение terminalKey с сервера
 export const getTerminalKey = () => {
-    return fetch(`${BASE_URL}/activate-subscription`, {
-        method: "POST",
-        headers: { 
-            "Content-Type": 'application/json',
-            "Authorization": localStorage.getItem("token") },
-        body: JSON.stringify({ userId: currentUser.id }),
+    return fetch(`${BASE_URL}/terminal`, {
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem('token')
+    },
     })
-    .then((res) => checkResponse(res));
+    .then(checkResponse);
 };
 
 // активировать подписку
 export const ActivateSubscription = () => {
-    return fetch(`${BASE_URL}/terminal`, {
-        headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("token") },
+    fetch(`${BASE_URL}/activate-subscription`, {
+        method: "POST",
+        headers: { 
+            "Content-Type": "application/json", 
+            "Authorization": localStorage.getItem("token") },
         body: JSON.stringify({ userId: currentUser.id }),
-    })
-    .then(checkResponse);
-};
+      })
+      .then(checkResponse);
+}
 
   
   
