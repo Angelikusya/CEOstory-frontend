@@ -32,9 +32,9 @@ import RegistrationSucceed from '../RegistrationSucceed/RegistrationSucceed';
 import PopupError from '../PopupError/PopupError';
 import PopupSuccess from '../PopupSuccess/PopupSuccess';
 import NotJoinedAllert from '../NotJoinedAllert/NotJoinedAllert';
-import NotPaidAllert from '../NotPaidAllert/NotPaidAllert';
 import DATACareer from '../Data/DataCareer';
 import DATABusiness from '../Data/DataBusiness';
+import { TariffProvider } from '../TariffContext/TariffContext';
 
 function App() {
 
@@ -56,7 +56,19 @@ function App() {
     const [subscriptionEnd, setSubscriptionEnd] = useState(null);
     const token = localStorage.getItem('token');
     const [newViews, setNewViews] = useState(0);
-    
+
+    const tariffs = [
+        {
+            tariff: 0.01,
+            price: 1, // здесь в копейках
+            quantity: 1,
+            oldPrice: 1699,
+            description: 'Доступ к тарифу на 1 год',
+            discount: 'скидка 58% до 31.03.2025',
+            duration: 12, //в месяцах
+        },
+    ]
+
     useEffect(() => {
         const handleUnhandledRejection = (event) => {
           console.error("Необработанная ошибка:", event.reason);
@@ -321,12 +333,6 @@ function App() {
             });
     };
 
-    // оплата
-    const handlePaymentSubmit = async (paymentData) => {
-        setIsLoading(true); // Устанавливаем состояние загрузки
-        console.log('Отправка данных на оплату:', paymentData);
-    };
-
     const handleClosePopup = () => {
         setIsPopupErrorVisible(false);
         setIsPopupSuccessVisible(false);
@@ -341,7 +347,7 @@ function App() {
         }
 
         const fetchUserSubscription = () => {
-            console.log('🔄 Запрос на проверку подписки...');
+            console.log('Запрос на проверку подписки...');
             auth.checkToken(token)
                 .then((res) => {
                     if (res && res.subscriptionEnd !== undefined) {
@@ -360,7 +366,7 @@ function App() {
                     }
                 })
                 .catch((error) => {
-                    console.error('⚠️ Ошибка обновления подписки:', error);
+                    console.error('Ошибка обновления подписки:', error);
                     setHasActiveSubscription(false);
                     setSubscriptionEnd(null);
                 });
@@ -401,6 +407,21 @@ function App() {
             });
     };
 
+    const handleAccessClick = (selectedTariff) => {
+        console.log('Выбранный тариф:', selectedTariff);
+    
+        if (!token) {
+            setErrorMessage('Для продолжения необходимо зарегистроваться');
+            setIsPopupErrorVisible(true);
+        } else if (hasActiveSubscription) {
+            setSuccessMessage('У тебя уже есть подписка');
+            setIsPopupSuccessVisible(true);
+        } else {
+            console.log('Передаем тариф на страницу оплаты:', selectedTariff);
+            navigate('/payment', { state: { tariff: selectedTariff } });
+        }
+    };
+
     //где header полностью черный
     const isSpecialPage = () => 
         pathname === '/career-stories' || 
@@ -414,8 +435,22 @@ function App() {
         pathname === '/academy' ||
         pathname === '/confirmation' ||
         pathname === '/korotkovae-story' ||
+        pathname === '/payment'||
         pathname === '/batashovr-story';
-    
+
+
+  const [terminalKey, setTerminalKey] = useState("");
+
+  useEffect(() => {
+    auth
+        .getTerminalKey().then((data) => {
+            if (data.terminalKey) {
+            setTerminalKey(data.terminalKey);
+        }
+        }).catch((error) => {
+            console.error("Ошибка получения terminalKey:", error);
+        });
+  }, []);
 
     return (
         <div className={`app ${isSpecialPage() ? 'special-page' : ''}`}>
@@ -433,10 +468,8 @@ function App() {
                     onClose={handleClosePopup}
                     successMessage={successMessage}
                 />
-                {/* <NotPaidAllert 
-                    hasActiveSubscription={hasActiveSubscription}
-                /> */}
                 <NotJoinedAllert />
+                <TariffProvider>
                 <Routes>
                     <Route 
                         path="/" 
@@ -469,7 +502,7 @@ function App() {
                     />
                     <Route
                         path="/about"
-                        element={logedIn ? <About 
+                        element={token ? <About 
                             logout={logout} 
                             subscriptionEnd={subscriptionEnd} 
                             hasActiveSubscription={hasActiveSubscription} 
@@ -527,13 +560,18 @@ function App() {
                     <Route 
                         path="/tariffs" element={
                             <Tariffs 
-                                onPaymentSubmit={handlePaymentSubmit} 
                                 totalStories={totalStories}
                                 getHistoryWord1={getHistoryWord1}
                                 getHistoryWord3={getHistoryWord3}
+                                tariffs={tariffs}
+                                terminalKey={terminalKey}
                             />} 
                     />
-                    <Route path="/payment" element={<Payment />} />
+                    <Route 
+                        path="/payment" element={
+                            <Payment 
+                        />} 
+                    />
                     <Route path="/confirmation" element={<ConfirmationPayment />} />
 
                     <Route path="/documents/privacy-policy" element={<Policy />}/>
@@ -578,8 +616,8 @@ function App() {
                             hasActiveSubscription={hasActiveSubscription}
                         />} 
                     /> 
-
                 </Routes>
+                </TariffProvider>
                 <Cookies />
                 <Footer />
             </CurrentUserContext.Provider>

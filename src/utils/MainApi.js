@@ -158,7 +158,7 @@ export const sendPasswordResetEmail = async (email) => {
   return checkResponse(response);
 };
 
-  export const newPassword = async (userId, token, password) => {
+export const newPassword = async (userId, token, password) => {
     const response = await fetch(`${BASE_URL}/password-reset/${userId}/${token}`, {
         method: 'PATCH',
         headers: {
@@ -168,9 +168,9 @@ export const sendPasswordResetEmail = async (email) => {
     });
 
     return checkResponse(response);
-  };
+};
 
-  export const payForTariff = (amount, currency, description) => {
+export const payForTariff = (amount, currency, description) => {
     return fetch(`${BASE_URL}/payment`, {
         method: 'POST',
         headers: {
@@ -180,7 +180,28 @@ export const sendPasswordResetEmail = async (email) => {
         body: JSON.stringify({ amount, currency, description })
     })
     .then((res) => checkResponse(res));
-  };
+};
+
+// Получение terminalKey с сервера
+export const getTerminalKey = () => {
+    return fetch(`${BASE_URL}/activate-subscription`, {
+        method: "POST",
+        headers: { 
+            "Content-Type": 'application/json',
+            "Authorization": localStorage.getItem("token") },
+        body: JSON.stringify({ userId: currentUser.id }),
+    })
+    .then((res) => checkResponse(res));
+};
+
+// активировать подписку
+export const ActivateSubscription = () => {
+    return fetch(`${BASE_URL}/terminal`, {
+        headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("token") },
+        body: JSON.stringify({ userId: currentUser.id }),
+    })
+    .then(checkResponse);
+};
 
   
   

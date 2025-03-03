@@ -1,4 +1,5 @@
-import BatashovR from '../../assets/speaker-photoes/Batashov-tiny.webp';
+import BatashovR from '../../assets/speaker-photoes/batashov-tiny.webp';
+
 
 // ПРОСТАВЛЯЙ НОМЕР ID ПО ПОРЯДКУ, ВКЛЮЧАЯ ВСЕ ИСТОРИИ!! ДАЖЕ БИЗНЕС
 const DATABusiness = [

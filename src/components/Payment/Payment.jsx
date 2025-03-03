@@ -1,9 +1,13 @@
+import { useEffect } from 'react';
 import './Payment.css';
 
 const Payment = () => {
-    return (
-      <div>Payment</div>
-    )
-  }
-  
-  export default Payment;
+ 
+  return (
+    <div>
+     
+    </div>
+  );
+};
+
+export default Payment;

@@ -32,7 +32,7 @@
     display: flex;
     font-family: Verdana, Arial, Helvetica, sans-serif;
     align-items: flex-end;
-    gap: 4px;
+    gap: 10px;
 }
 
 .tariffs-small__first {
@@ -94,6 +94,8 @@
     margin: 0;
     width: 100%;
     font-size: 20px;
+    border: none;
+    width: 310px;
 }
 
 .tariffs-small__benefits {

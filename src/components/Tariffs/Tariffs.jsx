@@ -5,15 +5,22 @@ import TariffsAbout from '../TariffsAbout/TariffsAbout';
 import TariffsCards from '../TariffsCards/TariffsCards';
 import TariffsSuccess from '../TariffsSuccess/TariffsSuccess';
 import TariffsCost from '../TariffsCost/TariffsCost';
-import TariffsPrice from '../TariffsPrice/TariffsPrice';
 import TariffsFAQ from '../TariffsFAQ/TariffsFAQ';
 import TariffsGarancy from '../TariffsGarancy/TariffsGarancy';
 import TariffsSmall from '../TariffsSmall/TariffsSmall';
 import Preloader from '../Preloader/Preloader';
+import PopupError from '../PopupError/PopupError';
+import PopupSuccess from '../PopupSuccess/PopupSuccess';
 
-const Tariffs = ({ onPaymentSubmit, totalStories, getHistoryWord1, getHistoryWord3  }) => {
+const Tariffs = ({ 
+  totalStories, 
+  getHistoryWord1, 
+  getHistoryWord3, 
+  tariffs,
+  terminalKey
+}) => {
 
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Создаем реф для элемента с тарифами
   const tariffsPriceRef = useRef(null);
@@ -46,6 +53,9 @@ const Tariffs = ({ onPaymentSubmit, totalStories, getHistoryWord1, getHistoryWor
       <Preloader />
     ) : (
       <div className='tariffs'>
+
+      <PopupError />
+      <PopupSuccess />
       <div className='tariffs__main'>
         <div className='tariffs__greeting'>
           <p className='tariffs__greeting-text'>Добро пожаловать в </p>
@@ -79,9 +89,10 @@ const Tariffs = ({ onPaymentSubmit, totalStories, getHistoryWord1, getHistoryWor
         <TariffsCost />
         {/* <TariffsPrice /> */}
         <TariffsSmall 
-          onPaymentSubmit={onPaymentSubmit} 
           totalStories={totalStories}
           getHistoryWord1={getHistoryWord1}
+          tariffs={tariffs}
+          terminalKey={terminalKey}
         />
       </div>
 
@@ -90,9 +101,10 @@ const Tariffs = ({ onPaymentSubmit, totalStories, getHistoryWord1, getHistoryWor
       <div ref={tariffsPriceRef}>
         {/* <TariffsPrice /> */}
         <TariffsSmall 
-          onPaymentSubmit={onPaymentSubmit} 
           totalStories={totalStories}
           getHistoryWord1={getHistoryWord1}
+          tariffs={tariffs}
+          terminalKey={terminalKey}
         />
       </div>
       </div>
