@@ -12,7 +12,6 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ForgottenPassword from '../ForgottenPassword/ForgottenPassword';
 import Tariffs from '../Tariffs/Tariffs';
-import Payment from '../Payment/Payment';
 import ServerError from '../ServerError/ServerError';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import About from '../About/About';
@@ -56,11 +55,12 @@ function App() {
     const [subscriptionEnd, setSubscriptionEnd] = useState(null);
     const token = localStorage.getItem('token');
     const [newViews, setNewViews] = useState(0);
+    const [terminalKey, setTerminalKey] = useState("");
 
     const tariffs = [
         {
             tariff: 0.01,
-            price: 1, // здесь в копейках
+            price: 0.1, // стоимость в копейках
             quantity: 1,
             oldPrice: 1699,
             description: 'Доступ к тарифу на 1 год',
@@ -407,20 +407,16 @@ function App() {
             });
     };
 
-    const handleAccessClick = (selectedTariff) => {
-        console.log('Выбранный тариф:', selectedTariff);
-    
-        if (!token) {
-            setErrorMessage('Для продолжения необходимо зарегистроваться');
-            setIsPopupErrorVisible(true);
-        } else if (hasActiveSubscription) {
-            setSuccessMessage('У тебя уже есть подписка');
-            setIsPopupSuccessVisible(true);
-        } else {
-            console.log('Передаем тариф на страницу оплаты:', selectedTariff);
-            navigate('/payment', { state: { tariff: selectedTariff } });
-        }
-    };
+    useEffect(() => {
+      auth
+          .getTerminalKey().then((data) => {
+              if (data.terminalKey) {
+              setTerminalKey(data.terminalKey);
+          }
+          }).catch((error) => {
+              console.error("Ошибка получения terminalKey:", error);
+          });
+    }, []);
 
     //где header полностью черный
     const isSpecialPage = () => 
@@ -438,19 +434,6 @@ function App() {
         pathname === '/payment'||
         pathname === '/batashovr-story';
 
-
-  const [terminalKey, setTerminalKey] = useState("");
-
-  useEffect(() => {
-    auth
-        .getTerminalKey().then((data) => {
-            if (data.terminalKey) {
-            setTerminalKey(data.terminalKey);
-        }
-        }).catch((error) => {
-            console.error("Ошибка получения terminalKey:", error);
-        });
-  }, []);
 
     return (
         <div className={`app ${isSpecialPage() ? 'special-page' : ''}`}>
@@ -566,11 +549,6 @@ function App() {
                                 tariffs={tariffs}
                                 terminalKey={terminalKey}
                             />} 
-                    />
-                    <Route 
-                        path="/payment" element={
-                            <Payment 
-                        />} 
                     />
                     <Route path="/confirmation" element={<ConfirmationPayment />} />
 

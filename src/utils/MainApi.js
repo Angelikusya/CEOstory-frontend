@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://localhost:3001';
-// export const BASE_URL = 'https://api.ceostory.ru';
+// export const BASE_URL = 'http://localhost:3001';
+export const BASE_URL = 'https://api.ceostory.ru';
 
 const checkResponse = async (res) => {
   if (res.ok) {
@@ -183,7 +183,7 @@ export const getTerminalKey = () => {
 };
 
 // активировать подписку
-export const ActivateSubscription = () => {
+export const activateSubscription = () => {
     fetch(`${BASE_URL}/activate-subscription`, {
         method: "POST",
         headers: { 

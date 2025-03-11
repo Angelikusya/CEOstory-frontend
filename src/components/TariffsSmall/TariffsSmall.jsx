@@ -24,6 +24,8 @@ const TariffsSmall = ({ totalStories, getHistoryWord1, tariffs, terminalKey }) =
     };
   }, []);
 
+
+
   const initiatePayment = (index) => {
     const form = document.forms[`payform-tbank-${index}`];
     if (!form) return;
