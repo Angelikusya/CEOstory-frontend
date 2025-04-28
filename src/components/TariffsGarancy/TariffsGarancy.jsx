@@ -6,7 +6,7 @@ const TariffsGarancy = () => {
 
   return (
     <section className='tariffs__garancy'>
-      <h2 className='tariffs__garancy-header'>
+      <h2 className='tariffs__subtitle'>
         Гарантируем, что ты останешься доволен или мы вернем деньги
       </h2>
       <div className='tariffs__text-container'>

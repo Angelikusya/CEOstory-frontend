@@ -36,7 +36,7 @@ const Cookies = () => {
     };
 
     // Проверяем, находится ли пользователь на нужных страницах
-    const isCookieVisible = location.pathname === '/' || location.pathname === '/career-stories' || location.pathname === '/business-stories' || location.pathname === '/academy';
+    const isCookieVisible = location.pathname === '/' || location.pathname === '/business-stories' || location.pathname === '/academy';
 
     if (!isVisible || !isCookieVisible) return null; // Если уведомление не должно быть видно, ничего не рендерим
 
@@ -45,7 +45,7 @@ const Cookies = () => {
             <div className="cookie__container">
                 <p className="cookie__text">
                     Мы используем файлы Cookie. Оставаясь на сайте, вы соглашаетесь с их обработкой в соответствии с&nbsp;
-                    <Link to='/documents/privacy-policy' target="_blank" className="cookie__link button">Политикой&nbsp;конфиденциальности</Link> 
+                    <Link to='/documents/privacy-policy' target="_blank" className="cookie__link button">Политикой конфиденциальности</Link> 
                 </p>
             </div>
             <button className='cookie__close button' onClick={handleClose}></button>

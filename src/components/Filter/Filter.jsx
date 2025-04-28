@@ -1,24 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Filter.css';
 import lupe from '../../assets/lupe-filter-desk.svg';
-// import data from '../Data/DataCareer';
 import { useSwipeable } from 'react-swipeable';
-import { useLocation } from 'react-router-dom';
 
+const Filter = ({ onFilterChange, data, getHistoryWord1 }) => {
 
-const Filter = ({ onFilterChange, data }) => {
-    const location = useLocation();
-    const isCareerPage = location.pathname.includes('career-stories'); 
-
-    // Отдельные ключи для хранения фильтров в localStorage
-    const storageKey = isCareerPage ? 'careerFilters' : 'businessFilters';
+    const storageKey = 'filters';
 
     const [filters, setFilters] = useState(() => {
         const savedFilters = localStorage.getItem(storageKey);
         return savedFilters ? JSON.parse(savedFilters) : {
-            ...(isCareerPage ? {} : { income: '' }), // Убираем "Доход" из CareerStories
+            incomeFilter: '',
             field: '',
-            searchTerm: ''
+            searchTerm: '',
+            investments: '',
         };
     });
 
@@ -30,6 +25,16 @@ const Filter = ({ onFilterChange, data }) => {
     const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
     const [hasActiveFilters, setHasActiveFilters] = useState(false);
 
+    const highlightMatch = (text, query) => {
+        if (!query) return text;
+        const regex = new RegExp(`(${query})`, 'gi');
+        const parts = text.split(regex);
+
+        return parts.map((part, index) =>
+            regex.test(part) ? <mark key={index}>{part}</mark> : part
+        );
+    };
+
     useEffect(() => {
         localStorage.setItem(storageKey, JSON.stringify(filters));
         if (JSON.stringify(prevFilters.current) !== JSON.stringify(filters)) {
@@ -37,11 +42,6 @@ const Filter = ({ onFilterChange, data }) => {
             prevFilters.current = filters;
         }
     }, [filters, onFilterChange, storageKey]);
-
-    // Данные для фильтра исходя из данных в data
-    const options = {
-        field: [...new Set(data.map(story => story.field))],
-    };
 
     const handleOptionClick = (key, option) => {
         setFilters((prev) => ({
@@ -54,65 +54,61 @@ const Filter = ({ onFilterChange, data }) => {
     };
 
     const resetFilters = () => {
-        setFilters(isCareerPage ? { field: '', searchTerm: '' } : { income: '', field: '', searchTerm: '' });
+        setFilters({ incomeFilter: '', field: '', searchTerm: '', investments: '' });
         setShowDropdown('');
         localStorage.removeItem(storageKey);
+        localStorage.removeItem('businessFilters');
     };
 
-    // Функция для преобразования строки в числовое значение
-    const parseIncome = (income) => {
-        const match = income.match(/от (\d+)(\s*млн)?/);
+    const parseIncomeFilter = (incomeFilter) => {
+        const match = incomeFilter.match(/от (\d+)(\s*млн)?/);
         if (match) {
             const value = parseInt(match[1], 10);
-            return match[2] ? value * 1000000 : value * 1000; // Если "млн", умножаем на 1 млн, если "тыс", то на 1 тыс.
+            return match[2] ? value * 1000000 : value * 1000;
         }
-        return 0; // Если не удалось распарсить, возвращаем 0
+        return 0;
     };
 
-    // Функция для сортировки
     const sortIncomeOptions = (options) => {
         return options.sort((a, b) => {
-            const aValue = parseIncome(a);
-            const bValue = parseIncome(b);
-            return bValue - aValue; // Сортируем по убыванию
+            const aValue = parseIncomeFilter(a);
+            const bValue = parseIncomeFilter(b);
+            return bValue - aValue;
         });
     };
 
-    if (!isCareerPage) {
-        options.income = sortIncomeOptions([...new Set(data.map(story => story.income))]);
-    }
-    
-    // Отображение фильтра в зависимости от ширины экрана
+    const options = {
+        field: [...new Set(data.map(story => story.field))],
+        incomeFilter: sortIncomeOptions([...new Set(data.map(story => story.incomeFilter))]),
+        investments: [...new Set(data.map(story => story.investments))],
+    };
+
     const handleResize = () => {
         setIsDesktop(window.innerWidth >= 768);
     };
-    
-    // Добавление debounce для обработки изменения размера окна
+
     useEffect(() => {
         const debounceResize = () => {
             clearTimeout(window.resizeTimeout);
             window.resizeTimeout = setTimeout(handleResize, 100);
         };
-    
+
         window.addEventListener('resize', debounceResize);
-        
+
         return () => {
             window.removeEventListener('resize', debounceResize);
             clearTimeout(window.resizeTimeout);
         };
     }, []);
-    
-    // Сохранение фильтров в localStorage при изменении
+
     useEffect(() => {
         localStorage.setItem('filters', JSON.stringify(filters));
         if (JSON.stringify(prevFilters.current) !== JSON.stringify(filters)) {
             onFilterChange(filters);
             prevFilters.current = filters;
-            
         }
     }, [filters, onFilterChange]);
 
-    // Закрытие фильтра если клик вне фильтра
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (optionsRef.current && !optionsRef.current.contains(event.target)) {
@@ -126,12 +122,10 @@ const Filter = ({ onFilterChange, data }) => {
         };
     }, []);
 
-    // расскрываем меню
     const toggleDropdown = (type) => {
         setShowDropdown((prev) => (prev === type ? '' : type));
     };
 
-    // Поиск по searchline
     const handleSearchChange = (e) => {
         setFilters((prev) => ({ ...prev, searchTerm: e.target.value }));
     };
@@ -139,77 +133,75 @@ const Filter = ({ onFilterChange, data }) => {
     useEffect(() => {
         const activeFilters = Object.values(filters).some(filter => filter);
         setHasActiveFilters(activeFilters);
-    }, [filters]); // Зависимость от filters
+    }, [filters]);
 
-
-    // сброс конкретного фильтра
     const resetFilter = (key) => {
         setFilters((prev) => ({ ...prev, [key]: '' }));
         localStorage.setItem('filters', JSON.stringify({ ...filters, [key]: '' }));
-        setHasActiveFilters(false)
+        setHasActiveFilters(false);
     };
 
-    // отображение названия фильтра
     const getButtonText = (key) => {
         switch (key) {
-            case 'income':
-                return filters.income || 'Доход';
+            case 'incomeFilter':
+                return filters.incomeFilter || 'Выручка';
             case 'field':
                 return filters.field || 'Сфера';
+            case 'investments':
+                return filters.investments || 'Вложения';
             default:
                 return '';
         }
     };
 
-    // Функция для фильтрации опций по поисковому запросу
+    const getFilterTitle = (key) => {
+        switch (key) {
+          case 'incomeFilter':
+            return 'Выручка';
+          case 'field':
+            return 'Сфера';
+          case 'investments':
+            return 'Вложения';
+          default:
+            return '';
+        }
+      };
+
     const filterOptions = (optionsArray) => {
         const searchTermLower = filters.searchTerm.toLowerCase();
         return optionsArray.filter(option =>
             option.toLowerCase().includes(searchTermLower)
         );
     };
-
-    // устанавливаю падеж
-    const getStoriesLabel = (count) => {
-        if (count === 1) {
-            return "историю";
-        } else if (count >= 2 && count <= 4) {
-            return "истории";
-        } else {
-            return "историй";
-        }
-    };
     
-    // отображение информации на странице в соответствии с фильтрами
     const getFilteredStoriesCount = () => {
         return data.filter(story => {
-            const matchesIncome = filters.income ? story.income === filters.income : true;
+            const matchesIncomeFilter = filters.incomeFilter ? story.incomeFilter === filters.incomeFilter : true;
             const matchesField = filters.field ? story.field === filters.field : true;
-            const matchesSearchTerm = filters.searchTerm ? story.title.toLowerCase().includes(filters.searchTerm.toLowerCase()) : true;
+            const matchesInvestments = filters.investments ? story.investments === filters.investments : true;
+            const matchesSearchTerm = filters.searchTerm
+                ? ['title', 'name', 'job', 'field'].some((key) =>
+                    story[key]?.toLowerCase().includes(filters.searchTerm.toLowerCase())
+                  )
+                : true;
 
-            return matchesIncome && matchesField && matchesSearchTerm;
+            return matchesIncomeFilter && matchesField && matchesInvestments && matchesSearchTerm;
         }).length;
     };
 
-    // отображение информации на странице в соответствии с фильтрами
     const filteredStoriesCount = getFilteredStoriesCount();
-    // устанавливаю падеж 
-    const storiesLabel = getStoriesLabel(filteredStoriesCount);
+    const storiesLabel = getHistoryWord1(filteredStoriesCount);
 
-    // Обработчик смахивания
     const handlers = useSwipeable({
         onSwipedDown: () => {
-            // setIsFilterOpen(false);
-            setIsFilterOpen((prev) => !prev); // Переключаем состояние фильтра
+            setIsFilterOpen((prev) => !prev);
         },
         preventDefaultTouchmoveEvent: true,
         trackMouse: true
     });
 
-    // Функция для закрытия фильтра
     const handleFilterToggle = () => {
-        setIsFilterOpen((prev) => !prev); // Переключаем состояние фильтра
-
+        setIsFilterOpen((prev) => !prev);
     };
 
     return (
@@ -257,14 +249,16 @@ const Filter = ({ onFilterChange, data }) => {
 
                             {showDropdown === key && (
                                 <div className="filter__content" ref={optionsRef}>
-                                    {filterOptions(options[key]).map((option) => (
-                                        <div 
-                                            key={option} 
-                                            className="filter__option" 
-                                            onClick={() => handleOptionClick(key, option)}
-                                        >
-                                            {option}
-                                        </div>
+                                {filterOptions(options[key]).map((option) => (
+                                    <div 
+                                        key={option} 
+                                        className="filter__option" 
+                                        onClick={() => handleOptionClick(key, option)}
+                                    >
+                                        <span className="filter__option-text">
+                                            {highlightMatch(option, filters.searchTerm)}
+                                        </span>
+                                    </div>
                                     ))}
                                 </div>
                             )}
@@ -273,10 +267,8 @@ const Filter = ({ onFilterChange, data }) => {
                 <button 
                     onClick={resetFilters} 
                     className={`filter__button-reset ${hasActiveFilters ? 'active' : ''}`}
-                >Сбросить фильтры
+                    >Сбросить фильтры
                 </button>
-
-                    {/* <button onClick={resetFilters} className='filter__button button filter__button-reset'>Сбросить фильтры</button> */}
                 </div>
             ) : (
                 <div className='filter__major-mobile'>
@@ -314,10 +306,7 @@ const Filter = ({ onFilterChange, data }) => {
                             <div className='filter__mobile-line'></div>
                                 {Object.keys(options).map((key) => (
                                     <div className="filter__mobile-container" key={key}>
-                                        <h3 className="filter__mobile-title">
-                                            { key === 'income' ? 'Доход' : 'Сфера'} 
-                                        </h3>
-
+                                        <h3 className="filter__mobile-title">{getFilterTitle(key)}</h3>
                                         <div className="filter__mobile-content">
                                             {options[key].map((option) => (
                                                 <div 
@@ -328,6 +317,7 @@ const Filter = ({ onFilterChange, data }) => {
                                                     {option}
                                                 </div>
                                             ))}
+                                            
                                         </div>
                                     </div>
                                 ))}
@@ -338,8 +328,6 @@ const Filter = ({ onFilterChange, data }) => {
                                         </button>
                                     )}
                                 </div>
-
-                        {/* <button onClick={resetFilters} className="filter__button button filter__button-reset">Сбросить фильтры</button> */}
                     </div>
                 </div>
                 )}

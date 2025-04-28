@@ -10,7 +10,6 @@ const StoriesMore = ({
     title, 
     navigation, 
     job, 
-    type, 
     field,
     income, 
     textPreview1,
@@ -24,7 +23,7 @@ const StoriesMore = ({
     onSave, 
     onRemove,
     views,
-    readingTime,
+    incomeFilter,
     onIncreaseView,
     isSaved,
 }) => {
@@ -39,7 +38,6 @@ const StoriesMore = ({
         title,
         navigation,
         job,
-        type,
         field,
         income,
         textPreview1,
@@ -49,7 +47,7 @@ const StoriesMore = ({
         investments,
         publicationDate,
         free,
-        readingTime,
+        incomeFilter,
         views: newViews,
     };
     const [screenSize, setScreenSize] = useState(window.innerWidth);
@@ -198,27 +196,17 @@ const StoriesMore = ({
                                     </p>
                                 </div>
                                 <div className='more__filter-mobile'>
-                                    <p className='more__name-mobile'>Доход в месяц: 
+                                    <p className='more__name-mobile'>Выручка в месяц: 
                                         <span className='more__name-mobile-span'> {income}
                                         </span>
                                     </p>
                                 </div>
-                                {type !== 'Бизнес' && (
                                 <div className='more__filter-mobile'>
-                                    <p className='more__name-mobile'>Опыт:  
-                                        <span className='more__name-mobile-span'> {experience}
-                                        </span>
-                                    </p>
-                                </div>
-                                )}
-                                {type == 'Бизнес' && (
-                                <div className='more__filter-mobile'>
-                                    <p className='more__name-mobile'>Стоимость открытия бизнеса:  
+                                    <p className='more__name-mobile'>Вложения:  
                                         <span className='more__name-mobile-span'> {investments}
                                         </span>
                                     </p>
                                 </div>
-                                )}
                             </div>
                         </Link>
                     </div>

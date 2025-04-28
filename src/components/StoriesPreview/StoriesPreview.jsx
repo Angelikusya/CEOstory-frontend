@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
 import './StoriesPreview.css';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
 import * as auth from '../../utils/MainApi';
+import { highlightMatch } from '../../utils/highlightMatch';
+import { Link, useLocation } from 'react-router-dom';
 
 const StoriesPreview = ({ 
     _id,
@@ -10,7 +12,6 @@ const StoriesPreview = ({
     title, 
     navigation, 
     job, 
-    type, 
     field,
     income, 
     textPreview1,
@@ -24,14 +25,20 @@ const StoriesPreview = ({
     onSave, 
     onRemove,
     views,
-    readingTime,
+    incomeFilter,
     onIncreaseView,
     isSaved,
-    showLoginMessage
+    searchTerm,
     }) => {
     const [newViews, setNewViews] = useState(views);
     const [isSaving, setIsSaving] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [showLoginMessage, setShowLoginMessage] = useState(false);
+
+    const currentUser = useContext(CurrentUserContext);
+
+    const location = useLocation();
+    const pathname = location.pathname;
 
     const storyData = {
         _id,
@@ -40,7 +47,6 @@ const StoriesPreview = ({
         title,
         navigation,
         job,
-        type,
         field,
         income,
         textPreview1,
@@ -50,12 +56,11 @@ const StoriesPreview = ({
         investments,
         publicationDate,
         free,
-        readingTime,
+        incomeFilter,
         views: newViews,
     };
     const [screenSize, setScreenSize] = useState(window.innerWidth);
     const [showTooltip, setShowTooltip] = useState(false);
-
 
     const handleResize = () => {
         setScreenSize(window.innerWidth);
@@ -92,14 +97,20 @@ const StoriesPreview = ({
     }, [storyId]); // Зависимость от storyId
 
     const handleSaveStory = async () => {
+        if (!currentUser) {
+            setShowLoginMessage(true);
+            setTimeout(() => setShowLoginMessage(false), 2000); // Скрыть через 2 секунды
+            return;
+        }
+    
         if (onSave) {
-            setIsSaving(true); // Устанавливаем состояние "сохранения"
+            setIsSaving(true);
             try {
-                await onSave(storyData); // Вызываем функцию onSave
+                await onSave(storyData);
             } catch (error) {
                 console.error("Ошибка при сохранении:", error);
             } finally {
-                setIsSaving(false); // Сбрасываем состояние "сохранения"
+                setIsSaving(false);
             }
         }
     };
@@ -155,17 +166,16 @@ const StoriesPreview = ({
         return 'прочтений';
     };    
         
-
-    return (
-        <div>
-            <div className='preview__card'>
-            {(location.pathname === '/saved' || location.pathname === '/career-stories' || location.pathname === '/business-stories') && (
-                <button className='preview__click' onClick={handleIncreaseView}>
+  return (
+    <div>
+      <div className='preview__card'>
+        {(pathname === '/saved' || pathname === '/business-stories') && (
+          <button className='preview__click' onClick={handleIncreaseView}>
                 {screenSize >767 && (
                     <div className='preview__desktop'>
                     {free && <div className='preview__free'>Бесплатно</div>}
                         <Link to={navigation} className='preview__link'>
-                            {location.pathname !== '/saved' && (
+                            {pathname !== '/saved' && (
                                 // <img src={photo} alt={name} className='preview__photo'/>
                                 <div className='preview__photo-container'>
                                 {!isLoading && <div className='preview__photo-placeholder' style={{ backgroundColor: getRandomColor() }} // Случайный цвет
@@ -182,13 +192,13 @@ const StoriesPreview = ({
                             )}
                             <div className='preview__container'>
                                 <div className='preview__jobs'>
-                                    <p className='preview__job'>{job}, {name}</p>
+                                    <p className='preview__job'>{job}, {highlightMatch(name, searchTerm)}</p>
                                 </div>
-                                <h2 className='preview__title'>{title}</h2>
+                                <h2 className='preview__title'>{highlightMatch(title, searchTerm)}</h2>
                                 <div className='preview__statistics'>
                                     <p className='preview__statistics-text'>{formatDate(publicationDate)}</p>
                                     <p className='preview__statistics-text'>{newViews} {getReadingForm(newViews)} </p>
-                                    {/* <p className='preview__statistics-text'>читать {readingTime}</p> */}
+                                    {/* <p className='preview__statistics-text'>читать {incomeFilter}</p> */}
 
 
                                 </div>
@@ -208,20 +218,11 @@ const StoriesPreview = ({
                                 </div>
                                 <div className='preview__filters'>
                                     <div className='preview__filter'>
-                                        <p className='preview__name'>Доход</p>
+                                        <p className='preview__name'>Выручка</p>
                                         <div className='preview__filter-wrapper'>
                                             <p className='preview__filter-title'>{income}</p>
                                         </div>
                                     </div>
-
-                                    {type !== 'Бизнес' && (
-                                        <div className='preview__filter'>
-                                            <p className='preview__name'>Опыт</p>
-                                            <div className='preview__filter-wrapper'>
-                                                <p className='preview__filter-title'>{experience}</p>
-                                            </div>
-                                        </div>
-                                    )}
 
                                     <div className='preview__filter'>
                                         <p className='preview__name'>Сфера</p>
@@ -229,16 +230,12 @@ const StoriesPreview = ({
                                             <p className='preview__filter-title'>{field}</p>
                                         </div>
                                     </div>
-
-                                    {type == 'Бизнес' && (
-                                        <div className='preview__filter'>
-                                            <p className='preview__name'>Вложения</p>
-                                            <div className='preview__filter-wrapper'>
-                                                <p className='preview__filter-title'>{investments}</p>
-                                            </div>
+                                    <div className='preview__filter'>
+                                        <p className='preview__name'>Вложения</p>
+                                        <div className='preview__filter-wrapper'>
+                                            <p className='preview__filter-title'>{investments}</p>
                                         </div>
-                                     )}
-
+                                    </div>
                                 </div>
                             </div>
                         </Link>
@@ -271,7 +268,6 @@ const StoriesPreview = ({
                                         <div className='preview__statistics'>
                                             <p className='preview__statistics-text'>{newViews} прочтений </p>
                                             <p className='preview__statistics-text'>{formatDate(publicationDate)}</p>
-                                            {/* <p className='preview__statistics-text'>читать {readingTime}</p> */}
                                         </div>
                                     </div>
                                 </div>
@@ -301,27 +297,17 @@ const StoriesPreview = ({
                                         </p>
                                     </div>
                                     <div className='preview__filter-mobile'>
-                                        <p className='preview__name-mobile'>Доход в месяц: 
+                                        <p className='preview__name-mobile'>Выручка в месяц: 
                                             <span className='preview__name-mobile-span'> {income}
                                             </span>
                                         </p>
                                     </div>
-                                    {type !== 'Бизнес' && (
-                                    <div className='preview__filter-mobile'>
-                                        <p className='preview__name-mobile'>Опыт:  
-                                            <span className='preview__name-mobile-span'> {experience}
-                                            </span>
-                                        </p>
-                                    </div>
-                                    )}
-                                    {type == 'Бизнес' && (
                                     <div className='preview__filter-mobile'>
                                         <p className='preview__name-mobile'>Стоимость открытия бизнеса:  
                                             <span className='preview__name-mobile-span'> {investments}
                                             </span>
                                         </p>
                                     </div>
-                                    )}
                                 </div>
                             </Link>
                         </div>

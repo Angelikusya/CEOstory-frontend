@@ -114,6 +114,11 @@
     position: relative;
 }
 
+.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+
 .main__card:hover {
     box-shadow: 0px 0px 12px -2px rgba(0,0,0,0.4);
     transform: scale(1.02);
@@ -123,6 +128,20 @@
     border-radius: 20px 0 0 20px;
     width: 132px;
     height: 228px;  
+    position: relative;
+}
+
+.main__card-photo-soon {
+    position: absolute;
+    top: 45%;
+    left: 21%;
+    font-weight: 700;
+    font-size: 25px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #fff;
+    font-family: 'Akshar', Arial, Helvetica, sans-serif;
+
 }
 
 .main__card-photo.grey {
@@ -133,15 +152,9 @@
     background-color: #3d0150;
 }
 
-.main__card-photo.pink {
-    background-color: #F892D3;
-}
-
 .main__card-photo.green {
     background-color: #283c35;;
 }
-
-
 
 .main__card-wrapper {
     display: flex;
@@ -164,12 +177,16 @@
     color: #9204A8;
 }
 
+.main__card-title-brown{
+    color: #6B331D;
+}
+
 .main__card-title-green {
     color: #54AF55;
 }
 
-.main__card-title-darkgreen {
-    color: #647745;
+.main__card-title-sand {
+    color: #006400;;
 }
 
 .main__card-title-red {
@@ -225,7 +242,7 @@
     color: rgba(47, 42, 48, 0.5);
     font-family: 'Playfair Display', Arial, Helvetica, sans-serif;
     margin: 0;
-    max-width: 50px;
+    /* max-width: 50px; */
     line-height: 90%;
 }
 
@@ -333,7 +350,7 @@
         line-height: 110%;
         color: #000000;
         max-width: 185px;
-        margin: 10px 0 15px 10px;
+        margin: 20px 0 15px 10px;
     }
     
     
@@ -464,7 +481,7 @@
     .main__about {
         font-weight: 700;
         font-size: 23px;
-        line-height: 110%;
+        line-height: 140%;
         color: #000;
         margin: 0 0 22px 0;
         text-align: center;
@@ -489,6 +506,7 @@
     
     .main__card-wrapper {
         margin: 14px 10px 10px 5px;
+        max-width: 200px;
     }
     
     .main__card-title {
@@ -518,7 +536,7 @@
         background-repeat:  no-repeat;
         width: 10px;
         height: 10px;
-        margin-top: 3px;
+        margin-top: 5px;
     }
     
     .main__card-text {
@@ -553,7 +571,7 @@
 
     .main__line {
         height: 3px;
-        width: 320px;
+        width: 235px;
         background-color: #92cbad;
         overflow: hidden; 
         opacity: 1; /* Прозрачность 1 */
@@ -593,6 +611,7 @@
     }
     .main__card-wrapper {
         margin: 14px 10px 5px 5px;
+        max-width: 215px;
     }
         
     .main__card-title {

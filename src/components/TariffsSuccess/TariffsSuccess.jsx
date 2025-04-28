@@ -20,11 +20,11 @@ const TariffsSuccess = () => {
 
   return (
       <section className='tariffs__success'>
-        <h2 className='tariffs__success-header'>
+        <h2 className='tariffs__subtitle'>
           {screenSize > 767 ? (
             <>
               Что, если ты четко увидишь, 
-              <br /><span className='tariffs__underline'>как добились успеха другие люди?</span>
+              <br /><span className='tariffs__underline'>как открыли бизнес другие люди?</span>
             </>
           ) : (
             <>
@@ -33,19 +33,17 @@ const TariffsSuccess = () => {
           )}
         </h2>
 
-        <div className='tariffs__success-container'>
+        <div className='tariffs__text-container'>
           <p className='tariffs__text'>
-            Представь, что ты точно знаешь, что поможет тебе в росте карьеры или 
-            в открытие успешного бизнеса.
+            Представь, что ты точно знаешь, что поможет тебе в открытии своего бизнеса.
           </p>
           <p className='tariffs__text'>
-            Представь, что ты не тратишь годы впустую, делая что-то неправильно. 
-            Ты уверен в каждом своем шаге.
-          </p>
-          <p className='tariffs__text list'>
-            С “СEOstory” ты получишь доступ к опыту крутейших ребят в карьере и бизнесе. Это позволит тебе:
+            Представь, что ты не тратишь годы впустую, делая что-то неправильно. Ты уверен в каждом своем шаге.
           </p>
           <ul className='tariffs__success-list'>
+            <p className='tariffs__text'>
+              С “СEOstory” ты получишь доступ к опыту крутейших ребят в бизнесе. Это позволит тебе:
+            </p>
             <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
@@ -55,50 +53,43 @@ const TariffsSuccess = () => {
             <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
-                Получить советы от успешных ребят в карьере и бизнесе.
+                Найти идеи для бизнеса.
               </p>
             </li>
             <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
-                Подчеркнуть идеи проектов в карьере или идеи для бизнеса.
+                Узнать что нужно для открытия своего бизнеса.
               </p>
             </li>
             <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
-                Узнать детали и нюансы, без которых не получится добиться успеха.
+                Понять, где искать клиентов.
               </p>
             </li>
             <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
-                Узнать финансовые показатели ребят в карьере и бизнесе.
+                Выяснить, что такое юнит-экономика и зачем она нужна.
               </p>
             </li>
             <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
-                Получить контакты спикера для предложений о сотрудничестве и партнерстве.
+                Узнать где и сколько можно заработать.
               </p>
             </li>
             <li className='tariffs__success-flex'>
               <div className='tariffs__success-arrow'></div>
               <p className='tariffs__text li'>
-                Получить полезный материал от спикеров.              
+              Получить полезные материалы от предпринимателей.              
               </p>
             </li>
-            {/* <li className='tariffs__success-flex'>
-              <div className='tariffs__success-arrow'></div>
-              <p className='tariffs__text li'>
-                Получить доступ к видео-урокам для развития карьеры и бизнеса от “CEOstory”.               
-                </p>
-            </li> */}
           </ul>
           <p className='tariffs__text'>
-            Если наши спикеры смогли добиться успеха, то сможешь и ты, ведь они такие 
-            же простые ребята &mdash; тебе просто нужно повторить их опыт и сэкономить себе 
-            кучу нервов и времени.
+            Если наши предприниматели смогли добиться успеха, то сможешь и ты, ведь они такие же простые 
+            ребята &mdash; тебе просто нужно повторить их опыт и сэкономить себе кучу нервов и времени.
           </p>
         </div>
     </section>

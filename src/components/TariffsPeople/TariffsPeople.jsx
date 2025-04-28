@@ -1,17 +1,13 @@
 import './TariffsPeople.css';
 import { useState, useEffect } from 'react';
-import BursalidiD from '../../assets/speaker-photoes/bursalidi-tariffs-desk.webp';
-import KorotkovaPhoto from '../../assets/speaker-photoes/korotkova-wide.webp';
 import BatashovR from '../../assets/speaker-photoes/botashov-tariffs-desk.webp';
-import VafeevT from '../../assets/speaker-photoes/vafeev-tariffs-desk.webp';
-import Kirillov from '../../assets/speaker-photoes/kirillov-tariffs-desk.webp';
 
 const speakers = [
-  { name: 'Екатерина', salary: 'топ-менеджер', image: KorotkovaPhoto },
-  { name: 'Петя', salary: 'топ-менеджер', image: BursalidiD },
-  { name: 'Айвар', salary: 'бизнесмен', image: VafeevT },
+  { name: 'Екатерина', salary: 'топ-менеджер', image: BatashovR },
+  { name: 'Петя', salary: 'топ-менеджер', image: BatashovR },
+  { name: 'Айвар', salary: 'бизнесмен', image: BatashovR },
   { name: 'Коля', salary: 'бизнесмен', image: BatashovR },
-  { name: 'Иван', salary: 'бизнесмен', image: Kirillov },
+  { name: 'Иван', salary: 'бизнесмен', image: BatashovR },
 ];
 
 const colors = ['#F892D3', '#353E44', '#3D0150', '#283C35','#F6EFE7' ];

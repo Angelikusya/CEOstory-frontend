@@ -1,17 +1,8 @@
 .tariffs__FAQ {
-    margin: 0 0 60px;
+    margin: 0 auto;
     display: flex;
-    flex-direction: column;
-}
-
-.tariffs__FAQ-header {
-    font-weight: 700;
-    font-size: 35px;
-    line-height: 120%;
-    text-align: center;
-    color: #000;
-    font-family: 'Akshar', Arial, Helvetica, sans-serif;
-    margin:0 0 29px;
+    flex-direction: column;    
+    width: 80vw;
 }
 
 .tarrifs__dropdowns {
@@ -25,7 +16,7 @@
 
 .tariffs__dropdown {
     overflow: hidden;
-    max-width: 1025px;
+    /* width: 80vw; */
     background: #fff;
     padding: 33px 38px 0;
     border-radius: 30px;
@@ -102,18 +93,12 @@
 
 @media screen and (max-width: 767px) {
     .tariffs__FAQ {
-        margin: 0 0 30px;
-    }
-    
-    .tariffs__FAQ-header {
-        font-size: 20px;
-        margin-bottom: 25px;
-        line-height: 100%;
-        text-align: left;
+        margin: 0 auto;
+        width: 100%;
     }
 
+
     .tariffs__dropdown {
-        max-width: 100%;
         padding: 15px 15px 0;
         border-radius: 16px;
     }

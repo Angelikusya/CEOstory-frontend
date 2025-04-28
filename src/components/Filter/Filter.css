@@ -193,12 +193,20 @@
     color: #fff;
 }
 
+@media screen and (max-width: 1279px) {
+    .filter__desktop {
+
+        margin: 20px 0 0;
+
+    }
+}
+
 @media screen and (max-width: 767px) {
 
     .filter__mobile{
         border-radius: 20px 20px 0 0;
         background: #fff;
-        width: 96vw;
+        width: calc(100vw - 10px - 10px);
         position: absolute;
         bottom: 0;
         display: flex;
@@ -221,9 +229,8 @@
         margin-bottom: 9px;
         position: absolute;
         top: -10px;
-        left: 55%;
-        width: 10vw;
-        margin-left: -36px;
+        left: calc((100% - 150px)/2);
+        width: 150px;
         will-change: opacity;
     }
 
@@ -328,10 +335,11 @@
         border-radius: 5px;
         height: 30px;
         padding: 0 0 0 8px;
-        width: 242px;
         transition: width 0.4s ease; /* Плавный переход для ширины */
         background: #f7f8fc;
         font-family: Verdana, Arial, Helvetica, sans-serif;
+        max-width: 242px;
+        width: 70vw;
     }
 
     .filter__buttton-open {
@@ -363,6 +371,11 @@
         background: #7D56D8;
         border-radius: 100%;
         opacity: 1;
+    }
+
+    .filter__searchline-input {
+        font-weight: 400;
+        font-size: 12px;
     }
     
        

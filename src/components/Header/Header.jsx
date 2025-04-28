@@ -6,7 +6,6 @@ import logoHeaderTablet from '../../assets/logo-header-tablet.svg'
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import profile from '../../assets/profile-header-desk.svg';
 import menu from '../../assets/menu-header-tablet.svg';
-import save from '../../assets/save-header-mobile.svg';
 import NavDocumentsPopup from '../NavDocumentsPopup/NavDocumentsPopup';
 import NavMain from '../NavMain/NavMain';
 
@@ -40,9 +39,7 @@ const Header = ({logout}) => {
 
   const { pathname } = useLocation();
   const currentUser = useContext(CurrentUserContext);
-  const token = localStorage.getItem('token');
   const [isMenuVisible, setIsMenuVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const scrollDirection = useScrollDirection();   // крутой header
   const [screenSize, setScreenSize] = useState(window.innerWidth);
   const [isNavDocumentsOpen, setIsNavDocumentsOpen] = useState(false);
@@ -122,8 +119,7 @@ const Header = ({logout}) => {
               <img src={logoHeader} className='header__desktop-logo-img' alt='CEOstory'/>
             </Link>
             <nav className='header__desktop-navs'>
-              <Link to='/career-stories' className={`header__desktop-nav ${location.pathname === '/career-stories' ? 'active' : ''}`}> Истории в карьере</Link>
-              <Link to='/business-stories' className={`header__desktop-nav ${location.pathname === '/business-stories' ? 'active' : ''}`}> Истории в бизнесе</Link>
+              <Link to='/business-stories' className={`header__desktop-nav ${location.pathname === '/business-stories' ? 'active' : ''}`}> Инструкции</Link>
               {/* <Link 
                 to='/academy' 
                 className={`header__desktop-nav ${location.pathname === '/academy' ? 'active' : ''}`} 
@@ -136,14 +132,14 @@ const Header = ({logout}) => {
           </div>
 
         {/* если пользователь не залогинен */}
-          {!token && (
+          {!currentUser && (
             <div className='header__desktop-registers'>
               <Link to='/signin' className='header__desktop-login button'>Вход</Link>
             </div>
           )}
 
         {/* если пользователь залогинен */}
-          {token && (
+          {currentUser && (
             <div className='header__desktop-logedin'>
               <Link to='/saved' className={`header__desktop-saved button ${location.pathname === '/saved' ? 'active' : ''}`}></Link>
               <Link to='/about' className='header__desktop-name-wrapper button'>
@@ -163,7 +159,7 @@ const Header = ({logout}) => {
 
             <div className='header__mobile-container'>
               {/* если пользователь не залогинен */}
-              {!token && (
+              {!currentUser && (
                 <div className='header__desktop-registers'>
                   <Link to='/signin' className='header__desktop-login button'>Вход</Link>
                 </div>

@@ -1,0 +1,28 @@
+
+.batashov__text-span {
+    font-weight: 700;
+    color: #007268;
+    border-bottom: 3px solid #007268;
+}
+
+
+.batashov-background {
+    background-color: #007268;
+}
+
+.batashov__item-number-green {
+    background: #eceff3;
+    border-radius: 10px;
+}
+
+.story__quotation-quote.green {
+    color: #007268;
+}
+
+.story__quotation-text-span.green {
+    color: #007268;
+}
+
+.batashov__item-number-green {
+    background: #eceff3;;
+}

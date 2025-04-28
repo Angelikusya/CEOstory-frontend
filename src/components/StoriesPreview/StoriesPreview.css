@@ -105,6 +105,11 @@
     text-align: left;
 }
 
+mark {
+    background-color: #92CBAD;
+    font-weight: bold;
+}
+
 .preview__name {
     margin: 0;
 }
@@ -397,7 +402,7 @@
 
     .preview__link {
         display: flex;
-        width: 318px;
+        width: 287px;
         position: relative;
         padding: 10px 0 17px 21px;
         flex-direction: column;

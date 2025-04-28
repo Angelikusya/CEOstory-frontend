@@ -1,12 +1,23 @@
 import './About.css';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import profile from '../../assets/profile-header-desk.svg';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useNavigate } from 'react-router-dom'; // добавь это
 
 const About = ({ subscriptionEnd, hasActiveSubscription, logout }) => {
 
   const currentUser = useContext(CurrentUserContext);
+
+  const navigate = useNavigate(); // хук для редиректа
+
+    // Если нет currentUser или у него нет имени — уходим на /signin
+    useEffect(() => {
+        if (!currentUser || !currentUser.name) {
+        navigate('/signin');
+        }
+    }, [currentUser, navigate]);
+
     // Проверяем, истекла ли подписка
     const currentDate = new Date();
     const isSubscriptionExpired = subscriptionEnd ? currentDate > subscriptionEnd : true;

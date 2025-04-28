@@ -2,18 +2,17 @@ import './NotPaidAllert.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo-notloggedin-desk.svg';
-import DATACareer from '../Data/DataCareer';
-import DATABusiness from '../Data/DataBusiness';
+import DATABusiness from '../StoryData/DataBusiness'; 
 
 const isOnSpecialPage = (pathname) => {
     return [
-        '/', '/about', '/career-stories', '/business-stories', '/signin',
+        '/', '/about', '/business-stories', '/signin',
         '/tariffs', '/signup', '/forgottenpassword', '/resetpassword',
         '/payment', '/404', '/500'
     ].includes(pathname) || pathname.startsWith('/password-reset/');
 };
 
-const NotPaidAllert = ({ hasActiveSubscription, free }) => {
+const NotPaidAllert = ({ hasActiveSubscription, free, getHistoryWord1 }) => {
     const [isVisible, setIsVisible] = useState(false);
     const location = useLocation();
     const token = localStorage.getItem('token');
@@ -21,12 +20,6 @@ const NotPaidAllert = ({ hasActiveSubscription, free }) => {
 
     // Если есть токен и подписка истекла — показываем попап
     const shouldShowAlert = token && !hasActiveSubscription && free === false
-
-    // Условие для отображения попапа:
-    // Если free === true, попап всегда скрыт.
-    // Если free === false, попап скрывается, если есть токен и активная подписка.
-    // const shouldShowAlert = (free === false && token && !hasActiveSubscription) || (free === false && !token);
-
 
     // Обновление размера экрана
     useEffect(() => {
@@ -46,7 +39,7 @@ const NotPaidAllert = ({ hasActiveSubscription, free }) => {
             const shouldShow = scrollY > (documentHeight - windowHeight) * 0.1 &&
                 shouldShowAlert &&
                 !isOnSpecialPage(location.pathname);
-            console.log('📢 Видимость попапа:', shouldShow ? 'ДА' : 'НЕТ');
+            // console.log('📢 Видимость попапа:', shouldShow ? 'ДА' : 'НЕТ');
             setIsVisible(shouldShow);
         };
 
@@ -59,20 +52,15 @@ const NotPaidAllert = ({ hasActiveSubscription, free }) => {
     // Ранний выход, если попап не должен отображаться
     if (!shouldShowAlert || !isVisible) return null;
 
-    const totalStories = DATACareer.length + DATABusiness.length;
+    const totalStories = DATABusiness.length;
 
-    const getHistoryWord1 = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) return "историю";
-        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(totalStories % 100)) return "истории";
-        return "историй";
-    };
 
     return (
         <div className="notpaied">
             <div className='notpaied__container'>
                 <div className='notpaied__left-block'>
                     <p className='notpaied__left-block-title'>
-                        Ты достиг лимита по статьям с бесплатным доступом
+                        Ты достиг лимита по бесплатному доступу
                     </p>
                     <p className='notpaied__left-block-text'>Не упусти свой шанс - открой доступ уже сегодня</p>
                     <Link to='/tariffs' className='link link__notpaied'>
@@ -83,17 +71,12 @@ const NotPaidAllert = ({ hasActiveSubscription, free }) => {
                     <Link to='/' className='notpaied__logo button'>
                         <img src={logo} className='notpaied__logo-img' alt='CEOstory'/>
                     </Link>
-                    <p className='notpaied__right-block-header'>Раскрой секреты успеха  
-                    {screenSize > 767 && (
-                        <span className='notpaied__right-block-span'><br/>бизнесменов и&nbsp;топ-менеджеров</span>
-                    )}
-                    {screenSize < 767 && (
-                        <span className='notpaied__right-block-span'><br/>бизнесменов <br/>и&nbsp;топ-менеджеров</span>
-                    )}                   
+                    <p className='notpaied__right-block-header'>Открой бизнес
+                    <span className='notpaied__right-block-span'><br/>по проверенным инструкциям</span>                  
                     </p>
-                    <p className='notpaied__right-block-text'>С СEOstory ты узнаешь какой путь надо пройти, чтобы сделать успешную карьеру или бизнес.</p>
+                    <p className='notpaied__right-block-text'>С СEOstory ты узнаешь какой путь надо пройти, чтобы открыть свой бизнес</p>
                     <p className='notpaied__right-block-more'>
-                        Погрузись в {totalStories} {getHistoryWord1(totalStories)} с советами, как с нуля добиться того же самого
+                        Погрузись в {totalStories} {getHistoryWord1(totalStories)}, как с нуля добиться того же самого
                     </p>
                     <div className='notpaied__right-block-image'></div>
                 </div>

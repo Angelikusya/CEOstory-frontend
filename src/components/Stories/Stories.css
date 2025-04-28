@@ -44,7 +44,7 @@
     line-height: 120%;
     text-align: center;
     color: #2f2a30;
-    max-width: 416px;
+    max-width: 470px;
     margin: 0 0 38px;
 }
 
@@ -95,6 +95,10 @@
         flex-direction: column;
         width: 675px;
 
+    }
+
+    .stories__filter {
+        max-width: 675px;
     }
 }
 

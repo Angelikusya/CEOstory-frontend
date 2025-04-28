@@ -2,10 +2,12 @@ import './NotFound.css';
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import mangif from '../../assets/gif-notfound.mp4';
-import DATACareer from '../Data/DataCareer';
-import DATABusiness from '../Data/DataBusiness';
 
-const NotFound = ({totalStories, getHistoryWord1}) => {
+const NotFound = ({
+  totalStories, 
+  getHistoryWord1, 
+  getHistoryWord2,
+}) => {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -46,19 +48,19 @@ const NotFound = ({totalStories, getHistoryWord1}) => {
           Похоже, она была удалена или ее никогда не&nbsp;существовало.
         </p>
         <p className="not-found__text">
-          В любом случае на твоем месте я бы погрузился в&nbsp;{totalStories} {getHistoryWord1(totalStories)} с
-          &nbsp;советами, как открыть успешный бизнес или стать топ-менеджером.
+          В любом случае на твоем месте я бы погрузился в&nbsp;{totalStories} {getHistoryWord2(totalStories)} {getHistoryWord1(totalStories)}, чтобы 
+          открыть свой бизнес
         </p>
         <p className="not-found__text">
           Искренне твой, <br />
           <span className="not-found__text-span">Айвар</span>, сооснователь CEOstory
         </p>
         <Link
-          to="/career-stories"
+          to="/business-stories"
           className="link link__not-found"
           onClick={() => window.scrollTo({ top: 0 })}
         >
-          <span>Читать истории</span>
+          <span>Читать инструкции</span>
         </Link> 
       </div>
       {screenSize > 1279 && (

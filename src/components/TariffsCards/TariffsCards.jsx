@@ -1,13 +1,12 @@
 import './TariffsCards.css';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import BursalidiD from '../../assets/speaker-photoes/speaker-photo-main-2.webp';
-import KorotkovaE from '../../assets/speaker-photoes/korotkova-tiny.webp';
-import VafeevT from '../../assets/speaker-photoes/speaker-photo-main-4.webp';
+import BatashovR from '../../assets/speaker-photoes/batashov-tiny.webp';
+
 
 const TariffsCards = ({totalStories, getHistoryWord3}) => {
   const [screenSize, setScreenSize] = useState(window.innerWidth);
-
+  const isDisabled = true;
 
   const handleResize = () => {
     setScreenSize(window.innerWidth);
@@ -24,53 +23,80 @@ const TariffsCards = ({totalStories, getHistoryWord3}) => {
     <section className='tariffs__cards'>
       <div className='tariffs__cards-block'>
       {screenSize < 768 || screenSize >= 1280 ? (
-        <Link to='/korotkovae-story' className='tariffs__cards-card'>
-          <img className='tariffs__cards-photo cards-photo-grey' src={BursalidiD} alr='Фотография спикера'/>
-          {/* <div className='tariffs__filter-tariffs'>
-            <p className='tariffs__filter-info-tariffs'>от 200 тыс.&nbsp;руб.</p>
-          </div> */}
+        <Link to='/batashovr-story' className='tariffs__cards-card'>
+          <img className='tariffs__cards-photo cards-photo-grey' src={BatashovR} alr='Роман Баташов'/>
+          <div className='tariffs__filter-tariffs'>
+            <p className='tariffs__filter-info-tariffs'>от 30 млн&nbsp;руб.</p>
+          </div>
           <div className='tariffs__card-wrapper'>          
-              <h4 className='tariffs__card-title'>Как стать директором по продукту в&nbsp;<span className='main__card-title-green'>ПЭКС</span> <br/>в&nbsp;57&nbsp;лет</h4>
+              <h4 className='tariffs__card-title'>Как построить бизнес с выручкой 30 млн руб.в&nbsp; год на <span className='main__card-title-red'>"Умных домах"</span></h4>
               <div className='tariffs__card-features'>
                 <div className='tariffs__card-feature'>
                   <div className='main__card-arrow margin'></div>
-                  <p className='tariffs__card-text'>Советы для роста в&nbsp;карьере</p>
+                  <p className='tariffs__card-text'>Описание основных бизнес-процессов и нюансов</p>
                 </div>
                 <div className='tariffs__card-feature'>
                   <div className='main__card-arrow margin'></div>
-                  <p className='tariffs__card-text'>Примеры проектов для реализации в&nbsp;работе</p>
+                  <p className='tariffs__card-text'>Советы по поиску клиентов</p>
                 </div>
               </div>
           </div>
         </Link>
         ) : null}
-        <Link to='/korotkovae-story' className='tariffs__cards-card'>
-            <img className='tariffs__cards-photo cards-photo-white ' src={KorotkovaE} alr='Фотография спикера'/>
+        
+        <Link
+          to={isDisabled ? '#' : '/'}
+          className={`tariffs__cards-card ${isDisabled ? 'disabled' : ''}`}
+          onClick={(e) => {
+            if (isDisabled) {
+              e.preventDefault(); // блокируем переход
+            } else {
+              window.scrollTo({ top: 0 });
+            }
+          }}
+          >
+            {/* <img className='tariffs__cards-photo cards-photo-white ' src={BatashovR} alr='Фотография спикера'/> */}
+            <div className='tariffs__cards-photo'>
+              <p className='tariffs__cards-photo-text'>Скоро</p>
+            </div>
                 {/* <div className='tariffs__filter-tariffs'>
                   <p className='tariffs__filter-info-tariffs'>от 100 тыс.&nbsp;руб.</p>
                 </div> */}
             <div className='tariffs__card-wrapper'>
-              <h4 className='tariffs__card-title'>Как стать операционным директором <br/>в&nbsp;28 лет</h4>
+              <h4 className='tariffs__card-title'>Как открыть магазин орехов <br/>с&nbsp;выручкой более 7 млн в год</h4>
               <div className='tariffs__card-features'>
                 <div className='tariffs__card-feature'>
                   <div className='main__card-arrow margin'></div>
-                  <p className='tariffs__card-text'>Советы для роста в&nbsp;карьере</p>
+                  <p className='tariffs__card-text'>Как найти место для магазина</p>
                 </div>
                 <div className='tariffs__card-feature'>
                   <div className='main__card-arrow margin'></div>
-                  <p className='tariffs__card-text'>Примеры проектов для реализации в&nbsp;работе</p>
+                  <p className='tariffs__card-text'>Где закупать товар и как организовать процесс</p>
                 </div>
               </div>
             </div>
           </Link>
-          <Link to='/korotkovae-story' className='tariffs__cards-card'>
-            <img className='tariffs__cards-photo cards-photo-purple' src={VafeevT} alr='Фотография спикера'/>
-              {/* <div className='tariffs__filter-tariffs'>
-                  <p className='tariffs__filter-info-tariffs'>от 900 млн руб.</p>
-              </div> */}
+          <Link
+          to={isDisabled ? '#' : '/'}
+          className={`tariffs__cards-card ${isDisabled ? 'disabled' : ''}`}
+          onClick={(e) => {
+            if (isDisabled) {
+              e.preventDefault(); // блокируем переход
+            } else {
+              window.scrollTo({ top: 0 });
+            }
+          }}
+          >
+            {/* <img className='tariffs__cards-photo cards-photo-white ' src={BatashovR} alr='Фотография спикера'/> */}
+            <div className='tariffs__cards-photo'>
+              <p className='tariffs__cards-photo-text'>Скоро</p>
+            </div>
+                {/* <div className='tariffs__filter-tariffs'>
+                  <p className='tariffs__filter-info-tariffs'>от 100 тыс.&nbsp;руб.</p>
+                </div> */}
             <div className='tariffs__card-wrapper'>
-              <h4 className='tariffs__card-title'>Как сделать бизнес на&nbsp;<span className='main__card-title-purple'>WB</span> с&nbsp;оборотом более 400&nbsp;млн&nbsp;руб. 
-              в месяц менее чем за год</h4>
+              <h4 className='tariffs__card-title'>Как сделать бизнес на&nbsp;<span className='main__card-title-purple'>WB</span> с&nbsp;выручкой более 900&nbsp;млн&nbsp;руб. 
+              в год</h4>
               <div className='tariffs__card-features'>
                 <div className='tariffs__card-feature'>
                   <div className='main__card-arrow margin'></div>

@@ -8,7 +8,7 @@
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     font-family: 'Roboto Condensed', Arial, Helvetica, sans-serif;
-    margin-bottom: 60px;
+    margin: 32px 0 0 0;
 }
 
 .tariffs-small__left-block {
@@ -98,6 +98,22 @@
     width: 310px;
 }
 
+
+.link__tariffs-small {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .link__tariffs-small:hover:not(:disabled) {
+    background-color: #008f5e;
+  }
+
+  .link__tariffs-small:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+
 .tariffs-small__benefits {
     margin: 25px 0 0 0;
 }
@@ -156,7 +172,7 @@
     flex-direction: column;
     align-items: flex-start;
     border-radius: 0 20px 20px 0 ;
-    padding: 15px 20px 29px 20px;
+    padding: 15px 30px 29px 20px;
 }
 
 .tariffs-small__logo-img {
@@ -184,7 +200,7 @@
     line-height: 120%;
     letter-spacing: -0.02em;
     color: #fff;
-    max-width: 340px;
+    width: 320px;
     margin: 15px 0 0 0;
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
@@ -237,7 +253,7 @@
 
     .tariffs-small__right-block {
         border-radius: 0 0 20px 20px;
-        padding: 15px 24px 29px 215x;
+        padding: 15px 24px 29px 20px;
     }
 
     .tariffs-small__benefits {

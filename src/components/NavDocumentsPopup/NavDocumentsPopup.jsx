@@ -56,7 +56,7 @@ const NavDocumentsPopup = ({ onCloseNavDocuments }) => {
         </li>
       </ul>
       <Link 
-        to='/career-stories' 
+        to='/business-stories' 
         className='link link__documents-nav'
         onClick={handleCloseNavDocuments}
         >

@@ -62,7 +62,7 @@ const ServerError = () => {
         <span className='not-found__text-span'>Айвар</span>, сооснователь CEOstory
       </p>
       <Link to='/' className='link link__not-found' onClick={() => { window.scrollTo({ top: 0 }) }}>
-        <span>Читать истории</span>
+        <span>Читать инструкции</span>
       </Link>
     </div>
     {screenSize > 1279 && (

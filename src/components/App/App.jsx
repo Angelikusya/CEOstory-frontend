@@ -1,17 +1,15 @@
 import './App.css';
-// import '../../vendor/normalize.css';
+import '../../vendor/normalize.css';
 import { useEffect, useState } from 'react';
 import { CurrentUserContext}  from '../../context/CurrentUserContext';
 import { Route, Routes, useLocation, useNavigate, Navigate, useParams  } from 'react-router-dom';
 import * as auth from '../../utils/MainApi';
-import Main from '../Main/Main'
 import NotFound from '../NotFound/NotFound';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ForgottenPassword from '../ForgottenPassword/ForgottenPassword';
-import Tariffs from '../Tariffs/Tariffs';
 import ServerError from '../ServerError/ServerError';
 import ResetPassword from '../ResetPassword/ResetPassword';
 import About from '../About/About';
@@ -21,19 +19,19 @@ import PersonalData from '../PersonalData/PersonalData';
 import TermsOfUse from '../TermsOfUse/TermsOfUse';
 import PersonalDataForm from '../PersonalDataForm/PersonalDataForm';
 import Cookies from '../Cookies/Cookies';
-import CareerStories from '../Stories/CareerStories/CareerStories';
-import BusinessStories from '../Stories/BusinessStories /BusinessStories';
-import Academy from '../Academy/Academy';
-import BatashevR from '../StoryData/Business/BatashevR/BatashevR';
-import ConfirmationPayment from '../ConfirmationPayment/ConfirmationPayment';
-import KorotkovaE from '../StoryData/Career/KorotkovaE/KorotkovaE';
+import ThankYouPage from '../ThankYouPage/ThankYouPage';
 import RegistrationSucceed from '../RegistrationSucceed/RegistrationSucceed';
 import PopupError from '../PopupError/PopupError';
 import PopupSuccess from '../PopupSuccess/PopupSuccess';
 import NotJoinedAllert from '../NotJoinedAllert/NotJoinedAllert';
-import DATACareer from '../Data/DataCareer';
-import DATABusiness from '../Data/DataBusiness';
+import DATABusiness from '../StoryData/DataBusiness';
 import { TariffProvider } from '../TariffContext/TariffContext';
+import BusinessStories from '../Stories/BusinessStories';
+import { HelmetProvider } from 'react-helmet-async';
+import BatashevR from '../StoryData/BatashevR/BatashevR';
+import Tariffs from '../Tariffs/Tariffs';
+import Main from '../Main/Main';
+
 
 function App() {
 
@@ -60,7 +58,7 @@ function App() {
     const tariffs = [
         {
             tariff: 0.01,
-            price: 0.1, // стоимость в копейках
+            price: 0.1, //вот тут указывай в копейках
             quantity: 1,
             oldPrice: 1699,
             description: 'Доступ к тарифу на 1 год',
@@ -118,7 +116,7 @@ function App() {
               localStorage.setItem('token', data.accessToken); // Сохраняем токен в localStorage
               setSuccessMessage("Вы успешно зарегистрировались!"); // Устанавливаем сообщение
               setIsPopupSuccessVisible(true); // Показываем popup
-              navigate('/career-stories', { replace: true }); // Перенаправляем пользователя
+              navigate('/business-stories', { replace: true }); // Перенаправляем пользователя
             } else {
               setErrorMessage('Не удалось получить токен доступа. Попробуйте снова позже.');
               setIsPopupErrorVisible(true); // Открываем PopupError
@@ -148,7 +146,7 @@ function App() {
             if (data.token) {
               localStorage.setItem('token', data.token); // Сохраняем токен
               getSavedStories();
-              navigate('/career-stories', { replace: true }); // Перенаправляем пользователя
+              navigate('/business-stories', { replace: true }); // Перенаправляем пользователя
             }
           })
           .catch((err) => {
@@ -203,7 +201,7 @@ function App() {
             .then((response) => {
                 if (response.accessToken) {
                     localStorage.setItem('token', response.accessToken); // Сохраняем токен
-                    navigate('/career-stories', { replace: true }); // Перенаправляем пользователя
+                    navigate('/business-stories', { replace: true }); // Перенаправляем пользователя
                 } else {
                     throw new Error('Ошибка: токен доступа не был получен.');
                 }
@@ -378,18 +376,31 @@ function App() {
         return () => clearInterval(intervalId);
     }, [token]);
 
-    const totalStories = DATACareer.length + DATABusiness.length;
+    const totalStories = DATABusiness.length;
 
+    //фукнция в инструкцию
     const getHistoryWord1 = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) return "историю";
-        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(totalStories % 100)) return "истории";
-        return "историй";
+        if (count % 10 === 1 && count % 100 !== 11) return "инструкцию";
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(totalStories % 100)) return "инструкции";
+        return "инструкций";
     };
 
+    //функция ... инструкция
     const getHistoryWord3 = (count) => {
-        if (count % 10 === 1 && count % 100 !== 11) return "история";
-        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return "истории";
-        return "историй";
+        if (count % 10 === 1 && count % 100 !== 11) return "инструкция";
+        if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return "инструкции";
+        return "инструкций";
+    };
+
+    //функция 
+    const getHistoryWord2 = (count) => {
+        if (count % 10 === 1 && count % 100 !== 11) return "проверенную";
+        return "проверенных";
+    };
+    //функция 
+    const getHistoryWord4 = (count) => {
+        if (count % 10 === 1 && count % 100 !== 11) return "проверенная";
+        return "проверенных";
     };
 
     // Функция для получения количества просмотров
@@ -420,7 +431,6 @@ function App() {
 
     //где header полностью черный
     const isSpecialPage = () => 
-        pathname === '/career-stories' || 
         pathname === '/business-stories' ||
         pathname === '/saved' || 
         pathname === '/documents/privacy-policy'||
@@ -430,7 +440,6 @@ function App() {
         pathname === '/tariffs' ||
         pathname === '/academy' ||
         pathname === '/confirmation' ||
-        pathname === '/korotkovae-story' ||
         pathname === '/payment'||
         pathname === '/batashovr-story';
 
@@ -451,150 +460,144 @@ function App() {
                     onClose={handleClosePopup}
                     successMessage={successMessage}
                 />
-                <NotJoinedAllert />
+                <NotJoinedAllert 
+                    getHistoryWord1={getHistoryWord1}
+                />
                 <TariffProvider>
-                <Routes>
-                    <Route 
-                        path="/" 
-                        element={
-                        <Main 
-                            totalStories={totalStories}
-                            getHistoryWord1={getHistoryWord1}
-                            getHistoryWord3={getHistoryWord3}
-                        />} 
-                    />
-                    <Route 
-                        path="/career-stories" 
-                        element={
-                            <CareerStories
-                            saveStory={handleSaveStory}
-                            removeStory={removeStory} 
-                            onIncreaseView={increaseView}
-                            isStorySaved={isStorySaved}
-                        />} 
-                    />
-                    <Route 
-                        path="/business-stories" 
-                        element={
-                            <BusinessStories
-                            saveStory={handleSaveStory}
-                            removeStory={removeStory} 
-                            onIncreaseView={increaseView}
-                            isStorySaved={isStorySaved}
-                        />}
-                    />
-                    <Route
-                        path="/about"
-                        element={token ? <About 
-                            logout={logout} 
-                            subscriptionEnd={subscriptionEnd} 
-                            hasActiveSubscription={hasActiveSubscription} 
-                        /> : <Navigate to="/" replace />}
-                    />                   
-                    <Route
-                        path="/saved"
-                        element={
-                            <Saved 
-                                stories={savedStories} 
-                                removeStory={removeStory}
-                                onIncreaseView={increaseView}
-                                isStorySaved={isStorySaved} 
-                        />} 
-                    />
-                    <Route 
-                        path="/signup" element={
-                        <Register 
-                            onRegister={handleRegister} 
-                            isLoading={isLoading}
-                            showPopupConfirmationEmail={showPopupConfirmationEmail} // Передаем состояние
-                            setShowPopupConfirmationEmail={setShowPopupConfirmationEmail} // Передаем функцию обновления состояния
-                        />} 
-                    />
-
-                    <Route 
-                        path="/confirm/:userId/:token" 
-                        element={
-                            <RegistrationSucceed 
-                                onEmailConfirmation={handleConfirmEmail} 
-                            />} 
-                    />
-
-                    <Route 
-                        path="/signin" element={
-                        <Login 
-                            onLogin={handleLogin}
-                        />} 
-                    />
-                    <Route 
-                        path="/forgottenpassword" element={
-                            <ForgottenPassword 
-                                onSendEmail={handleSendEmail}
-                                isLoading={isLoading}
-                                isEmailSent={isEmailSent}
-                        />} 
-                    />
-                    <Route path="/password-reset/:userId/:token" element={
-                        <ResetPassword 
-                            onNewPassword={handleNewPassword}
-                        />}
-                    />
-
-                    <Route path="/academy" element={<Academy />} />
-                    <Route 
-                        path="/tariffs" element={
-                            <Tariffs 
+                <HelmetProvider>
+                    <Routes>
+                        <Route 
+                            path="/" 
+                            element={
+                            <Main 
                                 totalStories={totalStories}
                                 getHistoryWord1={getHistoryWord1}
                                 getHistoryWord3={getHistoryWord3}
-                                tariffs={tariffs}
-                                terminalKey={terminalKey}
-                            />} 
-                    />
-                    <Route path="/confirmation" element={<ConfirmationPayment />} />
-
-                    <Route path="/documents/privacy-policy" element={<Policy />}/>
-                    <Route path="/documents/personal-data" element={<PersonalData />}/>
-                    <Route path="/documents/terms-of-use" element={<TermsOfUse />}/>
-                    <Route path="/documents/personal-data-form" element={<PersonalDataForm />}/>
-
-                    <Route path="/500" element={<ServerError/>} />
-                    <Route 
-                        path="/404" 
-                            element={
-                                <NotFound
-                                    totalStories={totalStories}
-                                    getHistoryWord={getHistoryWord1} 
                             />} 
                         />
-                    <Route path="*" element={<Navigate to="/404" replace />} />
+                        <Route 
+                            path="/business-stories" 
+                            element={
+                                <BusinessStories
+                                    saveStory={handleSaveStory}
+                                    removeStory={removeStory} 
+                                    onIncreaseView={increaseView}
+                                    isStorySaved={isStorySaved}
+                                    totalStories={totalStories}
+                                    getHistoryWord3={getHistoryWord3}
+                                    getHistoryWord1={getHistoryWord1}
+                                    getHistoryWord2={getHistoryWord2}
+                                    getHistoryWord4={getHistoryWord4}
+                            />}
+                        />
+                        <Route
+                            path="/about"
+                            element={token ? <About 
+                                logout={logout} 
+                                subscriptionEnd={subscriptionEnd} 
+                                hasActiveSubscription={hasActiveSubscription} 
+                            /> : <Navigate to="/" replace />}
+                        />                   
+                        <Route
+                            path="/saved"
+                            element={
+                                <Saved 
+                                    stories={savedStories} 
+                                    removeStory={removeStory}
+                                    onIncreaseView={increaseView}
+                                    isStorySaved={isStorySaved} 
+                            />} 
+                        />
+                        <Route 
+                            path="/signup" element={
+                            <Register 
+                                onRegister={handleRegister} 
+                                isLoading={isLoading}
+                                showPopupConfirmationEmail={showPopupConfirmationEmail} // Передаем состояние
+                                setShowPopupConfirmationEmail={setShowPopupConfirmationEmail} // Передаем функцию обновления состояния
+                            />} 
+                        />
 
-                    
-                    {/* ИСТОРИИ КАРЬЕРЫ */}
-                    <Route path="/korotkovae-story" 
-                        element={<KorotkovaE
-                            saveStory={handleSaveStory}
-                            removeStory={removeStory} 
-                            isStorySaved={isStorySaved}
-                            fetchViews={fetchViews} 
-                            newViews={newViews}
-                            onIncreaseView={increaseView}
-                            hasActiveSubscription={hasActiveSubscription}
-                        />} 
-                    />
+                        <Route 
+                            path="/confirm/:userId/:token" 
+                            element={
+                                <RegistrationSucceed 
+                                    onEmailConfirmation={handleConfirmEmail} 
+                                />} 
+                        />
 
-                    {/* ИСТОРИИ БИЗНЕСА */}
-                    <Route path="/batashovr-story" 
-                        element={<BatashevR
-                            saveStory={handleSaveStory}
-                            removeStory={removeStory} 
-                            isStorySaved={isStorySaved}
-                            fetchViews={fetchViews} 
-                            newViews={newViews}
-                            onIncreaseView={increaseView}
-                            hasActiveSubscription={hasActiveSubscription}
-                        />} 
-                    /> 
-                </Routes>
+                        <Route 
+                            path="/signin" element={
+                            <Login 
+                                onLogin={handleLogin}
+                            />} 
+                        />
+                        <Route 
+                            path="/forgottenpassword" element={
+                                <ForgottenPassword 
+                                    onSendEmail={handleSendEmail}
+                                    isLoading={isLoading}
+                                    isEmailSent={isEmailSent}
+                            />} 
+                        />
+                        <Route path="/password-reset/:userId/:token" element={
+                            <ResetPassword 
+                                onNewPassword={handleNewPassword}
+                            />}
+                        />
+
+                        {/* <Route path="/academy" element={<Academy />} /> */}
+                        <Route 
+                            path="/tariffs" element={
+                                <Tariffs 
+                                    totalStories={totalStories}
+                                    getHistoryWord1={getHistoryWord1}
+                                    getHistoryWord3={getHistoryWord3}
+                                    getHistoryWord2={getHistoryWord2}
+                                    getHistoryWord4={getHistoryWord4}
+                                    tariffs={tariffs}
+                                    terminalKey={terminalKey}
+                                />} 
+                        />
+                        <Route path="/confirmation" element={<ThankYouPage />} />
+
+                        <Route path="/documents/privacy-policy" element={<Policy />}/>
+                        <Route path="/documents/personal-data" element={<PersonalData />}/>
+                        <Route path="/documents/terms-of-use" element={<TermsOfUse />}/>
+                        <Route path="/documents/personal-data-form" element={<PersonalDataForm />}/>
+
+                        <Route path="/500" element={<ServerError/>} />
+                        <Route 
+                            path="/404" 
+                                element={
+                                    <NotFound
+                                        totalStories={totalStories}
+                                        getHistoryWord1={getHistoryWord1} 
+                                        getHistoryWord2={getHistoryWord2} 
+                                />} 
+                            />
+                        <Route 
+                            path="*" element={
+                                <Navigate to="/404" replace 
+                                    getHistoryWord1={getHistoryWord1}
+                                />}
+                        />
+
+                        {/* ИНСТРУКЦИИ */}
+                        <Route path="/batashovr-story" 
+                            element={<BatashevR
+                                saveStory={handleSaveStory}
+                                removeStory={removeStory} 
+                                isStorySaved={isStorySaved}
+                                fetchViews={fetchViews} 
+                                newViews={newViews}
+                                onIncreaseView={increaseView}
+                                hasActiveSubscription={hasActiveSubscription}
+                                getHistoryWord1={getHistoryWord1}
+                            />} 
+                        /> 
+                    </Routes>
+                </HelmetProvider>
                 </TariffProvider>
                 <Cookies />
                 <Footer />
@@ -602,7 +605,5 @@ function App() {
         </div>
     );
 }
-
-
 
 export default App;

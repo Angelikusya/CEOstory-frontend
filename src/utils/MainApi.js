@@ -174,10 +174,9 @@ export const newPassword = async (userId, token, password) => {
 // Получение terminalKey с сервера
 export const getTerminalKey = () => {
     return fetch(`${BASE_URL}/terminal`, {
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem('token')
-    },
+        headers: {
+            "Content-Type": "application/json"
+        }
     })
     .then(checkResponse);
 };

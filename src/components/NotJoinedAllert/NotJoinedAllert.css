@@ -37,7 +37,7 @@
 
 .notlogedin__right-block {
     background-color: #000;
-    width: 392px; 
+    width: 372px; 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -52,7 +52,7 @@
     line-height: 120%;
     color: #000;
     margin: 109px 0 20px;
-    max-width: 345px;
+    max-width: 350px;
 }
 
 .notlogedin__left-block-text {
@@ -130,7 +130,7 @@
     
     .notlogedin__left-block {
         border-radius: 20px 20px 0 0 ;
-        padding: 0 30px;
+        /* padding: 0 30px; */
     }
     
     .notlogedin__right-block {

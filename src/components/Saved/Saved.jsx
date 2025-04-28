@@ -2,18 +2,12 @@ import { Link } from 'react-router-dom';
 import React,  { useState, useEffect } from 'react';
 import StoriesPreview from '../StoriesPreview/StoriesPreview';
 import './Saved.css';
-import DATA from '../Data/DataCareer'; 
+import DATA from '../StoryData/DataBusiness'; 
 
-import KorotkovaE from '../../assets/speaker-photoes/korotkova-tiny.webp';
 import BatashovR from '../../assets/speaker-photoes/batashov-tiny.webp';
-import BursalidiD from '../../assets/speaker-photoes/speaker-photo-main-2.webp';
-import VafeevT from '../../assets/speaker-photoes/speaker-photo-main-4.webp';
 
 const photoMap = {
-    3: BatashovR,
-    1: KorotkovaE,
-    2: BursalidiD,
-    4: VafeevT,
+    1: BatashovR,
 };
 
 const Saved = ({ 
@@ -47,7 +41,6 @@ const Saved = ({
                                     key={story.storyId}
                                     storyId={story.storyId}
                                     name={story.name}
-                                    type={story.type}
                                     field={story.field}
                                     income={story.income}
                                     title={story.title}
@@ -59,7 +52,7 @@ const Saved = ({
                                     investments={story.investments}
                                     experience={story.experience} 
                                     publicationDate={story.publicationDate}
-                                    readingTime={story.readingTime}
+                                    incomeFilter={story.incomeFilter}
                                     free={story.free} 
                                     onRemove={removeStory} 
                                     onIncreaseView={onIncreaseView}
@@ -71,12 +64,12 @@ const Saved = ({
                     ))
                 ) : (
                     <div className='saved__container'>
-                        <p className='saved__text'>У тебя нет сохраненных историй</p>
+                        <p className='saved__text'>У тебя нет сохраненных инструкций</p>
                         <p className='saved__more'>
-                            Найди самые полезные истории про карьеру и бизнес и сохрани их здесь
+                            Найди самые полезные инструкции и сохрани их здесь
                         </p>
-                        <Link className='link link__saved' to='/career-stories'>
-                            <span>Перейти к историям</span>
+                        <Link className='link link__saved' to='/business-stories'>
+                            <span>Перейти к инструкциям</span>
                         </Link>
                     </div>
                 )}

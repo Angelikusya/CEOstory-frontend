@@ -2,21 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 0 40px 0;
-}
-
-.tariffs__cost-header {
-    font-weight: 700;
-    font-size: 35px;
-    line-height: 120%;
-    text-align: center;
-    color: #000;
-    margin: 0 0 30px;
-}
-
-.tariffs__cost-container {
-    max-width: 649px;
     margin: 0;
+    max-width: 690px;
 }
 
 
@@ -26,18 +13,8 @@
 
 @media screen and (max-width: 767px) {
     .tariffs__cost {
-        margin: 0 0 20px 0;
-    }
-
-    .tariffs__cost-header {
-        font-size: 20px;
-        margin: 10px 0 25px;
-        text-align: left;
-    }
-
-    .tariffs__cost-container {
-        max-width: 649px;
-        /* margin: 0 18px; */
+        margin: 0;
+        align-items:baseline;
     }
     
 }
